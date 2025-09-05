@@ -1,0 +1,9 @@
+services:
+  frontal-nginx:
+    extends:
+      file: frontal-nginx/docker-compose.yml
+      service: frontal
+  front:
+    extends:
+      file: front/docker-compose.yml
+      service: front
