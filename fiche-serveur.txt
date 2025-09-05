@@ -1,0 +1,12 @@
+Nom equipe : LWS
+Serveur BDD :  192.168.10.16
+Port BDD : 3306
+Nom BDD : ap3_lws
+
+Util1 nom : ap3_lws-1
+Util1 mdp : QBk2eSrI
+Util1 Perm : Create, Read, Update, Delete
+
+Util2 Nom : ap3_lws-2
+Util2 mdp : 0En4PHxp
+Util2 Perm : Create, Read, Update, Delete
