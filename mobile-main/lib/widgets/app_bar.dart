@@ -17,7 +17,7 @@ class _AppBarPrincipalState extends State<AppBarPrincipal> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       title: Image.asset('assets/images/logo_cds49_transparent.png', width: 50, height: 50, fit: BoxFit.cover),
       actions: <Widget>[        
         ...widget.actions,

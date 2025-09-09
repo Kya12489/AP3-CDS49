@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:json_theme/json_theme.dart';
+//import 'package:json_theme/json_theme.dart';
 import 'package:mobil_cds49/screens/screen_login/log_user.dart';
 import 'package:mobil_cds49/services/gestion_token/token.dart';
+import 'package:mobil_cds49/services/theme/generer_theme.dart';
 import 'package:mobil_cds49/services/theme/gestion_theme.dart';
 import 'package:mobil_cds49/screens/screen_accueil/accueil.dart';
 import 'package:mobil_cds49/screens/screen_param/param_app.dart';
@@ -36,9 +37,14 @@ Future<List<ThemeData>> loadDataBeforeRunningApp() async {
   // Vérification que les fichiers JSON sont valides
   final lightThemeJson = jsonDecode(lightThemeStr);
   final darkThemeJson = jsonDecode(darkThemeStr);
-  // Décodage des thèmes à partir des fichiers JSON
-  final lightTheme = ThemeDecoder.decodeThemeData(lightThemeJson,validate: true)!;
-  final darkTheme = ThemeDecoder.decodeThemeData(darkThemeJson,validate: true)!;
+  // Utilisation de json_theme KO depuis la denière mise à jour Flutter 
+  /*final lightTheme = ThemeDecoder.decodeThemeData(lightThemeJson,validate: true)!;
+  final darkTheme = ThemeDecoder.decodeThemeData(darkThemeJson,validate: true)!;*/
+  
+  // Décodage des thèmes à partir des fichiers JSON en manuel
+  final lightTheme = GenererTheme.buildThemeFromJson(lightThemeJson);
+  final darkTheme = GenererTheme.buildThemeFromJson(darkThemeJson);
+
   return [lightTheme, darkTheme];
 }
 
