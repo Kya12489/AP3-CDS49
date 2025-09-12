@@ -47,6 +47,12 @@ class BottomNavbar extends StatelessWidget {
           icon: Icon(Icons.settings_outlined),
           label: 'Paramètres',
         ),
+        NavigationDestination(
+          selectedIcon: Icon(Icons.mail),
+          icon: Icon(Icons.mail_outline),
+          label: 'Nous contacter',
+        ),
+        
       ],
     );
   }

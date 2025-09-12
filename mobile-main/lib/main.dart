@@ -9,6 +9,7 @@ import 'package:mobil_cds49/services/theme/gestion_theme.dart';
 import 'package:mobil_cds49/screens/screen_accueil/accueil.dart';
 import 'package:mobil_cds49/screens/screen_param/param_app.dart';
 import 'package:mobil_cds49/screens/screen_qcm/gestionqcm.dart';
+import 'package:mobil_cds49/screens/screen_contact/nouscontacter.dart';
 import 'package:mobil_cds49/widgets/app_bar.dart';
 import 'package:mobil_cds49/widgets/bottom_bar.dart';
 
@@ -129,6 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
         case 2:
           currentBody = const ParamApp();
           break;
+        case 3:
+        currentBody = const ContactApp();
         default:
           currentBody = const Center(child: Text('Page introuvable'));
       }
