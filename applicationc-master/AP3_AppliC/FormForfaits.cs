@@ -49,11 +49,14 @@ namespace AP3_AppliC
                 Forfait F = (Forfait)bsForfaits.Current;
 
                 // mise à jour des infos du forfait dans la listBox
-                lbDetails.Items.Add("Identifiant : " + F.Idforfait);
-                lbDetails.Items.Add("Libellé : " + F.Libelleforfait);
+                lbDetails.Items.Add(F.Libelleforfait);
                 lbDetails.Items.Add("Description : " + F.Descriptionforfait);
                 lbDetails.Items.Add("Contenu : " + F.Contenuforfait);
-                lbDetails.Items.Add("Prix du forfait : " + F.Prixforfait);
+                lbDetails.Items.Add("Prix du forfait : " + F.Prixforfait + " €");
+                lbDetails.Items.Add("Nombre d'heure : " + F.Nbheures);
+                if (F.Prixhoraire != null) {
+                    lbDetails.Items.Add("Prix horaire : " + F.Prixhoraire + " €");
+                }
 
                 lbDetails.Visible = true;
                 btnSupprimer.Visible = true;

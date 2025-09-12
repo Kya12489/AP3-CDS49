@@ -73,9 +73,9 @@ namespace AP3_AppliC
             throw new ArgumentException("Cette fonctionnalité n'est pas encore opérationnelle");
         }
 
-        private void gestionDesForfaitsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            openChildForm((new FormAjoutForfaits()));
         }
     }
 }

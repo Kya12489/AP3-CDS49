@@ -43,9 +43,10 @@
             cbForfaits.DropDownStyle = ComboBoxStyle.DropDownList;
             cbForfaits.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cbForfaits.FormattingEnabled = true;
-            cbForfaits.Location = new Point(82, 88);
+            cbForfaits.Location = new Point(72, 66);
+            cbForfaits.Margin = new Padding(3, 2, 3, 2);
             cbForfaits.Name = "cbForfaits";
-            cbForfaits.Size = new Size(614, 36);
+            cbForfaits.Size = new Size(538, 29);
             cbForfaits.TabIndex = 0;
             cbForfaits.SelectedIndexChanged += cbForfaits_SelectedIndexChanged;
             // 
@@ -53,9 +54,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(82, 38);
+            label1.Location = new Point(72, 28);
             label1.Name = "label1";
-            label1.Size = new Size(227, 31);
+            label1.Size = new Size(187, 25);
             label1.TabIndex = 1;
             label1.Text = "Gestion des Forfaits";
             // 
@@ -67,9 +68,11 @@
             // 
             lbDetails.FormattingEnabled = true;
             lbDetails.HorizontalScrollbar = true;
-            lbDetails.Location = new Point(82, 160);
+            lbDetails.ItemHeight = 15;
+            lbDetails.Location = new Point(72, 120);
+            lbDetails.Margin = new Padding(3, 2, 3, 2);
             lbDetails.Name = "lbDetails";
-            lbDetails.Size = new Size(761, 184);
+            lbDetails.Size = new Size(666, 139);
             lbDetails.TabIndex = 2;
             lbDetails.Visible = false;
             // 
@@ -79,9 +82,10 @@
             btnSupprimer.FlatStyle = FlatStyle.Popup;
             btnSupprimer.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSupprimer.ForeColor = SystemColors.ControlLightLight;
-            btnSupprimer.Location = new Point(84, 364);
+            btnSupprimer.Location = new Point(74, 273);
+            btnSupprimer.Margin = new Padding(3, 2, 3, 2);
             btnSupprimer.Name = "btnSupprimer";
-            btnSupprimer.Size = new Size(140, 57);
+            btnSupprimer.Size = new Size(122, 43);
             btnSupprimer.TabIndex = 3;
             btnSupprimer.Text = "SUPPRIMER";
             btnSupprimer.UseVisualStyleBackColor = false;
@@ -94,9 +98,10 @@
             btnFermer.FlatStyle = FlatStyle.Popup;
             btnFermer.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnFermer.ForeColor = Color.White;
-            btnFermer.Location = new Point(708, 364);
+            btnFermer.Location = new Point(620, 273);
+            btnFermer.Margin = new Padding(3, 2, 3, 2);
             btnFermer.Name = "btnFermer";
-            btnFermer.Size = new Size(135, 57);
+            btnFermer.Size = new Size(118, 43);
             btnFermer.TabIndex = 5;
             btnFermer.Text = "FERMER";
             btnFermer.UseVisualStyleBackColor = false;
@@ -104,16 +109,17 @@
             // 
             // FormForfaits
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 128, 0);
-            ClientSize = new Size(966, 450);
+            ClientSize = new Size(845, 338);
             Controls.Add(btnFermer);
             Controls.Add(btnSupprimer);
             Controls.Add(lbDetails);
             Controls.Add(label1);
             Controls.Add(cbForfaits);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FormForfaits";
             Text = "FormForfaits";
             Load += FormForfaits_Load;
