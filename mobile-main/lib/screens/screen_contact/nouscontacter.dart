@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // Ecran de paramètres de l'application
 class ContactApp extends StatefulWidget {
@@ -7,79 +8,155 @@ class ContactApp extends StatefulWidget {
   @override
   State<ContactApp> createState() => _ParamAppState();
 }
-Card createCard(List<Widget> content){
+
+Card createCard(List<Widget> content) {
   Card newCard = Card(
     margin: EdgeInsets.all(12),
-    child: 
-    Padding(
+    child: Padding(
       padding: EdgeInsets.all(16),
       child: Column(
         spacing: 20,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: content
-      )
-    )
+        children: content,
+      ),
+    ),
   );
   return newCard;
 }
-Row addContainer(IconData icon,String title,String content){
-  double containerWidth = 105;
+
+Row addContainer(
+  String title,
+  String content, {
+  IconData? icon,
+  double containerWidth = 105.0,
+  bool isBtn = false,
+  VoidCallback? onBtnPressed
+}) {
   Row newRow = Row(
     spacing: 5,
     children: [
-      Icon(icon),
+      if (icon != null) Icon(icon),
       Row(
-        
         spacing: 25,
         children: [
-          Container(
-            width: containerWidth,
-            child: Text(title),
-          ),
-          Container(
-            child: Text(content),
-          )
+          Container(width: containerWidth, child: Text(title)),
+          Container(child: isBtn?ElevatedButton(onPressed: onBtnPressed, child: Text(content)):Text(content)),
         ],
-      )
+      ),
     ],
   );
   return newRow;
 }
+
 class _ParamAppState extends State<ContactApp> {
+  String phoneNb = "07 61 97 03 31";
   @override
   void initState() {
     super.initState();
   }
-  @override
 
+  void _launchDialer()  {
+    final Uri launchUri = Uri(scheme: 'tel', path: phoneNb);
+    try{
+      launchUrl(launchUri);
+    }on Exception catch(err){
+      throw Exception("Impossible de lancer le dialect : $err");
+    }
+    Navigator.pop(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-     return SizedBox(
+    return SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: Column(
-        children: <Widget>[          
+        children: <Widget>[
           Expanded(
             child: ListView(
-              children: [ 
+              children: [
+                Padding(
+                  padding: EdgeInsetsGeometry.all(16),
+                  child: Column(
+                    children: [
+                      Text(
+                        "L'auto-école Chevrollier Driving School 49 (CDS 49) vous accompagne dans l'apprentissage de la conduite. Nous mettons à votre disposition des moniteurs expérimentés et une pédagogie adaptée à chacun pour vous mener vers la réussite de votre permis de conduire.",
+                        textAlign: TextAlign.center ,
+                        style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "\nQue vous soyez débutant ou que vous souhaitiez perfectionner votre conduite, nous avons la formule qu'il vous faut. Rejoignez-nous et prenez la route en toute confiance !"
+                        ,textAlign: TextAlign.center ,
+                      ),
+                    ],
+                  ),
+                ),
                 createCard(<Widget>[
-                  Text("Nos coordonées"), 
-                  addContainer(Icons.place, "Adresse :", "2 Rue Adrien Recouvreur, 49100, Angers France"),
-                  addContainer(Icons.phone, "Téléphone :", "02 XX XX XX XX"),
-                  addContainer(Icons.mail, "Adresse e-mail :", "contact@cds49.fr"),
-                  addContainer(Icons.web  , "Site web :", "http://frontap3.dombtsig.local/")
+                  Text("Nos coordonées"),
+                  addContainer(
+                    icon: Icons.place,
+
+                    "Adresse :",
+                    "2 Rue Adrien Recouvreur, 49100, Angers France",
+                  ),
+
+                  addContainer("Téléphone",
+                  phoneNb ,
+                  icon: Icons.phone,
+                  onBtnPressed:  (){
+                    showDialog(
+                      context: context, 
+                      builder: (BuildContext context)=>Dialog(
+                        child: Padding(
+                        padding: EdgeInsetsGeometry.all(16),
+                        child: Column(
+                          
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            
+                            Text("Voulez-vous appelez se numéro de téléphone : $phoneNb ?"),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                              TextButton(onPressed: _launchDialer, child: Text("Appeller")),
+                              TextButton(onPressed: (){
+                                Navigator.pop(context);
+                              }, 
+                              child: Text("Annuler"))
+                            ],)
+                          ],
+                        ),)
+                      ));
+                  }
+                  ,isBtn: true),
+                  
+                  addContainer(
+                    icon: Icons.mail,
+                    "Adresse e-mail :",
+                    "contact@cds49.fr",
+                  ),
+                  addContainer(
+                    icon: Icons.web,
+                    "Site web :",
+                    "http://frontap3.dombtsig.local/",
+                  ),
                 ]),
                 createCard(<Widget>[
-                  Text("Nos horraires"), 
-                  addContainer(Icons.alarm_on_sharp, "Adresse :", "2 Rue Adrien Recouvreur, 49100, Angers France"),
-                  addContainer(Icons.phone, "Téléphone :", "02 XX XX XX XX"),
-                  addContainer(Icons.mail, "Adresse e-mail :", "contact@cds49.fr"),
-                  addContainer(Icons.web  , "Site web :", "http://frontap3.dombtsig.local/")
-                ])
-                       
+                  Text("Nos horraires"),
+                  addContainer(
+                    containerWidth: 200,
+                    icon: Icons.alarm_on_sharp,
+                    "Du lundi au vendredi :",
+                    "",
+                  ),
+                  Text("08:00 - 12:00 "),
+                  Text("14:00 - 18:00 "),
+                ]),
               ],
             ),
           ),
-          
         ],
       ),
     );

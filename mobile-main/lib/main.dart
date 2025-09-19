@@ -132,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
           break;
         case 3:
         currentBody = const ContactApp();
+        
         default:
           currentBody = const Center(child: Text('Page introuvable'));
       }
