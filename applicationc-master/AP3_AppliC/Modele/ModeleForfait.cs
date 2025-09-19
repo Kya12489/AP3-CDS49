@@ -58,5 +58,32 @@ namespace AP3_AppliC.Modele
             return vretour;
         }
 
+
+        public static bool AjoutForfait(string libelle, string descr, string contenue, double prix, int nbHeures, double prixHoraire)
+        {
+            Forfait unF;
+            bool vretour = true;
+            try
+            {
+                // ajout dans la table Moniteur
+                unF = new Forfait();
+                unF.Libelleforfait = libelle;
+                unF.Descriptionforfait = descr;
+                unF.Contenuforfait = contenue;
+                unF.Prixforfait = (decimal?)prix;
+                unF.Nbheures = nbHeures;
+                unF.Prixhoraire = (decimal?)prixHoraire;
+
+                Modele.Connexion.MonModel.Forfaits.Add(unF);
+                Modele.Connexion.MonModel.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                vretour = false;
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return vretour;
+        }
     }
 }

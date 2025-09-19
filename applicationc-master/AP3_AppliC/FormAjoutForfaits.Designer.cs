@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             tbLibelleForfait = new TextBox();
+            tbDescrForfait = new TextBox();
             tbContenueForfait = new TextBox();
             tbPrixForfait = new TextBox();
-            tbNbheuresForfait = new TextBox();
-            tbDescrForfait = new TextBox();
+            tbNbheures = new TextBox();
             tbPrixhoraireForfait = new TextBox();
             label1 = new Label();
             btnAjouterForfait = new Button();
@@ -54,33 +54,33 @@
             tbLibelleForfait.Size = new Size(362, 26);
             tbLibelleForfait.TabIndex = 1;
             // 
+            // tbDescrForfait
+            // 
+            tbDescrForfait.Location = new Point(171, 56);
+            tbDescrForfait.Name = "tbDescrForfait";
+            tbDescrForfait.Size = new Size(362, 26);
+            tbDescrForfait.TabIndex = 2;
+            // 
             // tbContenueForfait
             // 
             tbContenueForfait.Location = new Point(171, 88);
             tbContenueForfait.Name = "tbContenueForfait";
             tbContenueForfait.Size = new Size(362, 26);
-            tbContenueForfait.TabIndex = 2;
+            tbContenueForfait.TabIndex = 3;
             // 
             // tbPrixForfait
             // 
             tbPrixForfait.Location = new Point(171, 120);
             tbPrixForfait.Name = "tbPrixForfait";
             tbPrixForfait.Size = new Size(362, 26);
-            tbPrixForfait.TabIndex = 3;
+            tbPrixForfait.TabIndex = 4;
             // 
-            // tbNbheuresForfait
+            // tbNbheures
             // 
-            tbNbheuresForfait.Location = new Point(171, 152);
-            tbNbheuresForfait.Name = "tbNbheuresForfait";
-            tbNbheuresForfait.Size = new Size(362, 26);
-            tbNbheuresForfait.TabIndex = 4;
-            // 
-            // tbDescrForfait
-            // 
-            tbDescrForfait.Location = new Point(171, 56);
-            tbDescrForfait.Name = "tbDescrForfait";
-            tbDescrForfait.Size = new Size(362, 26);
-            tbDescrForfait.TabIndex = 5;
+            tbNbheures.Location = new Point(171, 152);
+            tbNbheures.Name = "tbNbheures";
+            tbNbheures.Size = new Size(362, 26);
+            tbNbheures.TabIndex = 5;
             // 
             // tbPrixhoraireForfait
             // 
@@ -112,6 +112,7 @@
             btnAjouterForfait.TabIndex = 8;
             btnAjouterForfait.Text = "AJOUTER";
             btnAjouterForfait.UseVisualStyleBackColor = false;
+            btnAjouterForfait.Click += btnAjouterForfait_Click;
             // 
             // btnFermerAjoutForfait
             // 
@@ -126,6 +127,7 @@
             btnFermerAjoutForfait.TabIndex = 9;
             btnFermerAjoutForfait.Text = "FERMER";
             btnFermerAjoutForfait.UseVisualStyleBackColor = false;
+            btnFermerAjoutForfait.Click += btnFermerAjoutForfait_Click;
             // 
             // gbInfosForfait
             // 
@@ -136,11 +138,11 @@
             gbInfosForfait.Controls.Add(label3);
             gbInfosForfait.Controls.Add(label2);
             gbInfosForfait.Controls.Add(tbLibelleForfait);
+            gbInfosForfait.Controls.Add(tbNbheures);
             gbInfosForfait.Controls.Add(tbDescrForfait);
             gbInfosForfait.Controls.Add(tbContenueForfait);
-            gbInfosForfait.Controls.Add(tbPrixForfait);
             gbInfosForfait.Controls.Add(tbPrixhoraireForfait);
-            gbInfosForfait.Controls.Add(tbNbheuresForfait);
+            gbInfosForfait.Controls.Add(tbPrixForfait);
             gbInfosForfait.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gbInfosForfait.Location = new Point(72, 55);
             gbInfosForfait.Margin = new Padding(3, 2, 3, 2);
@@ -226,10 +228,10 @@
 
         #endregion
         private TextBox tbLibelleForfait;
+        private TextBox tbDescrForfait;
         private TextBox tbContenueForfait;
         private TextBox tbPrixForfait;
-        private TextBox tbNbheuresForfait;
-        private TextBox tbDescrForfait;
+        private TextBox tbNbheures;
         private TextBox tbPrixhoraireForfait;
         private Label label1;
         private Button btnAjouterForfait;

@@ -17,6 +17,34 @@ namespace AP3_AppliC
         {
             InitializeComponent();
         }
-        
+
+        private void btnAjouterForfait_Click(object sender, EventArgs e)
+        {
+            if (tbLibelleForfait.Text.Trim() != "" && tbDescrForfait.Text.Trim() != "" && tbContenueForfait.Text.Trim() != "" && Convert.ToDouble(tbPrixForfait.Text.Trim()) != 0 && Convert.ToInt32(tbNbheures.Text.Trim()) != 0)
+            {
+
+                if (Modele.ModeleForfait.AjoutForfait(tbLibelleForfait.Text, tbDescrForfait.Text, tbContenueForfait.Text, Convert.ToDouble(tbPrixForfait.Text), Convert.ToInt32(tbNbheures.Text), Convert.ToDouble(tbPrixhoraireForfait.Text)))
+                {
+                    MessageBox.Show("Forfait ajouté");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Erreur dans l'ajout d'un forfait", "ERREUR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
+            }
+            else
+            {
+                MessageBox.Show("Enregistrement impossible : Il faut saisir tous les champs", "ERREUR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnFermerAjoutForfait_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
+
 }

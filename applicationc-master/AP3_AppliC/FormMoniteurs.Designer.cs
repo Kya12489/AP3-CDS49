@@ -49,9 +49,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(53, 39);
+            label1.Location = new Point(46, 29);
             label1.Name = "label1";
-            label1.Size = new Size(255, 31);
+            label1.Size = new Size(212, 25);
             label1.TabIndex = 2;
             label1.Text = "Gestion des Moniteurs";
             // 
@@ -60,9 +60,10 @@
             cbListeMoniteurs.DropDownStyle = ComboBoxStyle.DropDownList;
             cbListeMoniteurs.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cbListeMoniteurs.FormattingEnabled = true;
-            cbListeMoniteurs.Location = new Point(241, 92);
+            cbListeMoniteurs.Location = new Point(211, 69);
+            cbListeMoniteurs.Margin = new Padding(3, 2, 3, 2);
             cbListeMoniteurs.Name = "cbListeMoniteurs";
-            cbListeMoniteurs.Size = new Size(425, 36);
+            cbListeMoniteurs.Size = new Size(372, 29);
             cbListeMoniteurs.TabIndex = 3;
             cbListeMoniteurs.SelectedIndexChanged += cbListeMoniteurs_SelectedIndexChanged;
             // 
@@ -79,9 +80,11 @@
             gbInfos.Controls.Add(label3);
             gbInfos.Controls.Add(label2);
             gbInfos.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            gbInfos.Location = new Point(62, 183);
+            gbInfos.Location = new Point(54, 137);
+            gbInfos.Margin = new Padding(3, 2, 3, 2);
             gbInfos.Name = "gbInfos";
-            gbInfos.Size = new Size(783, 215);
+            gbInfos.Padding = new Padding(3, 2, 3, 2);
+            gbInfos.Size = new Size(685, 161);
             gbInfos.TabIndex = 4;
             gbInfos.TabStop = false;
             gbInfos.Text = "Informations sur un moniteur";
@@ -90,34 +93,37 @@
             // tbEmail
             // 
             tbEmail.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tbEmail.Location = new Point(179, 139);
+            tbEmail.Location = new Point(157, 104);
+            tbEmail.Margin = new Padding(3, 2, 3, 2);
             tbEmail.Name = "tbEmail";
-            tbEmail.Size = new Size(354, 30);
+            tbEmail.Size = new Size(310, 26);
             tbEmail.TabIndex = 5;
             // 
             // tbPrenom
             // 
             tbPrenom.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tbPrenom.Location = new Point(179, 88);
+            tbPrenom.Location = new Point(157, 66);
+            tbPrenom.Margin = new Padding(3, 2, 3, 2);
             tbPrenom.Name = "tbPrenom";
-            tbPrenom.Size = new Size(354, 30);
+            tbPrenom.Size = new Size(310, 26);
             tbPrenom.TabIndex = 4;
             // 
             // tbNom
             // 
             tbNom.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tbNom.Location = new Point(179, 39);
+            tbNom.Location = new Point(157, 29);
+            tbNom.Margin = new Padding(3, 2, 3, 2);
             tbNom.Name = "tbNom";
-            tbNom.Size = new Size(354, 30);
+            tbNom.Size = new Size(310, 26);
             tbNom.TabIndex = 3;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(68, 139);
+            label4.Location = new Point(60, 104);
             label4.Name = "label4";
-            label4.Size = new Size(51, 23);
+            label4.Size = new Size(41, 19);
             label4.TabIndex = 2;
             label4.Text = "Email";
             // 
@@ -125,9 +131,9 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(68, 88);
+            label3.Location = new Point(60, 66);
             label3.Name = "label3";
-            label3.Size = new Size(70, 23);
+            label3.Size = new Size(57, 19);
             label3.TabIndex = 1;
             label3.Text = "Prénom";
             // 
@@ -135,9 +141,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(68, 38);
+            label2.Location = new Point(60, 28);
             label2.Name = "label2";
-            label2.Size = new Size(48, 23);
+            label2.Size = new Size(39, 19);
             label2.TabIndex = 0;
             label2.Text = "Nom";
             // 
@@ -147,9 +153,10 @@
             btnFermer.FlatStyle = FlatStyle.Popup;
             btnFermer.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnFermer.ForeColor = Color.White;
-            btnFermer.Location = new Point(710, 437);
+            btnFermer.Location = new Point(621, 328);
+            btnFermer.Margin = new Padding(3, 2, 3, 2);
             btnFermer.Name = "btnFermer";
-            btnFermer.Size = new Size(135, 57);
+            btnFermer.Size = new Size(118, 43);
             btnFermer.TabIndex = 5;
             btnFermer.Text = "FERMER";
             btnFermer.UseVisualStyleBackColor = false;
@@ -161,9 +168,10 @@
             btnAction.FlatStyle = FlatStyle.Popup;
             btnAction.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAction.ForeColor = SystemColors.ControlLightLight;
-            btnAction.Location = new Point(62, 437);
+            btnAction.Location = new Point(54, 328);
+            btnAction.Margin = new Padding(3, 2, 3, 2);
             btnAction.Name = "btnAction";
-            btnAction.Size = new Size(140, 57);
+            btnAction.Size = new Size(122, 43);
             btnAction.TabIndex = 6;
             btnAction.Text = "AJOUTER";
             btnAction.UseVisualStyleBackColor = false;
@@ -171,16 +179,17 @@
             // 
             // FormMoniteurs
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 128, 0);
-            ClientSize = new Size(912, 567);
+            ClientSize = new Size(798, 425);
             Controls.Add(btnAction);
             Controls.Add(btnFermer);
             Controls.Add(gbInfos);
             Controls.Add(cbListeMoniteurs);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FormMoniteurs";
             Text = "FormMoniteurs";
             Load += FormMoniteurs_Load;

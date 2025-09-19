@@ -115,7 +115,7 @@ namespace AP3_AppliC
         private void btnAction_Click(object sender, EventArgs e)
         {
          
-            if (tbNom.Text != "" && tbPrenom.Text != "" && tbEmail.Text != "")
+            if (tbNom.Text.Trim() != "" && tbPrenom.Text.Trim() != "" && tbEmail.Text.Trim() != "")
                 {
                 if (!Controleur.ValidMail(tbEmail.Text))
                 {

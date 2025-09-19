@@ -15,5 +15,6 @@ namespace AP3_AppliC
             Modele.Connexion.init();
             Application.Run(new FormMenu());
         }
+
     }
 }
