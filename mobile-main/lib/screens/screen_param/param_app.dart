@@ -15,6 +15,7 @@ class ParamApp extends StatefulWidget {
 class _ParamAppState extends State<ParamApp> {
   bool light = false; // Variable pour le thème clair
   User? userInfo;
+  
   bool isLoading = true;
 
   @override
@@ -28,6 +29,7 @@ class _ParamAppState extends State<ParamApp> {
     setState(() {
       userInfo = info;
       isLoading = false;
+      
     });
   }
 
@@ -89,8 +91,12 @@ class _ParamAppState extends State<ParamApp> {
                                 ),
                               ),
                               SizedBox(height: 8),
+                              Text('ID : ${userInfo?.ideleve ?? "..." }'),
                               Text('Prénom : ${userInfo?.prenomeleve ?? "..." }'),
                               Text('Nom : ${userInfo?.nomeleve ?? "..." }'),
+                              Text('Email : ${userInfo?.emailEleve ?? "..." }'),
+                              Text('Date de naissance : ${userInfo?.dateNEleve ?? "..." }'),
+
                             ],
                           ),
                   ),

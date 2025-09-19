@@ -11,15 +11,12 @@ class ContactApp extends StatefulWidget {
 
 Card createCard(List<Widget> content) {
   Card newCard = Card(
-    margin: EdgeInsets.all(12),
-    child: Padding(
-      padding: EdgeInsets.all(16),
       child: Column(
         spacing: 20,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: content,
       ),
-    ),
+    
   );
   return newCard;
 }
@@ -28,7 +25,6 @@ Row addContainer(
   String title,
   String content, {
   IconData? icon,
-  double containerWidth = 105.0,
   bool isBtn = false,
   VoidCallback? onBtnPressed
 }) {
@@ -39,7 +35,7 @@ Row addContainer(
       Row(
         spacing: 25,
         children: [
-          Container(width: containerWidth, child: Text(title)),
+          Container(child: Text(title)),
           Container(child: isBtn?ElevatedButton(onPressed: onBtnPressed, child: Text(content)):Text(content)),
         ],
       ),
@@ -73,21 +69,21 @@ class _ParamAppState extends State<ContactApp> {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: ListView(
+            child: Column(
+              spacing: 50,
               children: [
                 Padding(
+                  
                   padding: EdgeInsetsGeometry.all(16),
                   child: Column(
+                    
                     children: [
                       Text(
-                        "L'auto-école Chevrollier Driving School 49 (CDS 49) vous accompagne dans l'apprentissage de la conduite. Nous mettons à votre disposition des moniteurs expérimentés et une pédagogie adaptée à chacun pour vous mener vers la réussite de votre permis de conduire.",
+                        "L'auto-école Chevrollier Driving School 49 (CDS 49) vous accompagne dans l'apprentissage de la conduite.",
                         textAlign: TextAlign.center ,
                         style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        "\nQue vous soyez débutant ou que vous souhaitiez perfectionner votre conduite, nous avons la formule qu'il vous faut. Rejoignez-nous et prenez la route en toute confiance !"
-                        ,textAlign: TextAlign.center ,
-                      ),
+                      
                     ],
                   ),
                 ),
@@ -97,7 +93,7 @@ class _ParamAppState extends State<ContactApp> {
                     icon: Icons.place,
 
                     "Adresse :",
-                    "2 Rue Adrien Recouvreur, 49100, Angers France",
+                    "2 Rue Adrien Recouvreur\n49100, Angers France",
                   ),
 
                   addContainer("Téléphone",
@@ -146,13 +142,12 @@ class _ParamAppState extends State<ContactApp> {
                 createCard(<Widget>[
                   Text("Nos horraires"),
                   addContainer(
-                    containerWidth: 200,
                     icon: Icons.alarm_on_sharp,
                     "Du lundi au vendredi :",
                     "",
                   ),
                   Text("08:00 - 12:00 "),
-                  Text("14:00 - 18:00 "),
+                  Text("14:00 - 18:00 \n"),
                 ]),
               ],
             ),
