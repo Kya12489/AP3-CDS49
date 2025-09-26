@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobil_cds49/widgets/simple_Card.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Ecran de paramètres de l'application
@@ -36,7 +37,7 @@ Row addContainer(
         spacing: 25,
         children: [
           Container(child: Text(title)),
-          Container(child: isBtn?ElevatedButton(onPressed: onBtnPressed, child: Text(content)):Text(content)),
+          Container(child: isBtn?TextButton(onPressed: onBtnPressed, child: Text(content)):Text(content)),
         ],
       ),
     ],
@@ -66,92 +67,94 @@ class _ParamAppState extends State<ContactApp> {
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
-      child: Column(
+      child: ListView(
         children: <Widget>[
-          Expanded(
+          Padding(
+            
+            padding: EdgeInsetsGeometry.all(16),
             child: Column(
-              spacing: 50,
+              
               children: [
-                Padding(
-                  
-                  padding: EdgeInsetsGeometry.all(16),
-                  child: Column(
-                    
-                    children: [
-                      Text(
-                        "L'auto-école Chevrollier Driving School 49 (CDS 49) vous accompagne dans l'apprentissage de la conduite.",
-                        textAlign: TextAlign.center ,
-                        style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                      ),
-                      
-                    ],
-                  ),
+                Text(
+                  "L'auto-école Chevrollier Driving School 49 (CDS 49) vous accompagne dans l'apprentissage de la conduite.",
+                  textAlign: TextAlign.center ,
+                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                 ),
-                createCard(<Widget>[
-                  Text("Nos coordonées"),
-                  addContainer(
-                    icon: Icons.place,
-
-                    "Adresse :",
-                    "2 Rue Adrien Recouvreur\n49100, Angers France",
-                  ),
-
-                  addContainer("Téléphone",
-                  phoneNb ,
-                  icon: Icons.phone,
-                  onBtnPressed:  (){
-                    showDialog(
-                      context: context, 
-                      builder: (BuildContext context)=>Dialog(
-                        child: Padding(
-                        padding: EdgeInsetsGeometry.all(16),
-                        child: Column(
-                          
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            
-                            Text("Voulez-vous appelez se numéro de téléphone : $phoneNb ?"),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                              TextButton(onPressed: _launchDialer, child: Text("Appeller")),
-                              TextButton(onPressed: (){
-                                Navigator.pop(context);
-                              }, 
-                              child: Text("Annuler"))
-                            ],)
-                          ],
-                        ),)
-                      ));
-                  }
-                  ,isBtn: true),
-                  
-                  addContainer(
-                    icon: Icons.mail,
-                    "Adresse e-mail :",
-                    "contact@cds49.fr",
-                  ),
-                  addContainer(
-                    icon: Icons.web,
-                    "Site web :",
-                    "http://frontap3.dombtsig.local/",
-                  ),
-                ]),
-                createCard(<Widget>[
-                  Text("Nos horraires"),
-                  addContainer(
-                    icon: Icons.alarm_on_sharp,
-                    "Du lundi au vendredi :",
-                    "",
-                  ),
-                  Text("08:00 - 12:00 "),
-                  Text("14:00 - 18:00 \n"),
-                ]),
+                
               ],
             ),
           ),
+          CardPrincipal(
+            child: Column(
+              children: <Widget>[
+                Text("Nos coordonées"),
+            addContainer(
+              icon: Icons.place,
+
+              "Adresse :",
+              "2 Rue Adrien Recouvreur\n49100, Angers France",
+            ),
+
+            addContainer("Téléphone",
+            phoneNb ,
+            icon: Icons.phone,
+            onBtnPressed:  (){
+              showDialog(
+                context: context, 
+                builder: (BuildContext context)=>Dialog(
+                  child: Padding(
+                  padding: EdgeInsetsGeometry.all(16),
+                  child: Column(
+                    
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      
+                      Text("Voulez-vous appelez se numéro de téléphone : $phoneNb ?"),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                        TextButton(onPressed: _launchDialer, child: Text("Appeller")),
+                        TextButton(onPressed: (){
+                          Navigator.pop(context);
+                        }, 
+                        child: Text("Annuler"))
+                      ],)
+                    ],
+                  ),)
+                ));
+            }
+            ,isBtn: true),
+            
+            addContainer(
+              icon: Icons.mail,
+              "Adresse e-mail :",
+              "contact@cds49.fr",
+            ),
+            addContainer(
+              icon: Icons.web,
+              "Site web :",
+              "http://frontap3.dombtsig.local/",
+            ),
+              ],
+            )
+
+          ),
+          createCard(<Widget>[
+            
+          ]),
+          
+          createCard(<Widget>[
+            Text("Nos horraires"),
+            addContainer(
+              icon: Icons.alarm_on_sharp,
+              "Du lundi au vendredi :",
+              "",
+            ),
+            Text("08:00 - 12:00 "),
+            Text("14:00 - 18:00 \n"),
+          ]),
         ],
       ),
     );

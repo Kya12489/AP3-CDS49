@@ -129,6 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
           break;
         case 2:
           currentBody = const ParamApp();
+          
           break;
         case 3:
         currentBody = const ContactApp();
@@ -159,7 +160,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: const Icon(Icons.logout),
                   onPressed: () {
                     GestionToken.logout();
-                    setState(() {});
+                    setState(() {
+                      Navigator.pop(context);
+                    });
                   },
                 ); 
               }

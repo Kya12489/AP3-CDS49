@@ -10,6 +10,13 @@ class ThemeController extends ValueNotifier<ThemeMode> {
     value = value == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     
   }
+  ThemeMode getTheme(){
+    return value;
+  }
+
+  bool isLightMode(){
+    return value == ThemeMode.light;
+  }
 }
 
 final themeController = ThemeController();

@@ -29,7 +29,7 @@ class _ParamAppState extends State<ParamApp> {
     setState(() {
       userInfo = info;
       isLoading = false;
-      
+      light = themeController.isLightMode();
     });
   }
 
@@ -51,7 +51,7 @@ class _ParamAppState extends State<ParamApp> {
                     child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                        Text(light ? 'Passer en mode clair' : 'Passer en mode sombre',
+                        Text(light ? 'Passer en mode sombre' : 'Passer en mode clair',
                         style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
