@@ -74,6 +74,7 @@
             tbPrixForfait.Name = "tbPrixForfait";
             tbPrixForfait.Size = new Size(362, 26);
             tbPrixForfait.TabIndex = 4;
+            tbPrixForfait.KeyPress += tbPrixForfait_KeyPress;
             // 
             // tbNbheures
             // 
@@ -81,6 +82,7 @@
             tbNbheures.Name = "tbNbheures";
             tbNbheures.Size = new Size(362, 26);
             tbNbheures.TabIndex = 5;
+            tbNbheures.KeyPress += tbNbheures_KeyPress;
             // 
             // tbPrixhoraireForfait
             // 
@@ -88,6 +90,7 @@
             tbPrixhoraireForfait.Name = "tbPrixhoraireForfait";
             tbPrixhoraireForfait.Size = new Size(362, 26);
             tbPrixhoraireForfait.TabIndex = 6;
+            tbPrixhoraireForfait.KeyPress += tbPrixhoraireForfait_KeyPress;
             // 
             // label1
             // 
@@ -211,7 +214,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(255, 128, 0);
+            BackColor = Color.White;
             ClientSize = new Size(845, 338);
             Controls.Add(gbInfosForfait);
             Controls.Add(btnFermerAjoutForfait);

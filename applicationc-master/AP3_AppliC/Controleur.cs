@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -52,6 +53,31 @@ namespace AP3_AppliC
             {
                 Console.WriteLine("Exception caught in CreateEmail(): {0}", ex.ToString());
             }
+        }
+        public static bool KeyPressEntier(object sender, KeyPressEventArgs e)
+        {
+            bool valeurCorrect = true; 
+            if ((e.KeyChar < '0' || e.KeyChar > '9') && e.KeyChar != Convert.ToChar(Keys.Back))
+            {
+                valeurCorrect = false;
+            }
+            if (valeurCorrect == false) {
+                MessageBox.Show("Erreur, vous devez saisir des entiers", "Erreur", MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+            return valeurCorrect;
+        }
+        public static bool KeyPressDouble(object sender, KeyPressEventArgs e)
+        {
+            bool valeurCorrect = true;
+            if ((e.KeyChar < '0' || e.KeyChar > '9') && e.KeyChar != Convert.ToChar(Keys.Back) && e.KeyChar != ',')
+            {
+                valeurCorrect = false;
+            }
+            if (valeurCorrect == false)
+            {
+                MessageBox.Show("Erreur, vous devez saisir des entiers", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return valeurCorrect;
         }
     }
 }

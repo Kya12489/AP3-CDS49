@@ -59,7 +59,7 @@ namespace AP3_AppliC.Modele
         }
 
 
-        public static bool AjoutForfait(string libelle, string descr, string contenue, double prix, int nbHeures, double prixHoraire)
+        public static bool AjoutForfait(string libelle, string descr, string contenue, double prix, int nbHeures, double prixHoraire=0)
         {
             Forfait unF;
             bool vretour = true;
@@ -72,7 +72,7 @@ namespace AP3_AppliC.Modele
                 unF.Contenuforfait = contenue;
                 unF.Prixforfait = (decimal?)prix;
                 unF.Nbheures = nbHeures;
-                unF.Prixhoraire = (decimal?)prixHoraire;
+                unF.Prixhoraire = prixHoraire==0? null : (decimal?)prixHoraire;
 
                 Modele.Connexion.MonModel.Forfaits.Add(unF);
                 Modele.Connexion.MonModel.SaveChanges();
@@ -81,7 +81,15 @@ namespace AP3_AppliC.Modele
             catch (Exception ex)
             {
                 vretour = false;
-                MessageBox.Show(ex.Message.ToString());
+                
+                if(ex.Message.ToString()== "An error occurred while saving the entity changes. See the inner exception for details.")
+                {
+                    MessageBox.Show("Le nom de se forfait existe déjà.");
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
             }
             return vretour;
         }
