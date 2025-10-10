@@ -1,3 +1,7 @@
+using AP3_AppliC.view;
+using System.Reflection.Metadata;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using AP3_AppliC.Modele;
 namespace AP3_AppliC
 {
     internal static class Program
@@ -13,7 +17,9 @@ namespace AP3_AppliC
             ApplicationConfiguration.Initialize();
             // Connexion à la BD
             Modele.Connexion.init();
-            Application.Run(new FormMenu());
+            Application.Run(new FormConnexion());
+
+            
         }
 
     }

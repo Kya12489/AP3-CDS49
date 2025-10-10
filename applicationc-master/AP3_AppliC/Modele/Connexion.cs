@@ -12,17 +12,36 @@ namespace AP3_AppliC.Modele
         /// <summary>
         /// créé l'objet de lien (le CONTEXT) avec la BD
         /// </summary>
-        private static Ap320252026Context monModel;
+        private static Ap3LwsContext monModel;
 
-        public static Ap320252026Context MonModel { get => monModel; set => monModel = value; }
+        public static Ap3LwsContext MonModel { get => monModel; set => monModel = value; }
 
         /// <summary>
         /// Initialisation de la connexion avec la BD (à appeler dans Program.cs)
         /// </summary>
         public static void init()
         {
-            monModel = new Ap320252026Context();
+            monModel = new Ap3LwsContext();
         }
+        /*
+        public static bool VerifierAdmin()
+        {
+            Admin admin;
+            bool vretour = true;
+            try
+            {
+                admin.LoginAdmin = montant;
+                admin.PasswordAdmin = ;
+
+
+                monModel.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                vretour = false;
+            }
+            return vretour;
+        }*/
 
 
 

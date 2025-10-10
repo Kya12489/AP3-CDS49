@@ -17,6 +17,8 @@ public partial class Eleve
 
     public DateOnly Datenaissanceeleve { get; set; }
 
+    public string Numeroteleleve { get; set; } = null!;
+
     public virtual ICollection<Conduire> Conduires { get; set; } = new List<Conduire>();
 
     public virtual ICollection<Inscrire> Inscrires { get; set; } = new List<Inscrire>();
