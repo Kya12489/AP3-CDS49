@@ -26,7 +26,7 @@ class _ParamAppState extends State<ParamApp> {
 
   Future<void> _loadUserInfo() async {
     final info = await UsrApi.infoUser();
-    setState(() {
+    setState(() { 
       userInfo = info;
       isLoading = false;
       light = themeController.isLightMode();

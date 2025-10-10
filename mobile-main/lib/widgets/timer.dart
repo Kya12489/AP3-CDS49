@@ -19,19 +19,34 @@ class _TimerState extends State<TimerLabel> {
     super.initState();
     currentTime = widget.duration;
     timer = Timer.periodic(
+<<<<<<< HEAD
       Duration(milliseconds: widget.duration*50),
       (t) {
         setState(() {
           currentTime--;
+=======
+      Duration(seconds: 1),
+      (t) {
+        setState(() {
+          currentTime--;
+          
+>>>>>>> e84008d1bb995cd95115c5354436c0858ca69236
         });
         if (currentTime == 0) {
           t.cancel();
           widget.onEnded();
         }
+<<<<<<< HEAD
       },
     );
   }
 
+=======
+        
+      },
+    );
+  }
+>>>>>>> e84008d1bb995cd95115c5354436c0858ca69236
   @override
   void dispose(){
     timer?.cancel();

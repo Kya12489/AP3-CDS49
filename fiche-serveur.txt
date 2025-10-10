@@ -10,3 +10,8 @@ Util1 Perm : Create, Read, Update, Delete
 Util2 Nom : ap3_lws-2
 Util2 mdp : 0En4PHxp
 Util2 Perm : Create, Read, Update, Delete
+
+machine : ap3-slam5-ServeurWeb
+IP: 192.168.124.40
+Util : 
+Mdp : 

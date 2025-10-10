@@ -33,7 +33,11 @@ class _AffichageQCM extends State<AffichageQCM> {
     timerQ = TimerLabel(
       key: UniqueKey(),
       duration: 20,
+<<<<<<< HEAD
       onEnded: () {},
+=======
+      onEnded: () {_chargerProchaineQuestion([]);},
+>>>>>>> e84008d1bb995cd95115c5354436c0858ca69236
     );
   }
 
@@ -62,7 +66,11 @@ class _AffichageQCM extends State<AffichageQCM> {
         timerQ = TimerLabel(
           key: UniqueKey(),
           duration: 20,
+<<<<<<< HEAD
           onEnded: () {},
+=======
+          onEnded: () {_chargerProchaineQuestion([]);},
+>>>>>>> e84008d1bb995cd95115c5354436c0858ca69236
         );
       });
     } else {
