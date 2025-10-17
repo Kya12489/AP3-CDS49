@@ -25,7 +25,7 @@ class AppConfig {
       // Fallback pour d'autres plateformes (Windows, macOS, etc.)
       return const String.fromEnvironment(
         'API_URL_WEB',
-        defaultValue: 'https://frontap3.dombtsig.local',
+        defaultValue: 'http://localhost:9000',
       );
     }
   }

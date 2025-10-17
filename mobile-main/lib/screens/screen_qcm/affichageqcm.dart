@@ -11,7 +11,7 @@ import 'package:mobil_cds49/widgets/timer.dart';
 class AffichageQCM extends StatefulWidget {
   final void Function(Widget)? onNavigate;
   final int nbQuestions;
-  final String categorieQuestion;
+  final int categorieQuestion;
   const AffichageQCM({super.key, required this.nbQuestions, required this.categorieQuestion,this.onNavigate });
 
   @override
@@ -33,11 +33,7 @@ class _AffichageQCM extends State<AffichageQCM> {
     timerQ = TimerLabel(
       key: UniqueKey(),
       duration: 20,
-<<<<<<< HEAD
       onEnded: () {},
-=======
-      onEnded: () {_chargerProchaineQuestion([]);},
->>>>>>> e84008d1bb995cd95115c5354436c0858ca69236
     );
   }
 
@@ -60,27 +56,23 @@ class _AffichageQCM extends State<AffichageQCM> {
     }
       
    // Passe à la question suivante ou affiche le score final si c'est la dernière question 
-    if (_currentIndex < _questions.length - 1) {
+   if (_currentIndex < _questions.length - 1) {
       setState(() {
         _currentIndex++;
         timerQ = TimerLabel(
           key: UniqueKey(),
           duration: 20,
-<<<<<<< HEAD
-          onEnded: () {},
-=======
           onEnded: () {_chargerProchaineQuestion([]);},
->>>>>>> e84008d1bb995cd95115c5354436c0858ca69236
         );
       });
     } else {
       widget.onNavigate?.call(
-                    GestionScore(
-                      key: UniqueKey(),
-                      nbQuestionsTotal: widget.nbQuestions,
-                      scoreRealise: score,
-                    ),
-                  );
+        GestionScore(
+          key: UniqueKey(),
+          nbQuestionsTotal: widget.nbQuestions,
+          scoreRealise: score,
+        ),
+      );
     }
   }
   

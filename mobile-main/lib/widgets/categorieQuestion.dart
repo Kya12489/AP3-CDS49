@@ -16,7 +16,12 @@ class CategorieQuestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return Column(
+      children: [
+        Container(
+          width: 230,
+          height: 230,
+          child: InkWell(
                 onTap: this.onTap,
                 borderRadius: BorderRadius.circular(12),
                 child: AnimatedContainer(
@@ -35,24 +40,31 @@ class CategorieQuestion extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 32, horizontal: 40),
                     child: Column(
+                      // centrer le contenu (icône + titre)
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(
                           this.icon,
                           size: 40,                        
                         ),
+                        SizedBox(height: 12),
                         Text(
                           'Questions '+this.title,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,                            
                           ),
-                        ),
-                        SizedBox(height: 16),
-                        
+                        ),                        
                       ],
                     ),
-                  ),
-                ),
-              );
+                  ),                  
+                ),                
+              ),
+        ),
+        
+      ],
+    );
   }
 }

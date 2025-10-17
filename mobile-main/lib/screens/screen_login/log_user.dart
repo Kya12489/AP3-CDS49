@@ -19,7 +19,8 @@ class _LoginUtilisateurState extends State<LoginUtilisateur> {
     String email = emailController.text;
     String password = passwordController.text;
 
-    if (email.isNotEmpty && password.isNotEmpty) {
+    try{
+      if (email.isNotEmpty && password.isNotEmpty) {
       final result = await UsrApi().loginUser(email, password);
       // Vérifie que le widget est toujours actif avant d'utiliser context (Bonne pratique pour éviter les erreurs de contexte)
       if (!mounted) return;
@@ -44,6 +45,12 @@ class _LoginUtilisateurState extends State<LoginUtilisateur> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Veuillez remplir tous les champs')),
+      );
+    }
+    } catch (e) {
+      // Vous pouvez afficher une erreur ou la gérer ici
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Une erreur est survenue : $e')),
       );
     }
   }

@@ -6,7 +6,7 @@ import 'package:mobil_cds49/services/api/config.dart';
 class QuestionApi {
   
   /// Permet de récupérer les questions d'un QCM
-  Future<List<QuestionAvecReponses>> getQuestion(int nbQuestion, String categorieQuestion) async {
+  Future<List<QuestionAvecReponses>> getQuestion(int nbQuestion, int categorieQuestion) async {
       final response = await http.get(Uri.parse('${AppConfig.apiBaseUrl}/api/questions/$nbQuestion?categorie=$categorieQuestion'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonData = json.decode(response.body);

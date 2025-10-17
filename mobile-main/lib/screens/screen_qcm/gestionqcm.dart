@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mobil_cds49/models/categorie.dart';
 import 'package:mobil_cds49/screens/screen_qcm/affichageqcm.dart';
+import 'package:mobil_cds49/services/api/gestionCategorie/categorie_api.dart';
 import 'package:mobil_cds49/widgets/categorieQuestion.dart';
 
 
@@ -17,19 +19,43 @@ class _CodeQCMState extends State<CodeQCM> {
    // Nombre de questions par défault 
    int selectedNumber = 40;
    bool randomQuestion = true;
-   int idCatSelected = 0;
-   String selectedCategory = "random";
+   int? selectedCategory; // null = Random
+   List<Categorie>? lesCategories;
+   bool isLoading = true;
   
-  // Sélectionne la catégorie de questions
-  String selectCategorie() {
-    return selectedCategory;
+  Future<void> _LoadListeCategorie() async{
+    final info = await CategorieApi.getListeCategories();
+     setState(() {
+       lesCategories = info;
+       isLoading = false;
+     });
   }
 
+  // retourne le libellé (nom) de la catégorie sélectionnée
+  String selectCategorie() {
+    if (randomQuestion || selectedCategory == null) return "Random";
+    if (lesCategories == null || lesCategories!.isEmpty) return "..";
+    for (final cat in lesCategories!) {
+      if (cat.idCategorie == selectedCategory) {
+        return cat.libelleCategorie ?? "..";
+      }
+    }
+    return "..";
+  }
+
+  int? selectCategorieId(){
+    return selectedCategory;
+  }
   // Change l'état de la variable randomQuestion et met à jour la catégorie sélectionnée
-  void categorieRadom(String cat) {
+  void categorieRadom(int? catId) {
     setState(() {
-      randomQuestion = !randomQuestion;
-      selectedCategory = cat;
+      if (catId == null) {
+        randomQuestion = true;
+        selectedCategory = null;
+      } else {
+        randomQuestion = false;
+        selectedCategory = catId;
+      }
     });
   }
   
@@ -46,7 +72,9 @@ class _CodeQCMState extends State<CodeQCM> {
               value: value,
               child: Text('$value'),
             ))
-        .toList();   
+        .toList();
+    // charger les catégories depuis l'API
+    _LoadListeCategorie();
   }
   
   @override
@@ -96,30 +124,36 @@ class _CodeQCMState extends State<CodeQCM> {
              // Gestion de la catégorie de questions
               SizedBox(height: 64),
              
-                  CategorieQuestion(
+              // item "Random"
+              CategorieQuestion(
                 title: "Random",
                 icon: FontAwesomeIcons.shuffle,
-                onTap: (){categorieRadom("Random");},
-                nameSelected: selectedCategory,
+                onTap: (){ categorieRadom(null); },
+                nameSelected: selectCategorie(),
               ),
               SizedBox(height: 24),
-              CategorieQuestion(
-                title: "Test1",
-                icon: FontAwesomeIcons.shuffle,
-                onTap: (){categorieRadom("Test1");},
-                nameSelected: selectedCategory,
+
+              GridView.count(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  // ajuster si nécessaire
+                  children: [
+                    if (isLoading)
+                      Center(child: Text("Loading ..."))
+                    else
+                      ...lesCategories!.map((cat) => CategorieQuestion(
+                            title: cat.libelleCategorie ?? "...",
+                            icon: FontAwesomeIcons.accusoft,
+                            onTap: () {
+                              categorieRadom(cat.idCategorie);
+                            },
+                            nameSelected: selectCategorie(),
+                          ))
+                          .toList(),
+                  ]
+                
               ),
-              SizedBox(height: 24),
-              CategorieQuestion(
-                title: "Test2",
-                icon: FontAwesomeIcons.accusoft,
-                onTap: (){categorieRadom("Test2");},
-                nameSelected: selectedCategory,
-              ),
-              
-              
-              
-               
               
               //Espace entre les éléments
               SizedBox(height: 24),
@@ -132,12 +166,12 @@ class _CodeQCMState extends State<CodeQCM> {
                     AffichageQCM(
                       key: UniqueKey(),
                       nbQuestions: selectedNumber,
-                      categorieQuestion: selectCategorie(),
+                      categorieQuestion: selectCategorieId()??0,
                       onNavigate: widget.onNavigate,
                     ),
                   );
                 },
-                child: Text('Valider'),
+                child: Text("Commencer le QCM"),
               ),
             ]
               ),
