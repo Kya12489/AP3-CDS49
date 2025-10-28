@@ -22,6 +22,19 @@ class BottomNavbar extends StatelessWidget {
         );
         return;
       }
+    } else if (index == 4) {
+    
+      final autorise = await GestionToken.isLogged();
+      if (!autorise && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Veuillez vous connecter pour accéder à l\'historique des scores',
+            ),
+          ),
+        );
+        return;
+      }
     }
     onDestinationSelected(index);
   }
