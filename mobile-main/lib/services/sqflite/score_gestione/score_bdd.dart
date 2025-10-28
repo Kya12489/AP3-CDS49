@@ -26,12 +26,11 @@ class ScoreBDD {
 
     return await openDatabase(
       path,
-      version: 2,
+      version: 4,
       onCreate: _createDB,
       onUpgrade: (db, oldVersion, newVersion) async {
-        if (oldVersion < 2) {
+        if (oldVersion < 4) {
           // Ajouter la colonne idEleve si elle n'existe pas
-          await db.execute('ALTER TABLE scores ADD COLUMN idEleve INTEGER');
           db.execute('UPDATE scores SET idEleve = 8');
         }
       },

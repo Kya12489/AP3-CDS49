@@ -13,6 +13,7 @@ import 'package:mobil_cds49/screens/screen_qcm/gestionqcm.dart';
 import 'package:mobil_cds49/screens/screen_contact/nouscontacter.dart';
 import 'package:mobil_cds49/widgets/app_bar.dart';
 import 'package:mobil_cds49/widgets/bottom_bar.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   // Lancement de l'application
@@ -70,6 +71,16 @@ class MyApp extends StatelessWidget {
           title: 'CDS 49',
           debugShowMaterialGrid: false,
           debugShowCheckedModeBanner: false,
+
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('fr', 'FR'), // Français
+          ],
+          locale: const Locale('fr', 'FR'), // Langue par défaut
           // Application des thèmes clair et sombre
           theme: lightTheme,
           darkTheme: darkTheme,

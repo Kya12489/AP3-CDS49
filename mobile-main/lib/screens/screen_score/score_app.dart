@@ -47,7 +47,7 @@ class _scoreAppState extends State<scoreApp> {
       cpt++;
     }
     setState(() {
-      moyenne ~/= cpt;
+      moyenne ~/= cpt == 0 ? 1 : cpt;
     });
   }
 
