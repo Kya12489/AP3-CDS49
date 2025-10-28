@@ -16,7 +16,9 @@ class BottomNavbar extends StatelessWidget {
       final autorise = await GestionToken.isLogged();
       if (!autorise && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Veuillez vous connecter pour accéder au QCM')),
+          const SnackBar(
+            content: Text('Veuillez vous connecter pour accéder au QCM'),
+          ),
         );
         return;
       }
@@ -26,7 +28,7 @@ class BottomNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Construction de la barre de navigation 
+    // Construction de la barre de navigation
     return NavigationBar(
       selectedIndex: currentIndex,
       onDestinationSelected: (index) => _verifQCM(context, index),
@@ -52,7 +54,11 @@ class BottomNavbar extends StatelessWidget {
           icon: Icon(Icons.mail_outline),
           label: 'Nous contacter',
         ),
-        
+        NavigationDestination(
+          selectedIcon: Icon(Icons.score),
+          icon: Icon(Icons.score_outlined),
+          label: 'Historique des scores',
+        ),
       ],
     );
   }

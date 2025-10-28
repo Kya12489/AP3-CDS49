@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:json_theme/json_theme.dart';
 import 'package:mobil_cds49/screens/screen_login/log_user.dart';
+import 'package:mobil_cds49/screens/screen_score/score_app.dart';
 import 'package:mobil_cds49/services/gestion_token/token.dart';
 import 'package:mobil_cds49/services/theme/generer_theme.dart';
 import 'package:mobil_cds49/services/theme/gestion_theme.dart';
@@ -13,35 +14,37 @@ import 'package:mobil_cds49/screens/screen_contact/nouscontacter.dart';
 import 'package:mobil_cds49/widgets/app_bar.dart';
 import 'package:mobil_cds49/widgets/bottom_bar.dart';
 
-
-
 void main() async {
   // Lancement de l'application
-  WidgetsFlutterBinding.ensureInitialized();  
-  // Masquer la barre de statut (Enlève l'heure, la batterie, etc...) 
+  WidgetsFlutterBinding.ensureInitialized();
+  // Masquer la barre de statut (Enlève l'heure, la batterie, etc...)
   // Plein écran
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  // Chargement des thèmes avant de lancer l'application  
-  // await <Methode pour consulter le thème préféré de l'utilisateur>; 
+  // Chargement des thèmes avant de lancer l'application
+  // await <Methode pour consulter le thème préféré de l'utilisateur>;
   // pour éviter les erreurs de thème non chargé
   List<ThemeData> listtheme = await loadDataBeforeRunningApp();
   ThemeData lightTheme = listtheme[0];
-  ThemeData darkTheme = listtheme[1];   
+  ThemeData darkTheme = listtheme[1];
   runApp(MyApp(lightTheme: lightTheme, darkTheme: darkTheme));
 }
 
 //chargement des thèmes
 Future<List<ThemeData>> loadDataBeforeRunningApp() async {
   // Chargement des thèmes à partir des fichiers JSON
-  final lightThemeStr =await rootBundle.loadString('assets/theme/cds49_light.json');
-  final darkThemeStr = await rootBundle.loadString('assets/theme/cds49_night.json');
+  final lightThemeStr = await rootBundle.loadString(
+    'assets/theme/cds49_light.json',
+  );
+  final darkThemeStr = await rootBundle.loadString(
+    'assets/theme/cds49_night.json',
+  );
   // Vérification que les fichiers JSON sont valides
   final lightThemeJson = jsonDecode(lightThemeStr);
   final darkThemeJson = jsonDecode(darkThemeStr);
-  // Utilisation de json_theme KO depuis la denière mise à jour Flutter 
+  // Utilisation de json_theme KO depuis la denière mise à jour Flutter
   /*final lightTheme = ThemeDecoder.decodeThemeData(lightThemeJson,validate: true)!;
   final darkTheme = ThemeDecoder.decodeThemeData(darkThemeJson,validate: true)!;*/
-  
+
   // Décodage des thèmes à partir des fichiers JSON en manuel
   final lightTheme = GenererTheme.buildThemeFromJson(lightThemeJson);
   final darkTheme = GenererTheme.buildThemeFromJson(darkThemeJson);
@@ -55,8 +58,6 @@ class MyApp extends StatelessWidget {
   // Constructeur de la classe MyApp
   const MyApp({super.key, required this.lightTheme, required this.darkTheme});
 
-  
-  
   @override
   // Méthode de construction de l'application
   Widget build(BuildContext context) {
@@ -66,18 +67,18 @@ class MyApp extends StatelessWidget {
       // Construction de MaterialApp avec le thème approprié
       builder: (context, themeMode, _) {
         return MaterialApp(
-      title: 'CDS 49',     
-      debugShowMaterialGrid: false,
-      debugShowCheckedModeBanner: false,
-      // Application des thèmes clair et sombre
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      // Application du thème en fonction du mode
-      themeMode: themeMode,
-      home: const MyHomePage(title: 'CDS 49'),          
+          title: 'CDS 49',
+          debugShowMaterialGrid: false,
+          debugShowCheckedModeBanner: false,
+          // Application des thèmes clair et sombre
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          // Application du thème en fonction du mode
+          themeMode: themeMode,
+          home: const MyHomePage(title: 'CDS 49'),
         );
-    },
-   );
+      },
+    );
   }
 }
 
@@ -92,7 +93,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // Index de la page actuelle pour la navigation
-  int currentPageIndex = 0;    
+  int currentPageIndex = 0;
   Widget? currentBody;
 
   @override
@@ -106,18 +107,21 @@ class _MyHomePageState extends State<MyHomePage> {
       currentBody = nouvellePage;
     });
   }
+
   // Méthode pour empecher d'aller vers la page QCM si l'utilisateur n'est pas connecté
-   Future<void> _onDestinationSelected(int index) async {
+  Future<void> _onDestinationSelected(int index) async {
     if (index == 1) {
       final autorise = await GestionToken.isLogged();
       if (!autorise && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Veuillez vous connecter pour accéder au QCM')),
+          const SnackBar(
+            content: Text('Veuillez vous connecter pour accéder au QCM'),
+          ),
         );
         return;
       }
     }
-  // Mise à jour du corps de la page
+    // Mise à jour du corps de la page
     setState(() {
       currentPageIndex = index;
       switch (index) {
@@ -129,11 +133,14 @@ class _MyHomePageState extends State<MyHomePage> {
           break;
         case 2:
           currentBody = const ParamApp();
-          
+
           break;
         case 3:
-        currentBody = const ContactApp();
-        
+          currentBody = const ContactApp();
+
+        case 4:
+          currentBody = const scoreApp();
+          break;
         default:
           currentBody = const Center(child: Text('Page introuvable'));
       }
@@ -152,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context, snapshot) {
               // Empêche un affichage temporaire
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container(); 
+                return Container();
               }
               // Affiche le bouton de déconnexion si l'utilisateur est connecté
               if (snapshot.data == true) {
@@ -164,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.pop(context);
                     });
                   },
-                ); 
+                );
               }
               // Affiche le bouton de connexion si l'utilisateur n'est pas connecté
               return IconButton(
@@ -181,14 +188,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       // Affichage du corps de la page
-      body:  SafeArea(
-                child: currentBody ?? const Center(child: Text('Page introuvable')),
-              ),
+      body: SafeArea(
+        child: currentBody ?? const Center(child: Text('Page introuvable')),
+      ),
       // Appel de la barre de navigation en bas personnalisée
       bottomNavigationBar: BottomNavbar(
         currentIndex: currentPageIndex,
         onDestinationSelected: _onDestinationSelected,
-      ),       
+      ),
     );
   }
 }
