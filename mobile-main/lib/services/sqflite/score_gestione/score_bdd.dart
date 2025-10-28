@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:mobil_cds49/models/score.dart';
+import 'package:mobil_cds49/models/usr.dart';
+import 'package:mobil_cds49/services/api/gestionUsr/usr_api.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -20,13 +24,25 @@ class ScoreBDD {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(
+      path,
+      version: 2,
+      onCreate: _createDB,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          // Ajouter la colonne idEleve si elle n'existe pas
+          await db.execute('ALTER TABLE scores ADD COLUMN idEleve INTEGER');
+          db.execute('UPDATE scores SET idEleve = 8');
+        }
+      },
+    );
   }
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
       CREATE TABLE scores (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        idEleve INTEGER,
         dateResultat TEXT NOT NULL,
         scoreObtenu INTEGER NOT NULL,
         nbQuestions INTEGER NOT NULL
@@ -36,18 +52,24 @@ class ScoreBDD {
 
   Future<void> insertScore(Score score) async {
     final db = await instance.database;
-
+    User? Eleve = await UsrApi.infoUser();
     await db.insert('scores', {
       'dateResultat': score.dateResultat.toIso8601String(),
       'scoreObtenu': score.scoreObtenu,
       'nbQuestions': score.nbQuestions,
+      'idEleve': Eleve?.ideleve,
     });
   }
 
   Future<List<Score>> fetchAllScores() async {
     final db = await instance.database;
-
-    final result = await db.query('scores', orderBy: 'dateResultat DESC');
+    User? Eleve = await UsrApi.infoUser();
+    final result = await db.query(
+      'scores',
+      where: "idEleve = ?",
+      whereArgs: [Eleve?.ideleve],
+      orderBy: 'dateResultat DESC',
+    );
 
     return result
         .map(
@@ -60,13 +82,41 @@ class ScoreBDD {
         .toList();
   }
 
+  Future<List<Score>> getTop3(DateTime start, DateTime end) async {
+    final db = await instance.database;
+    User? Eleve = await UsrApi.infoUser();
+    final result = await db.rawQuery(
+      '''
+  SELECT * FROM scores
+  WHERE dateResultat BETWEEN ? AND ? AND idEleve = ?
+  ORDER BY (scoreObtenu * 40.0 / nbQuestions) DESC
+  LIMIT 3
+''',
+      [start.toIso8601String(), end.toIso8601String(), Eleve?.ideleve],
+    );
+
+    return result
+        .map(
+          (json) => Score(
+            dateResultat: DateTime.parse(json["dateResultat"] as String),
+            scoreObtenu: json["scoreObtenu"] as int,
+            nbQuestions: json["nbQuestions"] as int,
+          ),
+        )
+        .toList();
+  }
+
   Future<List<Score>> getScoreOfPeriod(DateTime start, DateTime end) async {
     final db = await instance.database;
-
+    User? Eleve = await UsrApi.infoUser();
     final result = await db.query(
       "scores",
-      where: "dateResultat BETWEEN ? ABD ?",
-      whereArgs: [start.toIso8601String(), end.toIso8601String()],
+      where: "dateResultat BETWEEN ? AND ? AND idEleve = ?",
+      whereArgs: [
+        start.toIso8601String(),
+        end.toIso8601String(),
+        Eleve?.ideleve,
+      ],
       orderBy: 'dateResultat DESC',
     );
 

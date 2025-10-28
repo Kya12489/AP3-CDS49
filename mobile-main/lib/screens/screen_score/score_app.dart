@@ -14,7 +14,14 @@ class _scoreAppState extends State<scoreApp> {
   int score = 0;
   int nbQuestions = 0;
   int scale = 0;
+  int moyenne = 0;
+  DateTime start = DateTime(2025);
+  DateTime end = DateTime.now();
+
+  String filtreDate = "Tous";
   List<Score> scoresListe = [];
+  List<Score> scoreInTop3 = [];
+
   void initState() {
     super.initState();
     _loadScores();
@@ -23,159 +30,129 @@ class _scoreAppState extends State<scoreApp> {
   Future<void> _loadScores() async {
     // Charger depuis votre base de données
     List<Score> loadedScore = await ScoreBDD.instance.fetchAllScores();
+    List<Score> loadedTopScore = await ScoreBDD.instance.getTop3(start, end);
+
     setState(() {
       scoresListe = loadedScore;
+      scoreInTop3 = loadedTopScore;
+      SetMoyenne();
+    });
+  }
+
+  void SetMoyenne() {
+    moyenne = 0;
+    int cpt = 0;
+    for (Score score in scoresListe) {
+      moyenne += scale == 0 ? score.getNoteOn(40) : score.getNoteOn(scale);
+      cpt++;
+    }
+    setState(() {
+      moyenne ~/= cpt;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gestion des Scores'),
-        backgroundColor: Colors.blue,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            // Formulaire d'ajout de score
-            Card(
-              elevation: 3,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    // Ligne avec les 2 TextField
-                    Row(
-                      children: <Widget>[
-                        // TextField Score avec Expanded
-                        Expanded(
-                          flex: 1,
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              labelText: 'Score',
-                              border: OutlineInputBorder(),
-                            ),
-                            keyboardType: TextInputType.number,
-                            onChanged: (value) {
-                              score = int.tryParse(value) ?? 0;
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 10), // Espacement
-                        // TextField Nombre de questions avec Expanded
-                        Expanded(
-                          flex: 2,
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              labelText: 'Nombre de questions',
-                              border: OutlineInputBorder(),
-                            ),
-                            keyboardType: TextInputType.number,
-                            onChanged: (value) {
-                              nbQuestions = int.tryParse(value) ?? 0;
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    // Bouton Ajouter en dessous
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          if (score > 0 && nbQuestions > 0) {
-                            final newScore = Score(
-                              dateResultat: DateTime.now(),
-                              scoreObtenu: score,
-                              nbQuestions: nbQuestions,
-                            );
-                            ScoreBDD.instance.insertScore(newScore);
-
-                            // Afficher un message de confirmation
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Score ajouté avec succès !'),
-                                backgroundColor: Colors.green,
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-
-                            // Recharger la liste (forcer le setState)
-                            setState(() {
-                              scoresListe.insert(0, newScore);
-                            });
-                          } else {
-                            // Afficher une erreur si les champs sont vides
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'Veuillez remplir tous les champs',
-                                ),
-                                backgroundColor: Colors.red,
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                          }
-                        },
-                        icon: const Icon(Icons.add),
-                        label: const Text('Ajouter le score'),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(16),
-                        ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          //affichage du score total moyen sur la periode et sur l'echelle choisie
+          Card(
+            elevation: 3,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  //combo box pour choisir l'echelle
+                  const Text('Échelle: '),
+                  DropdownButton<int>(
+                    value: scale,
+                    items: const [
+                      DropdownMenuItem(value: 0, child: Text('Original')),
+                      DropdownMenuItem(value: 10, child: Text('Sur 10')),
+                      DropdownMenuItem(value: 20, child: Text('Sur 20')),
+                      DropdownMenuItem(value: 30, child: Text('Sur 30')),
+                      DropdownMenuItem(value: 40, child: Text('Sur 40')),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        scale = value ?? 0;
+                        SetMoyenne();
+                      });
+                    },
+                  ),
+                  //tri par perdiode (dernier jour, semaine, mois)
+                  const Text('Période : '),
+                  DropdownButton<String>(
+                    value: filtreDate,
+                    alignment: AlignmentDirectional
+                        .center, // ← Centrer tout le contenu
+                    items: const [
+                      DropdownMenuItem(value: 'Tous', child: Text('Tous')),
+                      DropdownMenuItem(
+                        value: 'Jour',
+                        child: Text('Dernier jour'),
                       ),
-                    ),
-                  ],
-                ),
+                      DropdownMenuItem(
+                        value: 'Semaine',
+                        child: Text('Dernière semaine'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Mois',
+                        child: Text('Dernier mois'),
+                      ),
+                    ],
+                    onChanged: (value) async {
+                      // Filtrer les scores selon la période choisie
+                      DateTime now = DateTime.now();
+                      if (value == 'Jour') {
+                        start = now.subtract(const Duration(days: 1));
+                      } else if (value == 'Semaine') {
+                        start = now.subtract(const Duration(days: 7));
+                      } else if (value == 'Mois') {
+                        start = DateTime(now.year, now.month - 1, now.day);
+                      } else {
+                        start = DateTime(2000);
+                      }
+                      List<Score> filteredScores = await ScoreBDD.instance
+                          .getScoreOfPeriod(start, end);
+                      List<Score> filteredTopScores = await ScoreBDD.instance
+                          .getTop3(start, end);
+                      setState(() {
+                        filtreDate = value ?? "Tous";
+                        scoreInTop3 = filteredTopScores;
+                        scoresListe = filteredScores;
+                        SetMoyenne();
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
-            Card(
-              elevation: 3,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    //combo box pour choisir l'echelle
-                    Row(
-                      children: [
-                        const Text('Échelle: '),
-                        const SizedBox(width: 20),
-                        DropdownButton<int>(
-                          value: scale,
-                          items: const [
-                            DropdownMenuItem(value: 0, child: Text('Original')),
-                            DropdownMenuItem(value: 10, child: Text('Sur 10')),
-                            DropdownMenuItem(value: 20, child: Text('Sur 20')),
-                            DropdownMenuItem(value: 30, child: Text('Sur 30')),
-                            DropdownMenuItem(value: 40, child: Text('Sur 40')),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              scale = value ?? 0;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+          ),
+          Card(
+            elevation: 3,
+            child: Padding(
+              padding: EdgeInsetsGeometry.all(16),
+              child: Text(
+                "Votre score moyen est : ${scale == 0 ? "$moyenne/40" : "$moyenne/$scale"}",
               ),
             ),
-            const SizedBox(height: 20),
-            // Titre de la liste
-            const Text(
-              'Historique des scores',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            // Liste des scores
-            Expanded(
-              child: ScoresListview(scale: scale, scores: scoresListe),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+
+          // Titre de la liste
+          const Text(
+            'Historique des scores',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          // Liste des scores
+          Expanded(
+            child: ScoresListview(scale: scale, scores: scoresListe),
+          ),
+        ],
       ),
     );
   }
