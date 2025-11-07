@@ -17,7 +17,7 @@ namespace AP3_AppliC
             ApplicationConfiguration.Initialize();
             // Connexion à la BD
             Modele.Connexion.init();
-            Application.Run(new FormConnexion());
+            Application.Run(new FormMenu());
 
             
         }

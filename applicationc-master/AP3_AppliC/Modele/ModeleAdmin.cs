@@ -38,7 +38,7 @@ namespace AP3_AppliC.Modele
             return vretour;
         }
         
-        public static Admin? RecupAdmin(string login, string password)
+        public static Admin? AuthentificationAdmin(string login, string password)
         {
             // vérifie si le login et le password correspondent
             bool passwordHash = BC.Verify(password, Connexion.MonModel.Admins.First().PasswordAdmin.ToString());

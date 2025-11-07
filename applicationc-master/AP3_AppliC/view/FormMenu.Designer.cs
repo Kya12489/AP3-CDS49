@@ -28,6 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             menuStrip1 = new MenuStrip();
             gestionDesElèvesToolStripMenuItem = new ToolStripMenuItem();
             listeToolStripMenuItem = new ToolStripMenuItem();
@@ -40,8 +44,12 @@
             listeToolStripMenuItem3 = new ToolStripMenuItem();
             ajouterToolStripMenuItem = new ToolStripMenuItem();
             quitterToolStripMenuItem = new ToolStripMenuItem();
+            deconnexionToolStripMenuItem = new ToolStripMenuItem();
             panelPrincipal = new Panel();
+            chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             menuStrip1.SuspendLayout();
+            panelPrincipal.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)chart1).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -50,7 +58,7 @@
             menuStrip1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.ImeMode = ImeMode.NoControl;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { gestionDesElèvesToolStripMenuItem, gestionDesConducteursToolStripMenuItem, gestionDesForfaitsToolStripMenuItem, quitterToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { gestionDesElèvesToolStripMenuItem, gestionDesConducteursToolStripMenuItem, gestionDesForfaitsToolStripMenuItem, quitterToolStripMenuItem, deconnexionToolStripMenuItem });
             menuStrip1.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
@@ -93,21 +101,21 @@
             // listeToolStripMenuItem1
             // 
             listeToolStripMenuItem1.Name = "listeToolStripMenuItem1";
-            listeToolStripMenuItem1.Size = new Size(180, 24);
+            listeToolStripMenuItem1.Size = new Size(159, 24);
             listeToolStripMenuItem1.Text = "Liste";
             listeToolStripMenuItem1.Click += listeToolStripMenuItem1_Click;
             // 
             // ajoutToolStripMenuItem
             // 
             ajoutToolStripMenuItem.Name = "ajoutToolStripMenuItem";
-            ajoutToolStripMenuItem.Size = new Size(180, 24);
+            ajoutToolStripMenuItem.Size = new Size(159, 24);
             ajoutToolStripMenuItem.Text = "Ajout";
             ajoutToolStripMenuItem.Click += ajoutToolStripMenuItem_Click;
             // 
             // modificationToolStripMenuItem
             // 
             modificationToolStripMenuItem.Name = "modificationToolStripMenuItem";
-            modificationToolStripMenuItem.Size = new Size(180, 24);
+            modificationToolStripMenuItem.Size = new Size(159, 24);
             modificationToolStripMenuItem.Text = "Modification";
             modificationToolStripMenuItem.Click += modificationToolStripMenuItem_Click;
             // 
@@ -139,17 +147,46 @@
             quitterToolStripMenuItem.Text = "Quitter";
             quitterToolStripMenuItem.Click += qUITTERToolStripMenuItem_Click;
             // 
+            // deconnexionToolStripMenuItem
+            // 
+            deconnexionToolStripMenuItem.Name = "deconnexionToolStripMenuItem";
+            deconnexionToolStripMenuItem.Size = new Size(103, 23);
+            deconnexionToolStripMenuItem.Text = "Déconnexion";
+            deconnexionToolStripMenuItem.Click += deconnexionToolStripMenuItem_Click;
+            // 
             // panelPrincipal
             // 
             panelPrincipal.BackColor = Color.White;
             panelPrincipal.BackgroundImage = Properties.Resources.logo_cds49;
             panelPrincipal.BackgroundImageLayout = ImageLayout.Zoom;
             panelPrincipal.BorderStyle = BorderStyle.Fixed3D;
+            panelPrincipal.Controls.Add(chart1);
             panelPrincipal.Location = new Point(0, 24);
             panelPrincipal.Margin = new Padding(4);
             panelPrincipal.Name = "panelPrincipal";
             panelPrincipal.Size = new Size(934, 495);
             panelPrincipal.TabIndex = 1;
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            legend1.Title = "nb élèves";
+            chart1.Legends.Add(legend1);
+            chart1.Location = new Point(53, 64);
+            chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series1.YValuesPerPoint = 4;
+            chart1.Series.Add(series1);
+            chart1.Size = new Size(300, 300);
+            chart1.TabIndex = 0;
+            chart1.Text = "chart1";
+            title1.Name = "Title1";
+            title1.Text = "Nombre d’élèves inscrits par mois sur les 12 derniers mois";
+            chart1.Titles.Add(title1);
             // 
             // FormMenu
             // 
@@ -166,6 +203,8 @@
             Load += FormMenu_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            panelPrincipal.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)chart1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -185,5 +224,8 @@
         private ToolStripMenuItem listeToolStripMenuItem3;
         private ToolStripMenuItem modificationToolStripMenuItem;
         private ToolStripMenuItem ajouterToolStripMenuItem;
+        private ToolStripMenuItem deconnexionToolStripMenuItem;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        //private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }

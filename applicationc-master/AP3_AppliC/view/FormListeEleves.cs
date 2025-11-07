@@ -1,4 +1,5 @@
 ﻿using AP3_AppliC.Entities;
+using AP3_AppliC.Modele;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,10 @@ namespace AP3_AppliC
         public FormListeEleves()
         {
             InitializeComponent();
+
+            tbNomEleve.TextChanged += RechercheTempsReel;
+            tbPrenomEleve.TextChanged += RechercheTempsReel;
+
         }
 
         private void FormListeEleves_Load(object sender, EventArgs e)
@@ -27,7 +32,7 @@ namespace AP3_AppliC
                 x.Prenomeleve,
                 x.Emaileleve,
                 x.Datenaissanceeleve
-            }).OrderBy(x => x.Nomeleve);
+            }).OrderBy(x => x.Ideleve);
 
 
             dgvEleves.DataSource = bsEleves;
@@ -37,7 +42,6 @@ namespace AP3_AppliC
             dgvEleves.Columns[3].HeaderText = "Email";
             dgvEleves.Columns[4].HeaderText = "Date de Naissance";
             dgvForfaits.Visible = false;
-
         }
 
         private void voirSesForfaitsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -101,6 +105,30 @@ namespace AP3_AppliC
             F.Show();
         }
 
+        private void RechercheTempsReel(object sender, EventArgs e)
+        {
+            try
+            {
+                string nomSaisi = tbNomEleve.Text;
+                string prenomSaisi = tbPrenomEleve.Text;
+
+
+                bsEleves.DataSource = Modele.ModeleEleve.RechercherEleves(nomSaisi, prenomSaisi).Select(static x => new
+                {
+                    x.Ideleve,
+                    x.Nomeleve,
+                    x.Prenomeleve,
+                    x.Emaileleve,
+                    x.Datenaissanceeleve
+                }).OrderBy(x => x.Ideleve);
+
+                dgvEleves.DataSource = bsEleves;
+            }
+            catch
+            {
+
+            }
+        }
 
     }
 }

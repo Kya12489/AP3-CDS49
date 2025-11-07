@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AP3_AppliC.view;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -70,12 +71,19 @@ namespace AP3_AppliC
 
         private void inscriptionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            throw new ArgumentException("Cette fonctionnalité n'est pas encore opérationnelle");
+            openChildForm(new FormInscriptionEleve());
         }
 
         private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openChildForm((new FormAjoutForfaits()));
         }
+
+        private void deconnexionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new FormConnexion().Show();
+        }
+
     }
 }

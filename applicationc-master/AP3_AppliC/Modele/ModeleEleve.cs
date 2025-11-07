@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using BC = BCrypt.Net.BCrypt;
+
 
 namespace AP3_AppliC.Modele
 {
@@ -39,7 +43,7 @@ namespace AP3_AppliC.Modele
         }
 
         /// <summary>
-        /// Liste les forfaits de l'élève passé en paramètre
+        /// Liste les forfaits de l'élève passé en paramètre 
         /// </summary>
         /// <param name="idE"></param>
         /// <returns></returns>
@@ -79,9 +83,109 @@ namespace AP3_AppliC.Modele
             catch (Exception ex)
             {
                 vretour = false;
-               // MessageBox.Show(ex.Message.ToString());
+                // MessageBox.Show(ex.Message.ToString());
             }
             return vretour;
         }
+
+        public static List<Eleve> RechercherEleves(string nom = null, string prenom = null)
+        {
+            List<Eleve> tousLesEleves = Modele.Connexion.MonModel.Eleves.ToList();
+            List<Eleve> elevesCorrespondants = tousLesEleves;
+
+            if (!string.IsNullOrEmpty(nom))
+            {
+                string nomRecherche = nom.Trim().ToLower();
+
+                elevesCorrespondants = elevesCorrespondants
+                    .Where(eleve => eleve.Nomeleve.ToLower().Contains(nomRecherche))
+                    .ToList();
+            }
+
+            if (!string.IsNullOrEmpty(prenom))
+            {
+                string prenomRecherche = prenom.Trim().ToLower();
+
+                elevesCorrespondants = elevesCorrespondants
+                    .Where(eleve => eleve.Prenomeleve.ToLower().Contains(prenomRecherche))
+                    .ToList();
+            }
+
+            return elevesCorrespondants;
+        }
+
+        public static bool AjoutEleve(string nom, string prenom, string email, string mdp, DateOnly dateNaissance, string numTel)
+        {
+            Eleve unE;
+            bool vretour = true;
+            try
+            {
+                // ajout dans la table Eleve
+                unE = new Eleve();
+                string mdpHash = BC.HashPassword(mdp);
+
+                unE.Nomeleve = nom;
+                unE.Prenomeleve = prenom;
+                unE.Emaileleve = email;
+                unE.Motpasseeleve = mdpHash;
+                unE.Datenaissanceeleve = dateNaissance;
+                unE.Numeroteleleve = numTel;
+
+                Modele.Connexion.MonModel.Eleves.Add(unE);
+                Modele.Connexion.MonModel.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                vretour = false;
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return vretour;
+        }
+
+        #region recherche global
+        public static List<Eleve> RechercherElevesGlobal(string recherche)
+        {
+            if (string.IsNullOrEmpty(recherche))
+            {
+                return listeEleves();
+            }
+
+            List<Eleve> tousLesEleves = Modele.Connexion.MonModel.Eleves.ToList();
+
+            string texteRecherche = recherche.Trim().ToLower();
+
+            List<Eleve> elevesCorrespondants = tousLesEleves
+                .Where(eleve => eleve.Nomeleve.ToLower().Contains(texteRecherche) || eleve.Prenomeleve.ToLower().Contains(texteRecherche))
+                .ToList();
+
+            return elevesCorrespondants;
+        }
+        #endregion
+
+        //public static List<Inscrire> listeInscri()
+        //{
+        //    return Modele.Connexion.MonModel.Inscrires.ToList();
+        //}
+
+        //public static List<(string, int)> nbEleveParMois()
+        //{
+        //    List<string> lesMois = new List<string> {
+        //        "Janvier","Fevrier","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Decembre"
+        //    };
+        //    // SELECT MONTHNAME(dateinscription), COUNT(ideleve) FROM inscrire GROUP BY MONTHNAME(dateinscription);
+        //    List<(string, int)> nbEleveMois = new List<(string, int)>();
+        //    foreach (string mois in lesMois) {
+        //        nbEleveMois.Add((mois, 0));
+        //    }
+        //    foreach (Inscrire insc in listeInscri()) 
+        //    { 
+        //        int numMois = Convert.ToInt32(insc.Dateinscription.ToString().Split("-")[1])-1;
+        //        nbEleveMois[lesMois[numMois]] ++;
+        //    }
+
+
+        //    return nbEleveMois;
+        //}
     }
 }

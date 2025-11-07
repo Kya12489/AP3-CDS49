@@ -29,7 +29,7 @@ namespace AP3_AppliC.view
 
             string identifiant = tbLogin.Text.Trim();
             string motDePasse = tbPassword.Text;
-            Admin admin = ModeleAdmin.RecupAdmin(identifiant, motDePasse);
+            Admin admin = ModeleAdmin.AuthentificationAdmin(identifiant, motDePasse);
 
             if (string.IsNullOrEmpty(identifiant) || string.IsNullOrEmpty(motDePasse))
             {
@@ -50,6 +50,7 @@ namespace AP3_AppliC.view
                 MessageBox.Show("Identifiant ou mot de passe incorrect.");
             }
 
+            #region Ajout admin
             /*
              bool ajout = Modele.ModeleAdmin.AjoutAdmin("Lhermite", "Bernard", "BernardLhermite64", "123546sdkofJI?");
 
@@ -62,6 +63,7 @@ namespace AP3_AppliC.view
                  MessageBox.Show("Erreur lors de l'ajout");
              }
             */
+            #endregion
         }
 
     }
