@@ -38,10 +38,6 @@ namespace AP3_AppliC
             formEnfant.Show();
         }
 
-        private void qUITTERToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
 
         private void listeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -85,5 +81,19 @@ namespace AP3_AppliC
             new FormConnexion().Show();
         }
 
+        private void quitterToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void listeToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            openChildForm((new FormListeVehicules()));
+        }
+
+        private void ajouterToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            openChildForm((new FormAjoutVehicules()));
+        }
     }
 }

@@ -52,9 +52,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(70, 48);
+            label1.Location = new Point(61, 36);
             label1.Name = "label1";
-            label1.Size = new Size(177, 31);
+            label1.Size = new Size(145, 25);
             label1.TabIndex = 0;
             label1.Text = "Liste des Elèves";
             // 
@@ -65,14 +65,15 @@
             dgvEleves.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvEleves.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvEleves.ContextMenuStrip = contextMenuStrip1;
-            dgvEleves.Location = new Point(70, 107);
+            dgvEleves.Location = new Point(61, 80);
+            dgvEleves.Margin = new Padding(3, 2, 3, 2);
             dgvEleves.MultiSelect = false;
             dgvEleves.Name = "dgvEleves";
             dgvEleves.ReadOnly = true;
             dgvEleves.RightToLeft = RightToLeft.No;
             dgvEleves.RowHeadersVisible = false;
             dgvEleves.RowHeadersWidth = 51;
-            dgvEleves.Size = new Size(880, 373);
+            dgvEleves.Size = new Size(770, 280);
             dgvEleves.TabIndex = 1;
             dgvEleves.CellContentClick += dgvEleves_CellContentClick;
             dgvEleves.CellMouseClick += dgvEleves_CellMouseClick;
@@ -83,19 +84,19 @@
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { voirSesForfaitsToolStripMenuItem, attribuerUnForfaitToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(203, 52);
+            contextMenuStrip1.Size = new Size(174, 48);
             // 
             // voirSesForfaitsToolStripMenuItem
             // 
             voirSesForfaitsToolStripMenuItem.Name = "voirSesForfaitsToolStripMenuItem";
-            voirSesForfaitsToolStripMenuItem.Size = new Size(202, 24);
+            voirSesForfaitsToolStripMenuItem.Size = new Size(173, 22);
             voirSesForfaitsToolStripMenuItem.Text = "Voir ses forfaits";
             voirSesForfaitsToolStripMenuItem.Click += voirSesForfaitsToolStripMenuItem_Click;
             // 
             // attribuerUnForfaitToolStripMenuItem
             // 
             attribuerUnForfaitToolStripMenuItem.Name = "attribuerUnForfaitToolStripMenuItem";
-            attribuerUnForfaitToolStripMenuItem.Size = new Size(202, 24);
+            attribuerUnForfaitToolStripMenuItem.Size = new Size(173, 22);
             attribuerUnForfaitToolStripMenuItem.Text = "Attribuer un forfait";
             attribuerUnForfaitToolStripMenuItem.Click += attribuerUnForfaitToolStripMenuItem_Click;
             // 
@@ -105,20 +106,21 @@
             dgvForfaits.AllowUserToDeleteRows = false;
             dgvForfaits.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvForfaits.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvForfaits.Location = new Point(634, 177);
+            dgvForfaits.Location = new Point(555, 133);
+            dgvForfaits.Margin = new Padding(3, 2, 3, 2);
             dgvForfaits.Name = "dgvForfaits";
             dgvForfaits.ReadOnly = true;
             dgvForfaits.RowHeadersWidth = 51;
-            dgvForfaits.Size = new Size(399, 188);
+            dgvForfaits.Size = new Size(349, 141);
             dgvForfaits.TabIndex = 2;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(70, 513);
+            label2.Location = new Point(61, 385);
             label2.Name = "label2";
-            label2.Size = new Size(680, 28);
+            label2.Size = new Size(541, 21);
             label2.TabIndex = 3;
             label2.Text = "click droit sur l'élève sélectionné pour voir ses forfaits ou en attribuer un.";
             // 
@@ -128,9 +130,10 @@
             btnFermer.FlatStyle = FlatStyle.Popup;
             btnFermer.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnFermer.ForeColor = Color.White;
-            btnFermer.Location = new Point(815, 499);
+            btnFermer.Location = new Point(713, 374);
+            btnFermer.Margin = new Padding(3, 2, 3, 2);
             btnFermer.Name = "btnFermer";
-            btnFermer.Size = new Size(135, 57);
+            btnFermer.Size = new Size(118, 43);
             btnFermer.TabIndex = 4;
             btnFermer.Text = "FERMER";
             btnFermer.UseVisualStyleBackColor = false;
@@ -138,24 +141,28 @@
             // 
             // tbNomEleve
             // 
-            tbNomEleve.Location = new Point(501, 54);
+            tbNomEleve.Location = new Point(438, 40);
+            tbNomEleve.Margin = new Padding(3, 2, 3, 2);
             tbNomEleve.Name = "tbNomEleve";
-            tbNomEleve.Size = new Size(125, 27);
+            tbNomEleve.PlaceholderText = "Nom";
+            tbNomEleve.Size = new Size(110, 23);
             tbNomEleve.TabIndex = 5;
             // 
             // tbPrenomEleve
             // 
-            tbPrenomEleve.Location = new Point(708, 54);
+            tbPrenomEleve.Location = new Point(620, 40);
+            tbPrenomEleve.Margin = new Padding(3, 2, 3, 2);
             tbPrenomEleve.Name = "tbPrenomEleve";
-            tbPrenomEleve.Size = new Size(125, 27);
+            tbPrenomEleve.PlaceholderText = "Prénom";
+            tbPrenomEleve.Size = new Size(110, 23);
             tbPrenomEleve.TabIndex = 6;
             // 
             // FormListeEleves
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1045, 591);
+            ClientSize = new Size(914, 443);
             Controls.Add(tbPrenomEleve);
             Controls.Add(tbNomEleve);
             Controls.Add(btnFermer);
@@ -164,6 +171,7 @@
             Controls.Add(dgvEleves);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FormListeEleves";
             Text = "Liste des Elèves";
             Load += FormListeEleves_Load;

@@ -43,8 +43,11 @@
             gestionDesForfaitsToolStripMenuItem = new ToolStripMenuItem();
             listeToolStripMenuItem3 = new ToolStripMenuItem();
             ajouterToolStripMenuItem = new ToolStripMenuItem();
-            quitterToolStripMenuItem = new ToolStripMenuItem();
+            vehiculeToolStripMenuItem = new ToolStripMenuItem();
+            listeToolStripMenuItem2 = new ToolStripMenuItem();
+            ajouterToolStripMenuItem1 = new ToolStripMenuItem();
             deconnexionToolStripMenuItem = new ToolStripMenuItem();
+            quitterToolStripMenuItem1 = new ToolStripMenuItem();
             panelPrincipal = new Panel();
             chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             menuStrip1.SuspendLayout();
@@ -58,7 +61,7 @@
             menuStrip1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.ImeMode = ImeMode.NoControl;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { gestionDesElèvesToolStripMenuItem, gestionDesConducteursToolStripMenuItem, gestionDesForfaitsToolStripMenuItem, quitterToolStripMenuItem, deconnexionToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { gestionDesElèvesToolStripMenuItem, gestionDesConducteursToolStripMenuItem, gestionDesForfaitsToolStripMenuItem, vehiculeToolStripMenuItem, deconnexionToolStripMenuItem, quitterToolStripMenuItem1 });
             menuStrip1.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
@@ -140,12 +143,26 @@
             ajouterToolStripMenuItem.Text = "Ajouter";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
-            // quitterToolStripMenuItem
+            // vehiculeToolStripMenuItem
             // 
-            quitterToolStripMenuItem.Name = "quitterToolStripMenuItem";
-            quitterToolStripMenuItem.Size = new Size(66, 23);
-            quitterToolStripMenuItem.Text = "Quitter";
-            quitterToolStripMenuItem.Click += qUITTERToolStripMenuItem_Click;
+            vehiculeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { listeToolStripMenuItem2, ajouterToolStripMenuItem1 });
+            vehiculeToolStripMenuItem.Name = "vehiculeToolStripMenuItem";
+            vehiculeToolStripMenuItem.Size = new Size(157, 23);
+            vehiculeToolStripMenuItem.Text = "Gestion des Véhicules";
+            // 
+            // listeToolStripMenuItem2
+            // 
+            listeToolStripMenuItem2.Name = "listeToolStripMenuItem2";
+            listeToolStripMenuItem2.Size = new Size(180, 24);
+            listeToolStripMenuItem2.Text = "Liste";
+            listeToolStripMenuItem2.Click += listeToolStripMenuItem2_Click;
+            // 
+            // ajouterToolStripMenuItem1
+            // 
+            ajouterToolStripMenuItem1.Name = "ajouterToolStripMenuItem1";
+            ajouterToolStripMenuItem1.Size = new Size(180, 24);
+            ajouterToolStripMenuItem1.Text = "Ajouter";
+            ajouterToolStripMenuItem1.Click += ajouterToolStripMenuItem1_Click;
             // 
             // deconnexionToolStripMenuItem
             // 
@@ -153,6 +170,13 @@
             deconnexionToolStripMenuItem.Size = new Size(103, 23);
             deconnexionToolStripMenuItem.Text = "Déconnexion";
             deconnexionToolStripMenuItem.Click += deconnexionToolStripMenuItem_Click;
+            // 
+            // quitterToolStripMenuItem1
+            // 
+            quitterToolStripMenuItem1.Name = "quitterToolStripMenuItem1";
+            quitterToolStripMenuItem1.Size = new Size(66, 23);
+            quitterToolStripMenuItem1.Text = "Quitter";
+            quitterToolStripMenuItem1.Click += quitterToolStripMenuItem1_Click;
             // 
             // panelPrincipal
             // 
@@ -218,7 +242,7 @@
         private ToolStripMenuItem gestionDesConducteursToolStripMenuItem;
         private ToolStripMenuItem listeToolStripMenuItem1;
         private ToolStripMenuItem ajoutToolStripMenuItem;
-        private ToolStripMenuItem quitterToolStripMenuItem;
+        private ToolStripMenuItem vehiculeToolStripMenuItem;
         private Panel panelPrincipal;
         private ToolStripMenuItem gestionDesForfaitsToolStripMenuItem;
         private ToolStripMenuItem listeToolStripMenuItem3;
@@ -226,6 +250,9 @@
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem deconnexionToolStripMenuItem;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private ToolStripMenuItem quitterToolStripMenuItem1;
+        private ToolStripMenuItem listeToolStripMenuItem2;
+        private ToolStripMenuItem ajouterToolStripMenuItem1;
         //private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
