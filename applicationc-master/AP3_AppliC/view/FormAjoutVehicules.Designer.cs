@@ -64,6 +64,7 @@
             tbImmatriculation.Size = new Size(129, 27);
             tbImmatriculation.TabIndex = 3;
             tbImmatriculation.TextChanged += tbImmatriculation_TextChanged;
+            tbImmatriculation.KeyPress += tbImmatriculation_KeyPress;
             // 
             // tbDesignation
             // 

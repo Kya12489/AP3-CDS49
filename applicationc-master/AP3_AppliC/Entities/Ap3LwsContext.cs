@@ -344,6 +344,7 @@ public partial class Ap3LwsContext : DbContext
             entity.HasIndex(e => e.Immatriculation, "immatriculation").IsUnique();
 
             entity.Property(e => e.Idvehicule).HasColumnName("idvehicule");
+            entity.Property(e => e.Archiver).HasColumnName("archiver");
             entity.Property(e => e.Designation)
                 .HasMaxLength(128)
                 .HasColumnName("designation");

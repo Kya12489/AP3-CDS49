@@ -9,11 +9,17 @@ namespace AP3_AppliC.Modele
 {
     public class ModeleVehicule
     {
-        public static List<Entities.Vehicule> listeVehicules()
+        public static List<Entities.Vehicule> listeTousVehicules()
         {
             return Modele.Connexion.MonModel.Vehicules.ToList();
         }
 
+        public static List<Entities.Vehicule> listeVehicules()
+        {
+            return Modele.Connexion.MonModel.Vehicules
+                .Where(v => v.Archiver == false)  // Filtrer les non-archivés
+                .ToList();
+        }
         public static bool AjoutVehicule(int ?nbPassagers, string immatriculation, string ?designation, string mode)
         {
             Vehicule unV;
@@ -36,6 +42,8 @@ namespace AP3_AppliC.Modele
                     unV.Manuel = true;
                 }
 
+                unV.Archiver = false;
+
                 Modele.Connexion.MonModel.Vehicules.Add(unV);
                 Modele.Connexion.MonModel.SaveChanges();
 
@@ -57,6 +65,29 @@ namespace AP3_AppliC.Modele
             }
             catch
             {
+                return false;
+            }
+        }
+
+        public static bool ArchiverVehicule(int idVehicule)
+        {
+            try
+            {
+                Vehicule vehicule = Modele.Connexion.MonModel.Vehicules
+                    .FirstOrDefault(v => v.Idvehicule == idVehicule);
+
+                if (vehicule != null)
+                {
+                    vehicule.Archiver = true;  // Archiver (1)
+                    Modele.Connexion.MonModel.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
                 return false;
             }
         }
