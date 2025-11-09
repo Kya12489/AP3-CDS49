@@ -63,6 +63,7 @@
             tbImmatriculation.PlaceholderText = "Immatriculation";
             tbImmatriculation.Size = new Size(129, 27);
             tbImmatriculation.TabIndex = 3;
+            tbImmatriculation.TextChanged += tbImmatriculation_TextChanged;
             // 
             // tbDesignation
             // 
@@ -90,6 +91,7 @@
             btAjouter.TabIndex = 13;
             btAjouter.Text = "Ajouter";
             btAjouter.UseVisualStyleBackColor = true;
+            btAjouter.Click += btAjouter_Click;
             // 
             // FormAjoutVehicules
             // 

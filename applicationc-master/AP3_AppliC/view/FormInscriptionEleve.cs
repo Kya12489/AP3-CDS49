@@ -34,7 +34,7 @@ namespace AP3_AppliC.view
             }
             else
             {
-                MessageBox.Show("Erreur lors de l'ajout");
+                MessageBox.Show("Erreur lors de l'inscription");
             }
         }
     }

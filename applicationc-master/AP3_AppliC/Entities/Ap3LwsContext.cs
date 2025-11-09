@@ -18,6 +18,8 @@ public partial class Ap3LwsContext : DbContext
 
     public virtual DbSet<Admin> Admins { get; set; }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Conduire> Conduires { get; set; }
 
     public virtual DbSet<Eleve> Eleves { get; set; }
@@ -71,6 +73,16 @@ public partial class Ap3LwsContext : DbContext
                 .HasColumnName("prenomAdmin");
         });
 
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.HasKey(e => e.IdCategorie).HasName("PRIMARY");
+
+            entity.Property(e => e.IdCategorie).HasColumnName("idCategorie");
+            entity.Property(e => e.LibelleCategorie)
+                .HasMaxLength(50)
+                .HasColumnName("libelleCategorie");
+        });
+
         modelBuilder.Entity<Conduire>(entity =>
         {
             entity.HasKey(e => new { e.Ideleve, e.Idvehicule, e.Idmoniteur, e.Heuredebut })
@@ -94,6 +106,9 @@ public partial class Ap3LwsContext : DbContext
             entity.Property(e => e.Heuredebut)
                 .HasColumnType("datetime")
                 .HasColumnName("heuredebut");
+            entity.Property(e => e.DureeMinutes)
+                .HasDefaultValueSql("'60'")
+                .HasColumnName("duree_minutes");
             entity.Property(e => e.Lieurdv)
                 .HasMaxLength(128)
                 .HasColumnName("lieurdv");
@@ -123,11 +138,11 @@ public partial class Ap3LwsContext : DbContext
                 .HasCharSet("utf8mb3")
                 .UseCollation("utf8mb3_bin");
 
+            entity.HasIndex(e => e.Emaileleve, "emaileleve").IsUnique();
+
             entity.Property(e => e.Ideleve).HasColumnName("ideleve");
             entity.Property(e => e.Datenaissanceeleve).HasColumnName("datenaissanceeleve");
-            entity.Property(e => e.Emaileleve)
-                .HasMaxLength(255)
-                .HasColumnName("emaileleve");
+            entity.Property(e => e.Emaileleve).HasColumnName("emaileleve");
             entity.Property(e => e.Motpasseeleve)
                 .HasMaxLength(255)
                 .HasColumnName("motpasseeleve");
@@ -208,10 +223,10 @@ public partial class Ap3LwsContext : DbContext
                 .HasCharSet("utf8mb3")
                 .UseCollation("utf8mb3_bin");
 
+            entity.HasIndex(e => e.Emailmoniteur, "emailmoniteur").IsUnique();
+
             entity.Property(e => e.Idmoniteur).HasColumnName("idmoniteur");
-            entity.Property(e => e.Emailmoniteur)
-                .HasMaxLength(255)
-                .HasColumnName("emailmoniteur");
+            entity.Property(e => e.Emailmoniteur).HasColumnName("emailmoniteur");
             entity.Property(e => e.Nommoniteur)
                 .HasMaxLength(128)
                 .HasColumnName("nommoniteur");
@@ -229,13 +244,20 @@ public partial class Ap3LwsContext : DbContext
                 .HasCharSet("utf8mb3")
                 .UseCollation("utf8mb3_bin");
 
+            entity.HasIndex(e => e.IdCategorie, "idCategorie");
+
             entity.Property(e => e.Idquestion).HasColumnName("idquestion");
+            entity.Property(e => e.IdCategorie).HasColumnName("idCategorie");
             entity.Property(e => e.Imagequestion)
                 .HasMaxLength(255)
                 .HasColumnName("imagequestion");
             entity.Property(e => e.Libellequestion)
                 .HasMaxLength(255)
                 .HasColumnName("libellequestion");
+
+            entity.HasOne(d => d.IdCategorieNavigation).WithMany(p => p.Questions)
+                .HasForeignKey(d => d.IdCategorie)
+                .HasConstraintName("question_ibfk_1");
         });
 
         modelBuilder.Entity<Reponse>(entity =>
@@ -318,6 +340,8 @@ public partial class Ap3LwsContext : DbContext
                 .ToTable("vehicule")
                 .HasCharSet("utf8mb3")
                 .UseCollation("utf8mb3_bin");
+
+            entity.HasIndex(e => e.Immatriculation, "immatriculation").IsUnique();
 
             entity.Property(e => e.Idvehicule).HasColumnName("idvehicule");
             entity.Property(e => e.Designation)

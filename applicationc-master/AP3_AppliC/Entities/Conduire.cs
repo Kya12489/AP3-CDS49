@@ -15,6 +15,8 @@ public partial class Conduire
 
     public string? Lieurdv { get; set; }
 
+    public int DureeMinutes { get; set; }
+
     public virtual Eleve IdeleveNavigation { get; set; } = null!;
 
     public virtual Moniteur IdmoniteurNavigation { get; set; } = null!;
