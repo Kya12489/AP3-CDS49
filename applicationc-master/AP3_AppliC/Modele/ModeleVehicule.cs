@@ -35,11 +35,11 @@ namespace AP3_AppliC.Modele
 
                 if (mode == "Manuel")
                 {
-                    unV.Manuel = false;
+                    unV.Manuel = true;
                 }
                 else
                 {
-                    unV.Manuel = true;
+                    unV.Manuel = false;
                 }
 
                 unV.Archiver = false;
@@ -84,6 +84,47 @@ namespace AP3_AppliC.Modele
                 }
 
                 return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+                return false;
+            }
+        }
+
+        public static Vehicule ObtenirVehicule(int idVehicule)
+        {
+            try
+            {
+                return Modele.Connexion.MonModel.Vehicules
+                    .FirstOrDefault(v => v.Idvehicule == idVehicule && v.Archiver == false);
+            }
+
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static bool ModifierVehicule(int idVehicules, int? nbPassagers, string immatriculation, string? designation, string mode)
+        {
+            try
+            {
+                Vehicule vehicule = Modele.Connexion.MonModel.Vehicules
+                    .FirstOrDefault(v => v.Idvehicule == idVehicules);
+                if (vehicule == null)
+                {
+                    MessageBox.Show("Vehicule introuvable");
+                    return false;
+                }
+
+                vehicule.Nbpassagers = nbPassagers;
+                vehicule.Immatriculation = immatriculation;
+                vehicule.Designation = string.IsNullOrWhiteSpace(designation) ? null : designation;
+                vehicule.Manuel = mode == "Manuel";
+
+                Modele.Connexion.MonModel.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {

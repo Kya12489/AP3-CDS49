@@ -13,16 +13,19 @@ namespace AP3_AppliC
 {
     public partial class FormMenu : Form
     {
+        public static FormMenu Instance { get; private set; }
+        private Form activeForm = null;
         public FormMenu()
         {
             InitializeComponent();
+            Instance = this;
         }
 
         private void FormMenu_Load(object sender, EventArgs e)
         {
 
         }
-        public Form activeForm = null;
+        // public Form activeForm = null;
         public void openChildForm(Form formEnfant)
         {
             if (activeForm != null)
@@ -88,7 +91,7 @@ namespace AP3_AppliC
 
         private void ajouterToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            openChildForm((new FormAjoutVehicules()));
+            openChildForm((new FormGestionVehicules(AP3_AppliC.view.EtatGestionV.Add)));
         }
 
         private void listeToolStripMenuItem4_Click(object sender, EventArgs e)

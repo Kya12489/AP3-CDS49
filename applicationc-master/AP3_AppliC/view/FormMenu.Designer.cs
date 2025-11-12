@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             menuStrip1 = new MenuStrip();
             gestionDesElèvesToolStripMenuItem = new ToolStripMenuItem();
             listeToolStripMenuItem = new ToolStripMenuItem();
@@ -107,21 +107,21 @@
             // listeToolStripMenuItem1
             // 
             listeToolStripMenuItem1.Name = "listeToolStripMenuItem1";
-            listeToolStripMenuItem1.Size = new Size(191, 28);
+            listeToolStripMenuItem1.Size = new Size(224, 28);
             listeToolStripMenuItem1.Text = "Liste";
             listeToolStripMenuItem1.Click += listeToolStripMenuItem1_Click;
             // 
             // ajoutToolStripMenuItem
             // 
             ajoutToolStripMenuItem.Name = "ajoutToolStripMenuItem";
-            ajoutToolStripMenuItem.Size = new Size(191, 28);
+            ajoutToolStripMenuItem.Size = new Size(224, 28);
             ajoutToolStripMenuItem.Text = "Ajout";
             ajoutToolStripMenuItem.Click += ajoutToolStripMenuItem_Click;
             // 
             // modificationToolStripMenuItem
             // 
             modificationToolStripMenuItem.Name = "modificationToolStripMenuItem";
-            modificationToolStripMenuItem.Size = new Size(191, 28);
+            modificationToolStripMenuItem.Size = new Size(224, 28);
             modificationToolStripMenuItem.Text = "Modification";
             modificationToolStripMenuItem.Click += modificationToolStripMenuItem_Click;
             // 
@@ -156,14 +156,14 @@
             // listeToolStripMenuItem2
             // 
             listeToolStripMenuItem2.Name = "listeToolStripMenuItem2";
-            listeToolStripMenuItem2.Size = new Size(150, 28);
+            listeToolStripMenuItem2.Size = new Size(224, 28);
             listeToolStripMenuItem2.Text = "Liste";
             listeToolStripMenuItem2.Click += listeToolStripMenuItem2_Click;
             // 
             // ajouterToolStripMenuItem1
             // 
             ajouterToolStripMenuItem1.Name = "ajouterToolStripMenuItem1";
-            ajouterToolStripMenuItem1.Size = new Size(150, 28);
+            ajouterToolStripMenuItem1.Size = new Size(224, 28);
             ajouterToolStripMenuItem1.Text = "Ajouter";
             ajouterToolStripMenuItem1.Click += ajouterToolStripMenuItem1_Click;
             // 
@@ -177,14 +177,14 @@
             // listeToolStripMenuItem4
             // 
             listeToolStripMenuItem4.Name = "listeToolStripMenuItem4";
-            listeToolStripMenuItem4.Size = new Size(150, 28);
+            listeToolStripMenuItem4.Size = new Size(224, 28);
             listeToolStripMenuItem4.Text = "Liste";
             listeToolStripMenuItem4.Click += listeToolStripMenuItem4_Click;
             // 
             // ajouterToolStripMenuItem2
             // 
             ajouterToolStripMenuItem2.Name = "ajouterToolStripMenuItem2";
-            ajouterToolStripMenuItem2.Size = new Size(150, 28);
+            ajouterToolStripMenuItem2.Size = new Size(224, 28);
             ajouterToolStripMenuItem2.Text = "Ajouter";
             ajouterToolStripMenuItem2.Click += ajouterToolStripMenuItem2_Click;
             // 
@@ -217,25 +217,25 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            legend2.Title = "nb élèves";
-            chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            legend1.Title = "nb élèves";
+            chart1.Legends.Add(legend1);
             chart1.Location = new Point(61, 85);
             chart1.Margin = new Padding(3, 4, 3, 4);
             chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            series2.YValuesPerPoint = 4;
-            chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series1.YValuesPerPoint = 4;
+            chart1.Series.Add(series1);
             chart1.Size = new Size(343, 400);
             chart1.TabIndex = 0;
             chart1.Text = "chart1";
-            title2.Name = "Title1";
-            title2.Text = "Nombre d’élèves inscrits par mois sur les 12 derniers mois";
-            chart1.Titles.Add(title2);
+            title1.Name = "Title1";
+            title1.Text = "Nombre d’élèves inscrits par mois sur les 12 derniers mois";
+            chart1.Titles.Add(title1);
             // 
             // FormMenu
             // 
