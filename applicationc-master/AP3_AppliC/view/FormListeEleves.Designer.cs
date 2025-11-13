@@ -43,6 +43,7 @@
             tbPrenomEleve = new TextBox();
             btModifier = new Button();
             btArchiver = new Button();
+            btFacturation = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvEleves).BeginInit();
             contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsEleves).BeginInit();
@@ -183,12 +184,22 @@
             btArchiver.UseVisualStyleBackColor = false;
             btArchiver.Click += btArchiver_Click;
             // 
+            // btFacturation
+            // 
+            btFacturation.Location = new Point(887, 34);
+            btFacturation.Name = "btFacturation";
+            btFacturation.Size = new Size(146, 45);
+            btFacturation.TabIndex = 9;
+            btFacturation.Text = "Générer facture";
+            btFacturation.UseVisualStyleBackColor = true;
+            // 
             // FormListeEleves
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1045, 591);
+            Controls.Add(btFacturation);
             Controls.Add(btArchiver);
             Controls.Add(btModifier);
             Controls.Add(tbPrenomEleve);
@@ -228,5 +239,6 @@
         private Button btRecherche;
         private Button btModifier;
         private Button btArchiver;
+        private Button btFacturation;
     }
 }
