@@ -38,6 +38,8 @@ namespace AP3_AppliC
 
 
             dgvEleves.DataSource = bsEleves;
+            dgvEleves.Columns["Ideleve"].Visible = false;
+
             dgvEleves.Columns[0].HeaderText = "Identifiant";
             dgvEleves.Columns[1].HeaderText = "Nom";
             dgvEleves.Columns[2].HeaderText = "Prénom";
@@ -123,7 +125,8 @@ namespace AP3_AppliC
                     x.Nomeleve,
                     x.Prenomeleve,
                     x.Emaileleve,
-                    x.Datenaissanceeleve
+                    x.Datenaissanceeleve,
+                    x.Numeroteleleve
                 }).OrderBy(x => x.Ideleve);
 
                 dgvEleves.DataSource = bsEleves;
@@ -182,6 +185,21 @@ namespace AP3_AppliC
             else
             {
                 MessageBox.Show("Veuillez sélectionner un élève à supprimer.",
+                    "Aucune sélection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btFacturation_Click(object sender, EventArgs e)
+        {
+            if (dgvEleves.CurrentRow != null)
+            {
+                int idEleve = (int)dgvEleves.CurrentRow.Cells["Ideleve"].Value;
+
+                GenererFacturation.GenererFactureEleve(idEleve);
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un élève dans la liste.",
                     "Aucune sélection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

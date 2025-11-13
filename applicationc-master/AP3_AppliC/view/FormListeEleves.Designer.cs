@@ -192,6 +192,7 @@
             btFacturation.TabIndex = 9;
             btFacturation.Text = "Générer facture";
             btFacturation.UseVisualStyleBackColor = true;
+            btFacturation.Click += btFacturation_Click;
             // 
             // FormListeEleves
             // 
