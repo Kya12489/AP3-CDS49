@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AP3_AppliC.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,12 +11,33 @@ using System.Windows.Forms;
 
 namespace AP3_AppliC.view
 {
+    public enum EtatGestionE
+    {
+        Add,
+        Update
+    }
     public partial class FormInscriptionEleve : Form
     {
-        public FormInscriptionEleve()
+        private EtatGestionE etat;
+        private int _idEleve = 0;
+
+        // Constructeur pour AJOUT
+        public FormInscriptionEleve(EtatGestionE etat)
         {
             InitializeComponent();
+            this.etat = etat;
+
         }
+        // Constructeur pour MODIFICATION (avec ID)
+        public FormInscriptionEleve(EtatGestionE etat, int idEleve)
+        {
+            InitializeComponent();
+            this.etat = etat;
+            this._idEleve = idEleve;
+        }
+
+
+
         public void RemplirListeForfaits()
         {
 
@@ -65,7 +87,7 @@ namespace AP3_AppliC.view
                 return;
             }
 
-            if (Modele.ModeleEleve.EmailExiste(mail))
+            if (etat == EtatGestionE.Add && Modele.ModeleEleve.EmailExiste(mail))
             {
                 MessageBox.Show($"L'adresse email '{mail}' est déjà utilisée.",
                     "Email existant", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -125,37 +147,108 @@ namespace AP3_AppliC.view
             }
             string telEnvoyer = Controleur.NettoyerNumeroTelephone(tel);
 
-            bool ajout = Modele.ModeleEleve.AjoutEleve(nom, prenom, mail, mdp, date, telEnvoyer);
-
-            if (ajout)
+            if (etat == EtatGestionE.Add && !Modele.ModeleEleve.EmailExiste(mail))
             {
-                MessageBox.Show("Élève inscrit avec succès !",
-                    "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (cbForfait.SelectedIndex != -1)
+                Eleve nouvelEleve = Modele.ModeleEleve.AjoutEleve(nom, prenom, mail, mdp, date, telEnvoyer);
+
+                if (nouvelEleve != null)
                 {
-                    int idForfait = Convert.ToInt32(cbForfait.SelectedValue);
-                    int idE = Modele.ModeleEleve.
-                    if (Modele.ModeleEleve.AjoutInscrire(idE, idForfait))
+                    MessageBox.Show("Élève inscrit avec succès !",
+                        "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (cbForfait.SelectedIndex != -1)
                     {
-                        MessageBox.Show("Le forfait a été ajouté à l'èlève");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Erreur dans l'attribution d'un forfait", "ERREUR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                        int idForfait = Convert.ToInt32(cbForfait.SelectedValue);
+                        int idE = nouvelEleve.Ideleve;
+                        if (Modele.ModeleEleve.AjoutInscrire(idE, idForfait))
+                        {
+                            MessageBox.Show("Le forfait a été ajouté à l'èlève");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Erreur dans l'attribution d'un forfait", "ERREUR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
 
+                    }
+                    FormMenu.Instance.openChildForm(new FormListeEleves());
                 }
-                FormMenu.Instance.openChildForm(new FormListeEleves());
+                else
+                {
+                    MessageBox.Show("Erreur lors de l'inscription");
+                }
             }
-            else
+            if (etat == EtatGestionE.Update && !Modele.ModeleEleve.EmailExisteModif(mail, _idEleve))
             {
-                MessageBox.Show("Erreur lors de l'inscription");
+                Eleve eleveModifie = Modele.ModeleEleve.ModifierEleve(_idEleve, nom, prenom, mail, mdp, date, telEnvoyer);
+                if (eleveModifie != null)
+                {
+                    MessageBox.Show("Élève modifié avec succès !",
+                        "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (cbForfait.SelectedIndex != -1)
+                    {
+                        int idForfait = Convert.ToInt32(cbForfait.SelectedValue);
+                        int idE = eleveModifie.Ideleve;
+                        if (Modele.ModeleEleve.AjoutInscrire(idE, idForfait))
+                        {
+                            MessageBox.Show("Le forfait a été ajouté à l'èlève");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Erreur dans l'attribution d'un forfait", "ERREUR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
+                    }
+                    FormMenu.Instance.openChildForm(new FormListeEleves());
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de la modification");
+                }
             }
+
+
         }
 
         private void FormInscriptionEleve_Load(object sender, EventArgs e)
         {
             RemplirListeForfaits();
+            if (etat == EtatGestionE.Add) // cas etat en ajout
+            {
+                btAction.Text = "AJOUTER";
+
+
+            }
+
+            if (etat == EtatGestionE.Update) // cas etat en modification 
+            {
+                btAction.Text = "MODIFIER";
+                ChargerDonneesEleves();
+            }
+        }
+
+        private void ChargerDonneesEleves()
+        {
+            // Récupérer les données de l'élève depuis la BDD
+            Eleve eleve = Modele.ModeleEleve.ObtenirEleve(_idEleve);
+
+            if (eleve != null)
+            {
+                tbNom.Text = eleve.Nomeleve;
+                tbPrenom.Text = eleve.Prenomeleve;
+                tbEmail.Text = eleve.Emaileleve;
+                dtpNaissance.Value = eleve.Datenaissanceeleve.ToDateTime(new TimeOnly(0, 0));
+                tbNumTel.Text = eleve.Numeroteleleve;
+            }
+            else
+            {
+                MessageBox.Show("Elève introuvable.", "Erreur",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+        }
+
+        private void btnFermer_Click(object sender, EventArgs e)
+        {
+            FormMenu.Instance.openChildForm(new FormListeEleves());
         }
     }
 }

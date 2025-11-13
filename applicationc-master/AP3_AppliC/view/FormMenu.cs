@@ -70,7 +70,7 @@ namespace AP3_AppliC
 
         private void inscriptionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openChildForm(new FormInscriptionEleve());
+            openChildForm(new FormInscriptionEleve(AP3_AppliC.view.EtatGestionE.Add));
         }
 
         private void ajouterToolStripMenuItem_Click(object sender, EventArgs e)

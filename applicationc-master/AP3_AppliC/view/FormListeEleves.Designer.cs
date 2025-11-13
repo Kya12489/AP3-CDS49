@@ -41,6 +41,8 @@
             btnFermer = new Button();
             tbNomEleve = new TextBox();
             tbPrenomEleve = new TextBox();
+            btModifier = new Button();
+            btArchiver = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvEleves).BeginInit();
             contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsEleves).BeginInit();
@@ -117,7 +119,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(70, 513);
+            label2.Location = new Point(70, 554);
             label2.Name = "label2";
             label2.Size = new Size(680, 28);
             label2.TabIndex = 3;
@@ -153,12 +155,42 @@
             tbPrenomEleve.Size = new Size(125, 27);
             tbPrenomEleve.TabIndex = 6;
             // 
+            // btModifier
+            // 
+            btModifier.BackColor = Color.Black;
+            btModifier.FlatStyle = FlatStyle.Popup;
+            btModifier.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btModifier.ForeColor = Color.White;
+            btModifier.Location = new Point(452, 499);
+            btModifier.Name = "btModifier";
+            btModifier.Size = new Size(135, 57);
+            btModifier.TabIndex = 7;
+            btModifier.Text = "MODIFIER";
+            btModifier.UseVisualStyleBackColor = false;
+            btModifier.Click += btModifier_Click;
+            // 
+            // btArchiver
+            // 
+            btArchiver.BackColor = Color.Black;
+            btArchiver.FlatStyle = FlatStyle.Popup;
+            btArchiver.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btArchiver.ForeColor = Color.White;
+            btArchiver.Location = new Point(70, 499);
+            btArchiver.Name = "btArchiver";
+            btArchiver.Size = new Size(135, 57);
+            btArchiver.TabIndex = 8;
+            btArchiver.Text = "SUPPRIMER";
+            btArchiver.UseVisualStyleBackColor = false;
+            btArchiver.Click += btArchiver_Click;
+            // 
             // FormListeEleves
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1045, 591);
+            Controls.Add(btArchiver);
+            Controls.Add(btModifier);
             Controls.Add(tbPrenomEleve);
             Controls.Add(tbNomEleve);
             Controls.Add(btnFermer);
@@ -194,5 +226,7 @@
         private TextBox tbNomEleve;
         private TextBox tbPrenomEleve;
         private Button btRecherche;
+        private Button btModifier;
+        private Button btArchiver;
     }
 }

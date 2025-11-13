@@ -116,14 +116,13 @@ namespace AP3_AppliC.Modele
             return elevesCorrespondants;
         }
 
-        public static bool AjoutEleve(string nom, string prenom, string email, string mdp, DateOnly dateNaissance, string numTel)
+        public static Eleve AjoutEleve(string nom, string prenom, string email, string mdp, DateOnly dateNaissance, string numTel)
         {
-            Eleve unE;
-            bool vretour = true;
+            //bool vretour = true;
             try
             {
                 // ajout dans la table Eleve
-                unE = new Eleve();
+                Eleve unE = new Eleve();
                 string mdpHash = BC.HashPassword(mdp);
 
                 unE.Nomeleve = nom;
@@ -136,13 +135,15 @@ namespace AP3_AppliC.Modele
                 Modele.Connexion.MonModel.Eleves.Add(unE);
                 Modele.Connexion.MonModel.SaveChanges();
 
+                return unE;
             }
             catch (Exception ex)
             {
-                vretour = false;
+                // vretour = false;
                 MessageBox.Show(ex.Message.ToString());
+                return null;
             }
-            return vretour;
+           // return vretour;
         }
 
         #region recherche global
@@ -199,6 +200,86 @@ namespace AP3_AppliC.Modele
             }
             catch 
             {
+                return false;
+            }
+        }
+        public static bool EmailExisteModif(string email, int idEleveAExclure)
+        {
+            try
+            {
+                return Modele.Connexion.MonModel.Eleves
+                    .Any(e => e.Emaileleve == email
+                           && e.Archiver == false
+                           && e.Ideleve != idEleveAExclure);  
+            }
+            catch
+            {
+                return false;
+            }
+        }
+       
+
+        public static Eleve ModifierEleve(int idEleves, string nom, string prenom, string email, string mdp, DateOnly dateNaissance, string numTel)
+        {
+            try
+            {
+                Eleve eleve = Modele.Connexion.MonModel.Eleves
+                    .FirstOrDefault(v => v.Ideleve == idEleves);
+                if (eleve == null)
+                {
+                    MessageBox.Show("Eleve introuvable");
+                    return null;
+                }
+
+                eleve.Nomeleve = nom;
+                eleve.Prenomeleve = prenom;
+                eleve.Emaileleve = email;
+                eleve.Motpasseeleve = BC.HashPassword(mdp);
+                eleve.Datenaissanceeleve = dateNaissance;
+                eleve.Numeroteleleve = numTel;
+
+                Modele.Connexion.MonModel.SaveChanges();
+                return eleve;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+                return null;
+            }
+        }
+        public static Eleve ObtenirEleve(int idEleve)
+        {
+            try
+            {
+                return Modele.Connexion.MonModel.Eleves
+                    .FirstOrDefault(e => e.Ideleve == idEleve && e.Archiver == false);
+            }
+
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static bool ArchiverEleve(int idEleve)
+        {
+            try
+            {
+                Eleve eleve = Modele.Connexion.MonModel.Eleves
+                    .FirstOrDefault(e => e.Ideleve == idEleve);
+
+                if (eleve != null)
+                {
+                    eleve.Archiver = true;  // Archiver (1)
+                    Modele.Connexion.MonModel.SaveChanges();
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
                 return false;
             }
         }

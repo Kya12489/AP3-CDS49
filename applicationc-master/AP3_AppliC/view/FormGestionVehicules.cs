@@ -21,7 +21,7 @@ namespace AP3_AppliC.view
     public partial class FormGestionVehicules : Form
     {
         private EtatGestionV etat;
-        private int _idVehicule = 0;  // ← Ajouter cette variable
+        private int _idVehicule = 0;  
 
         // Constructeur pour AJOUT
         public FormGestionVehicules(EtatGestionV etat)
@@ -346,7 +346,7 @@ namespace AP3_AppliC.view
         private void ChargerDonneesVehicule()
         {
             // Récupérer les données du véhicule depuis la BDD
-            var vehicule = Modele.ModeleVehicule.ObtenirVehicule(_idVehicule);
+            Vehicule vehicule = Modele.ModeleVehicule.ObtenirVehicule(_idVehicule);
 
             if (vehicule != null)
             {

@@ -1,5 +1,6 @@
 ﻿using AP3_AppliC.Entities;
 using AP3_AppliC.Modele;
+using AP3_AppliC.view;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,7 +32,8 @@ namespace AP3_AppliC
                 x.Nomeleve,
                 x.Prenomeleve,
                 x.Emaileleve,
-                x.Datenaissanceeleve
+                x.Datenaissanceeleve,
+                x.Numeroteleleve
             }).OrderBy(x => x.Ideleve);
 
 
@@ -41,6 +43,8 @@ namespace AP3_AppliC
             dgvEleves.Columns[2].HeaderText = "Prénom";
             dgvEleves.Columns[3].HeaderText = "Email";
             dgvEleves.Columns[4].HeaderText = "Date de Naissance";
+            dgvEleves.Columns[5].HeaderText = "Numéro de téléphone";
+
             dgvForfaits.Visible = false;
         }
 
@@ -130,5 +134,56 @@ namespace AP3_AppliC
             }
         }
 
+        private void btModifier_Click(object sender, EventArgs e)
+        {
+            if (dgvEleves.CurrentRow != null)
+            {
+                int idEleve = (int)dgvEleves.CurrentRow.Cells["IdEleve"].Value;
+
+                FormMenu.Instance.openChildForm(new FormInscriptionEleve(AP3_AppliC.view.EtatGestionE.Update, idEleve));
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un élève à modifier.",
+                    "Aucune sélection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btArchiver_Click(object sender, EventArgs e)
+        {
+            if (dgvEleves.CurrentRow != null)
+            {
+                int idEleve = (int)dgvEleves.CurrentRow.Cells["Ideleve"].Value;
+
+                DialogResult confirmation = MessageBox.Show(
+                    "Voulez-vous vraiment supprimer cet élève ?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (confirmation == DialogResult.Yes)
+                {
+                    bool succes = Modele.ModeleEleve.ArchiverEleve(idEleve);
+
+                    if (succes)
+                    {
+                        MessageBox.Show("Elève supprimé avec succès.",
+                            "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // Rafraîchir la liste après archivage
+                        FormListeEleves_Load(sender, e);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Échec de la suppression du véhicule.",
+                            "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un élève à supprimer.",
+                    "Aucune sélection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }

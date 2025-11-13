@@ -41,10 +41,11 @@
             tbMdp = new TextBox();
             dtpNaissance = new DateTimePicker();
             tbNumTel = new TextBox();
-            btAjouter = new Button();
+            btAction = new Button();
             cbForfait = new ComboBox();
             label7 = new Label();
             bsForfait = new BindingSource(components);
+            btnFermer = new Button();
             ((System.ComponentModel.ISupportInitialize)bsForfait).BeginInit();
             SuspendLayout();
             // 
@@ -150,18 +151,19 @@
             tbNumTel.Size = new Size(174, 27);
             tbNumTel.TabIndex = 11;
             // 
-            // btAjouter
+            // btAction
             // 
-            btAjouter.Location = new Point(231, 432);
-            btAjouter.Name = "btAjouter";
-            btAjouter.Size = new Size(94, 29);
-            btAjouter.TabIndex = 12;
-            btAjouter.Text = "Ajouter";
-            btAjouter.UseVisualStyleBackColor = true;
-            btAjouter.Click += btAjouter_Click;
+            btAction.Location = new Point(231, 432);
+            btAction.Name = "btAction";
+            btAction.Size = new Size(94, 29);
+            btAction.TabIndex = 12;
+            btAction.Text = "Ajouter";
+            btAction.UseVisualStyleBackColor = true;
+            btAction.Click += btAjouter_Click;
             // 
             // cbForfait
             // 
+            cbForfait.DropDownStyle = ComboBoxStyle.DropDownList;
             cbForfait.FormattingEnabled = true;
             cbForfait.Location = new Point(286, 357);
             cbForfait.Name = "cbForfait";
@@ -177,14 +179,29 @@
             label7.TabIndex = 14;
             label7.Text = "Forfait";
             // 
+            // btnFermer
+            // 
+            btnFermer.BackColor = Color.Black;
+            btnFermer.FlatStyle = FlatStyle.Popup;
+            btnFermer.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnFermer.ForeColor = Color.White;
+            btnFermer.Location = new Point(633, 415);
+            btnFermer.Name = "btnFermer";
+            btnFermer.Size = new Size(135, 57);
+            btnFermer.TabIndex = 15;
+            btnFermer.Text = "FERMER";
+            btnFermer.UseVisualStyleBackColor = false;
+            btnFermer.Click += btnFermer_Click;
+            // 
             // FormInscriptionEleve
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(894, 520);
+            Controls.Add(btnFermer);
             Controls.Add(label7);
             Controls.Add(cbForfait);
-            Controls.Add(btAjouter);
+            Controls.Add(btAction);
             Controls.Add(tbNumTel);
             Controls.Add(dtpNaissance);
             Controls.Add(tbMdp);
@@ -220,9 +237,10 @@
         private TextBox tbMdp;
         private DateTimePicker dtpNaissance;
         private TextBox tbNumTel;
-        private Button btAjouter;
+        private Button btAction;
         private ComboBox cbForfait;
         private Label label7;
         private BindingSource bsForfait;
+        private Button btnFermer;
     }
 }
