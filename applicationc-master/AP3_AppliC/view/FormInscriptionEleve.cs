@@ -16,6 +16,15 @@ namespace AP3_AppliC.view
         {
             InitializeComponent();
         }
+        public void RemplirListeForfaits()
+        {
+
+            cbForfait.ValueMember = "Idforfait";//permet de stocker l'identifiant
+            cbForfait.DisplayMember = "Libelleforfait";
+            bsForfait.DataSource = Modele.ModeleForfait.listeForfaits();
+            cbForfait.DataSource = bsForfait;
+            cbForfait.SelectedIndex = -1;
+        }
 
         private void btAjouter_Click(object sender, EventArgs e)
         {
@@ -122,12 +131,31 @@ namespace AP3_AppliC.view
             {
                 MessageBox.Show("Élève inscrit avec succès !",
                     "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (cbForfait.SelectedIndex != -1)
+                {
+                    int idForfait = Convert.ToInt32(cbForfait.SelectedValue);
+                    int idE = Modele.ModeleEleve.
+                    if (Modele.ModeleEleve.AjoutInscrire(idE, idForfait))
+                    {
+                        MessageBox.Show("Le forfait a été ajouté à l'èlève");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur dans l'attribution d'un forfait", "ERREUR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }
                 FormMenu.Instance.openChildForm(new FormListeEleves());
             }
             else
             {
                 MessageBox.Show("Erreur lors de l'inscription");
             }
+        }
+
+        private void FormInscriptionEleve_Load(object sender, EventArgs e)
+        {
+            RemplirListeForfaits();
         }
     }
 }

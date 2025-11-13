@@ -20,7 +20,9 @@ namespace AP3_AppliC.Modele
         /// <returns></returns>
         public static List<Entities.Eleve> listeEleves()
         {
-            return Modele.Connexion.MonModel.Eleves.ToList();
+            return Modele.Connexion.MonModel.Eleves
+                .Where(e => e.Archiver == false)  // Filtrer les non-archivés
+                .ToList();
         }
 
         /// <summary>
@@ -90,7 +92,7 @@ namespace AP3_AppliC.Modele
 
         public static List<Eleve> RechercherEleves(string nom = null, string prenom = null)
         {
-            List<Eleve> tousLesEleves = Modele.Connexion.MonModel.Eleves.ToList();
+            List<Eleve> tousLesEleves = Modele.Connexion.MonModel.Eleves.Where(e => e.Archiver == false).ToList();
             List<Eleve> elevesCorrespondants = tousLesEleves;
 
             if (!string.IsNullOrEmpty(nom))

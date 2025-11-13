@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -41,6 +42,10 @@
             dtpNaissance = new DateTimePicker();
             tbNumTel = new TextBox();
             btAjouter = new Button();
+            cbForfait = new ComboBox();
+            label7 = new Label();
+            bsForfait = new BindingSource(components);
+            ((System.ComponentModel.ISupportInitialize)bsForfait).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -147,7 +152,7 @@
             // 
             // btAjouter
             // 
-            btAjouter.Location = new Point(240, 391);
+            btAjouter.Location = new Point(231, 432);
             btAjouter.Name = "btAjouter";
             btAjouter.Size = new Size(94, 29);
             btAjouter.TabIndex = 12;
@@ -155,11 +160,30 @@
             btAjouter.UseVisualStyleBackColor = true;
             btAjouter.Click += btAjouter_Click;
             // 
+            // cbForfait
+            // 
+            cbForfait.FormattingEnabled = true;
+            cbForfait.Location = new Point(286, 357);
+            cbForfait.Name = "cbForfait";
+            cbForfait.Size = new Size(174, 28);
+            cbForfait.TabIndex = 13;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(109, 365);
+            label7.Name = "label7";
+            label7.Size = new Size(52, 20);
+            label7.TabIndex = 14;
+            label7.Text = "Forfait";
+            // 
             // FormInscriptionEleve
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(894, 520);
+            Controls.Add(label7);
+            Controls.Add(cbForfait);
             Controls.Add(btAjouter);
             Controls.Add(tbNumTel);
             Controls.Add(dtpNaissance);
@@ -176,6 +200,8 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormInscriptionEleve";
             Text = "FormInscriptionEleve";
+            Load += FormInscriptionEleve_Load;
+            ((System.ComponentModel.ISupportInitialize)bsForfait).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -195,5 +221,8 @@
         private DateTimePicker dtpNaissance;
         private TextBox tbNumTel;
         private Button btAjouter;
+        private ComboBox cbForfait;
+        private Label label7;
+        private BindingSource bsForfait;
     }
 }
