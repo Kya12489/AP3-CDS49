@@ -17,6 +17,8 @@ public partial class Conduire
 
     public int DureeMinutes { get; set; }
 
+    public bool Archiver { get; set; }
+
     public virtual Eleve IdeleveNavigation { get; set; } = null!;
 
     public virtual Moniteur IdmoniteurNavigation { get; set; } = null!;

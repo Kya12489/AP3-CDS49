@@ -341,8 +341,6 @@ public partial class Ap3LwsContext : DbContext
                 .HasCharSet("utf8mb3")
                 .UseCollation("utf8mb3_bin");
 
-            entity.HasIndex(e => e.Immatriculation, "immatriculation").IsUnique();
-
             entity.Property(e => e.Idvehicule).HasColumnName("idvehicule");
             entity.Property(e => e.Archiver).HasColumnName("archiver");
             entity.Property(e => e.Designation)

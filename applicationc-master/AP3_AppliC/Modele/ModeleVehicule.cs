@@ -55,13 +55,29 @@ namespace AP3_AppliC.Modele
             }
             return vretour;
         }
-        // vérifier si l'immatriculation existe
+        // vérifier si l'immatriculation existe pour l'ajout
         public static bool ImmatriculationExiste(string immatriculation)
         {
             try
             {
                 return Modele.Connexion.MonModel.Vehicules
-                    .Any(v => v.Immatriculation == immatriculation);
+                    .Any(v => v.Immatriculation == immatriculation
+                            && v.Archiver == false);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        // méthode pour la modification
+        public static bool ImmatriculationExisteModif(string immatriculation, int idVehiculeAExclure)
+        {
+            try
+            {
+                return Modele.Connexion.MonModel.Vehicules
+                    .Any(v => v.Immatriculation == immatriculation
+                           && v.Archiver == false
+                           && v.Idvehicule != idVehiculeAExclure);  // ← Exclure le véhicule actuel
             }
             catch
             {

@@ -187,5 +187,18 @@ namespace AP3_AppliC.Modele
 
         //    return nbEleveMois;
         //}
+
+        public static bool EmailExiste(string email)
+        {
+            try
+            {
+                return Modele.Connexion.MonModel.Eleves
+                    .Any(e => e.Emaileleve == email);
+            }
+            catch 
+            {
+                return false;
+            }
+        }
     }
 }

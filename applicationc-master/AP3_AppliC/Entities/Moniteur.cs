@@ -13,5 +13,7 @@ public partial class Moniteur
 
     public string Emailmoniteur { get; set; } = null!;
 
+    public bool Archiver { get; set; }
+
     public virtual ICollection<Conduire> Conduires { get; set; } = new List<Conduire>();
 }

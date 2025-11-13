@@ -79,5 +79,67 @@ namespace AP3_AppliC
             }
             return valeurCorrect;
         }
+
+        public static bool MdpValide(string mdp, out string messageErreur)
+        {
+            messageErreur = "";
+
+            if (string.IsNullOrWhiteSpace(mdp))
+            {
+                messageErreur = "Le mot de passe est obligatoire.";
+                return false;
+            }
+
+            if (mdp.Length < 12)
+            {
+                messageErreur = "Le mot de passe doit contenir au moins 12 caractères.";
+                return false;
+            }
+
+            if (!Regex.IsMatch(mdp, @"[A-Z]"))
+            {
+                messageErreur = "Le mot de passe doit contenir au moins une lettre majuscule.";
+                return false;
+            }
+
+            if (!Regex.IsMatch(mdp, @"[a-z]"))
+            {
+                messageErreur = "Le mot de passe doit contenir au moins une lettre minuscule.";
+                return false;
+            }
+
+            if (!Regex.IsMatch(mdp, @"[0-9]"))
+            {
+                messageErreur = "Le mot de passe doit contenir au moins un chiffre.";
+                return false;
+            }
+
+            if (!Regex.IsMatch(mdp, @"[^a-zA-Z0-9]"))
+            {
+                messageErreur = "Le mot de passe doit contenir au moins un caractère spécial (!@#$%^&*...).";
+                return false;
+            }
+
+            return true;
+
+        }
+        public static string NettoyerNumeroTelephone(string numero)
+        {
+            if (string.IsNullOrWhiteSpace(numero))
+                return "";
+
+            return numero.Replace(" ", "")
+                        .Replace(".", "")
+                        .Replace("-", "")
+                        .Replace("(", "")
+                        .Replace(")", "");
+        }
+        public static bool NumTelValide(string numero)
+        {
+            string numeroNettoye = NettoyerNumeroTelephone(numero);
+
+            // Vérifier format français : 10 chiffres commençant par 0
+            return Regex.IsMatch(numeroNettoye, @"^0[1-9]\d{8}$");
+        }
     }
 }

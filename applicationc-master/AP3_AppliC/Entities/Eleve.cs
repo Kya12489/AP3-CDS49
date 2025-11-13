@@ -19,6 +19,8 @@ public partial class Eleve
 
     public string? Numeroteleleve { get; set; }
 
+    public bool Archiver { get; set; }
+
     public virtual ICollection<Conduire> Conduires { get; set; } = new List<Conduire>();
 
     public virtual ICollection<Inscrire> Inscrires { get; set; } = new List<Inscrire>();

@@ -112,8 +112,15 @@ namespace AP3_AppliC.view
                 tbImmatriculation.Focus();
                 return;
             }
-            #endregion
-            string designation = string.IsNullOrWhiteSpace(tbDesignation.Text) ? null : tbDesignation.Text;
+            else if (etat == EtatGestionV.Update && Modele.ModeleVehicule.ImmatriculationExisteModif(immatriculation, _idVehicule))
+            {
+                MessageBox.Show($"L'immatriculation '{immatriculation}' est déjà utilisée par un autre véhicule !",
+                        "Immatriculation existante", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbImmatriculation.Focus();
+                return;
+            }
+                #endregion
+                string designation = string.IsNullOrWhiteSpace(tbDesignation.Text) ? null : tbDesignation.Text;
             string mode = cbType.SelectedItem.ToString();
 
             /*
