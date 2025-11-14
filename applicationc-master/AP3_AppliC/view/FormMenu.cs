@@ -108,5 +108,10 @@ namespace AP3_AppliC
         {
             Application.Exit();
         }
+
+        private void listeToolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormListeQuizz());
+        }
     }
 }

@@ -196,7 +196,8 @@ namespace AP3_AppliC.Modele
             try
             {
                 return Modele.Connexion.MonModel.Eleves
-                    .Any(e => e.Emaileleve == email);
+                    .Any(e => e.Emaileleve == email
+                            && e.Archiver == false);
             }
             catch 
             {

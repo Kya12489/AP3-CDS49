@@ -120,7 +120,7 @@ namespace AP3_AppliC.view
                 return;
             }
                 #endregion
-                string designation = string.IsNullOrWhiteSpace(tbDesignation.Text) ? null : tbDesignation.Text;
+            string designation = string.IsNullOrWhiteSpace(tbDesignation.Text) ? null : tbDesignation.Text;
             string mode = cbType.SelectedItem.ToString();
 
             /*
