@@ -32,13 +32,12 @@
             dgvQuizz = new DataGridView();
             bsQuizz = new BindingSource(components);
             dgvReponse = new DataGridView();
-            contextMenuStrip1 = new ContextMenuStrip(components);
-            voirSesForfaitsToolStripMenuItem = new ToolStripMenuItem();
-            attribuerUnForfaitToolStripMenuItem = new ToolStripMenuItem();
+            contextMenuStrip = new ContextMenuStrip(components);
+            voirSesReponseToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dgvQuizz).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bsQuizz).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvReponse).BeginInit();
-            contextMenuStrip1.SuspendLayout();
+            contextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // dgvQuizz
@@ -65,24 +64,18 @@
             dgvReponse.Size = new Size(414, 226);
             dgvReponse.TabIndex = 3;
             // 
-            // contextMenuStrip1
+            // contextMenuStrip
             // 
-            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { voirSesForfaitsToolStripMenuItem, attribuerUnForfaitToolStripMenuItem });
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(181, 70);
+            contextMenuStrip.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { voirSesReponseToolStripMenuItem });
+            contextMenuStrip.Name = "contextMenuStrip1";
+            contextMenuStrip.Size = new Size(181, 48);
             // 
-            // voirSesForfaitsToolStripMenuItem
+            // voirSesReponseToolStripMenuItem
             // 
-            voirSesForfaitsToolStripMenuItem.Name = "voirSesForfaitsToolStripMenuItem";
-            voirSesForfaitsToolStripMenuItem.Size = new Size(180, 22);
-            voirSesForfaitsToolStripMenuItem.Text = "Voir ses forfaits";
-            // 
-            // attribuerUnForfaitToolStripMenuItem
-            // 
-            attribuerUnForfaitToolStripMenuItem.Name = "attribuerUnForfaitToolStripMenuItem";
-            attribuerUnForfaitToolStripMenuItem.Size = new Size(180, 22);
-            attribuerUnForfaitToolStripMenuItem.Text = "Attribuer un forfait";
+            voirSesReponseToolStripMenuItem.Name = "voirSesReponseToolStripMenuItem";
+            voirSesReponseToolStripMenuItem.Size = new Size(180, 22);
+            voirSesReponseToolStripMenuItem.Text = "Voir ses forfaits";
             // 
             // FormListeQuizz
             // 
@@ -98,7 +91,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvQuizz).EndInit();
             ((System.ComponentModel.ISupportInitialize)bsQuizz).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvReponse).EndInit();
-            contextMenuStrip1.ResumeLayout(false);
+            contextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -107,8 +100,7 @@
         private DataGridView dgvQuizz;
         private BindingSource bsQuizz;
         private DataGridView dgvReponse;
-        private ContextMenuStrip contextMenuStrip1;
-        private ToolStripMenuItem voirSesForfaitsToolStripMenuItem;
-        private ToolStripMenuItem attribuerUnForfaitToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip;
+        private ToolStripMenuItem voirSesReponseToolStripMenuItem;
     }
 }
