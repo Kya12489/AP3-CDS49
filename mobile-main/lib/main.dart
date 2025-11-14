@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 //import 'package:json_theme/json_theme.dart';
 import 'package:mobil_cds49/screens/screen_login/log_user.dart';
 import 'package:mobil_cds49/screens/screen_score/score_app.dart';
+import 'package:mobil_cds49/services/api/gestionScore/score_api.dart';
 import 'package:mobil_cds49/services/gestion_token/token.dart';
+import 'package:mobil_cds49/services/sqflite/score_gestione/score_bdd.dart';
 import 'package:mobil_cds49/services/theme/generer_theme.dart';
 import 'package:mobil_cds49/services/theme/gestion_theme.dart';
 import 'package:mobil_cds49/screens/screen_accueil/accueil.dart';
@@ -110,7 +112,26 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    _importScore();
     currentBody = Accueil(onNavigate: afficherNouvellePage);
+  }
+
+  void _importScore() async {
+    try {
+      String? token = await GestionToken.getToken();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Échec de connexion $token')));
+      final result = await ScoreApi.getAllScore(token ?? "");
+
+      if (result != null) {
+        ScoreBDD.insertListScore(result);
+      }
+    } catch (Exception) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Impossible de synchroniser les scores ')),
+      );
+    }
   }
 
   void afficherNouvellePage(Widget nouvellePage) {

@@ -24,17 +24,7 @@ class ScoreBDD {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(
-      path,
-      version: 4,
-      onCreate: _createDB,
-      onUpgrade: (db, oldVersion, newVersion) async {
-        if (oldVersion < 4) {
-          // Ajouter la colonne idEleve si elle n'existe pas
-          db.execute('UPDATE scores SET idEleve = 8');
-        }
-      },
-    );
+    return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -44,7 +34,8 @@ class ScoreBDD {
         idEleve INTEGER,
         dateResultat TEXT NOT NULL,
         scoreObtenu INTEGER NOT NULL,
-        nbQuestions INTEGER NOT NULL
+        nbQuestions INTEGER NOT NULL,
+        UNIQUE(idEleve, dateResultat, scoreObtenu, nbQuestions)
       )
     ''');
   }
@@ -58,6 +49,34 @@ class ScoreBDD {
       'nbQuestions': score.nbQuestions,
       'idEleve': Eleve?.ideleve,
     });
+  }
+
+  static Future<void> insertListScore(List<Score> listScore) async {
+    final db = await instance.database;
+    User? Eleve = await UsrApi.infoUser();
+
+    Batch batch = db.batch();
+
+    for (Score score in listScore) {
+      batch.insert('scores', {
+        'ideleve': Eleve?.ideleve,
+        'dateresultat': score.dateResultat.toIso8601String(),
+        'scoreObtenu': score.scoreObtenu,
+        'nbquestions': score.nbQuestions,
+      }, conflictAlgorithm: ConflictAlgorithm.ignore);
+    }
+
+    await batch.commit(noResult: true);
+  }
+
+  Future<void> deleteAllScores() async {
+    final db = await instance.database;
+    User? Eleve = await UsrApi.infoUser();
+    await db.delete(
+      'scores',
+      where: "idEleve = ?",
+      whereArgs: [Eleve?.ideleve],
+    );
   }
 
   Future<List<Score>> fetchAllScores() async {
@@ -76,6 +95,7 @@ class ScoreBDD {
             dateResultat: DateTime.parse(json['dateResultat'] as String),
             scoreObtenu: json['scoreObtenu'] as int,
             nbQuestions: json['nbQuestions'] as int,
+            idEleve: Eleve?.ideleve ?? 0,
           ),
         )
         .toList();
@@ -100,6 +120,7 @@ class ScoreBDD {
             dateResultat: DateTime.parse(json["dateResultat"] as String),
             scoreObtenu: json["scoreObtenu"] as int,
             nbQuestions: json["nbQuestions"] as int,
+            idEleve: Eleve?.ideleve ?? 0,
           ),
         )
         .toList();
@@ -124,6 +145,7 @@ class ScoreBDD {
           (json) => Score(
             dateResultat: DateTime.parse(json['dateResultat'] as String),
             scoreObtenu: json['scoreObtenu'] as int,
+            idEleve: Eleve?.ideleve ?? 0,
             nbQuestions: json['nbQuestions'] as int,
           ),
         )

@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
+
 class Score {
+  final int idEleve;
   final DateTime dateResultat;
   final int scoreObtenu;
   final int nbQuestions;
@@ -6,6 +9,7 @@ class Score {
     required this.dateResultat,
     required this.scoreObtenu,
     required this.nbQuestions,
+    this.idEleve = 0,
   });
 
   String getDateFormatted() {
@@ -25,5 +29,14 @@ class Score {
 
   int getNbQuestions() {
     return nbQuestions;
+  }
+
+  factory Score.fromJson(Map<String, dynamic> json) {
+    return Score(
+      dateResultat: DateTime.parse(json["dateresultat"]),
+      scoreObtenu: json["score"],
+      nbQuestions: json["nbquestions"],
+      idEleve: json["ideleve"],
+    );
   }
 }

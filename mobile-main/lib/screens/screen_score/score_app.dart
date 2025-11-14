@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobil_cds49/models/score.dart';
+import 'package:mobil_cds49/services/api/gestionScore/score_api.dart';
 import 'package:mobil_cds49/services/sqflite/score_gestione/score_bdd.dart';
 import 'package:mobil_cds49/widgets/scoresListeview.dart';
 
@@ -24,6 +25,7 @@ class _scoreAppState extends State<scoreApp> {
 
   void initState() {
     super.initState();
+
     _loadScores();
   }
 
