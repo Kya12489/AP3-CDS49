@@ -113,5 +113,10 @@ namespace AP3_AppliC
         {
             openChildForm(new FormListeQuizz());
         }
+
+        private void ajouterToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionQuizz());
+        }
     }
 }
