@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AP3_AppliC.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +12,35 @@ namespace AP3_AppliC.Modele
     {
         public static List<Entities.Question> listeTousQuestions()
         {
-            return Modele.Connexion.MonModel.Questions.ToList();
+            return Modele.Connexion.MonModel.Questions
+                .Include(q => q.IdCategorieNavigation)
+                .ToList();
+        }
+
+        public static List<Reponse> listeReponses()
+        {
+            try
+            {
+                return Connexion.MonModel.Reponses.ToList();
+            }
+            catch
+            {
+                return new List<Reponse>();
+            }
+        }
+
+        public static List<Reponse> listeReponsesParQuestion(int idQ)
+        {
+            try
+            {
+                return Connexion.MonModel.Reponses
+                    .Where(r => r.Idquestion == idQ)
+                    .ToList();
+            }
+            catch
+            {
+                return new List<Reponse>();
+            }
         }
     }
 }

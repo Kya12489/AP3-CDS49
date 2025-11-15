@@ -29,78 +29,87 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            dgvQuizz = new DataGridView();
-            bsQuizz = new BindingSource(components);
-            dgvReponse = new DataGridView();
+            dgvQuestion = new DataGridView();
             contextMenuStrip = new ContextMenuStrip(components);
             voirSesReponseToolStripMenuItem = new ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)dgvQuizz).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)bsQuizz).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvReponse).BeginInit();
+            bsQuestion = new BindingSource(components);
+            dgvReponse = new DataGridView();
+            bsReponse = new BindingSource(components);
+            ((System.ComponentModel.ISupportInitialize)dgvQuestion).BeginInit();
             contextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bsQuestion).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvReponse).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsReponse).BeginInit();
             SuspendLayout();
             // 
-            // dgvQuizz
+            // dgvQuestion
             // 
-            dgvQuizz.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvQuizz.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvQuizz.Location = new Point(36, 34);
-            dgvQuizz.Name = "dgvQuizz";
-            dgvQuizz.RowHeadersVisible = false;
-            dgvQuizz.Size = new Size(831, 352);
-            dgvQuizz.TabIndex = 0;
-            // 
-            // dgvReponse
-            // 
-            dgvReponse.AllowUserToAddRows = false;
-            dgvReponse.AllowUserToDeleteRows = false;
-            dgvReponse.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dgvReponse.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvReponse.Location = new Point(476, 74);
-            dgvReponse.Margin = new Padding(3, 2, 3, 2);
-            dgvReponse.Name = "dgvReponse";
-            dgvReponse.ReadOnly = true;
-            dgvReponse.RowHeadersWidth = 51;
-            dgvReponse.Size = new Size(414, 226);
-            dgvReponse.TabIndex = 3;
+            dgvQuestion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvQuestion.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvQuestion.ContextMenuStrip = contextMenuStrip;
+            dgvQuestion.Location = new Point(41, 45);
+            dgvQuestion.Margin = new Padding(3, 4, 3, 4);
+            dgvQuestion.Name = "dgvQuestion";
+            dgvQuestion.RowHeadersVisible = false;
+            dgvQuestion.RowHeadersWidth = 51;
+            dgvQuestion.Size = new Size(950, 469);
+            dgvQuestion.TabIndex = 0;
             // 
             // contextMenuStrip
             // 
             contextMenuStrip.ImageScalingSize = new Size(20, 20);
             contextMenuStrip.Items.AddRange(new ToolStripItem[] { voirSesReponseToolStripMenuItem });
             contextMenuStrip.Name = "contextMenuStrip1";
-            contextMenuStrip.Size = new Size(181, 48);
+            contextMenuStrip.Size = new Size(192, 28);
             // 
             // voirSesReponseToolStripMenuItem
             // 
             voirSesReponseToolStripMenuItem.Name = "voirSesReponseToolStripMenuItem";
-            voirSesReponseToolStripMenuItem.Size = new Size(180, 22);
-            voirSesReponseToolStripMenuItem.Text = "Voir ses forfaits";
+            voirSesReponseToolStripMenuItem.Size = new Size(191, 24);
+            voirSesReponseToolStripMenuItem.Text = "Voir ses réponses";
+            voirSesReponseToolStripMenuItem.Click += voirSesReponseToolStripMenuItem_Click;
+            // 
+            // dgvReponse
+            // 
+            dgvReponse.AllowUserToAddRows = false;
+            dgvReponse.AllowUserToDeleteRows = false;
+            dgvReponse.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvReponse.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvReponse.Location = new Point(544, 99);
+            dgvReponse.Name = "dgvReponse";
+            dgvReponse.ReadOnly = true;
+            dgvReponse.RowHeadersVisible = false;
+            dgvReponse.RowHeadersWidth = 51;
+            dgvReponse.Size = new Size(473, 301);
+            dgvReponse.TabIndex = 3;
             // 
             // FormListeQuizz
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(902, 417);
+            ClientSize = new Size(1031, 556);
             Controls.Add(dgvReponse);
-            Controls.Add(dgvQuizz);
+            Controls.Add(dgvQuestion);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormListeQuizz";
             Text = "FormListeQuizz";
             Load += FormListeQuizz_Load;
-            ((System.ComponentModel.ISupportInitialize)dgvQuizz).EndInit();
-            ((System.ComponentModel.ISupportInitialize)bsQuizz).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvReponse).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvQuestion).EndInit();
             contextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)bsQuestion).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvReponse).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsReponse).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dgvQuizz;
-        private BindingSource bsQuizz;
+        private DataGridView dgvQuestion;
+        private BindingSource bsQuestion;
         private DataGridView dgvReponse;
         private ContextMenuStrip contextMenuStrip;
         private ToolStripMenuItem voirSesReponseToolStripMenuItem;
+        private BindingSource bsReponse;
     }
 }
