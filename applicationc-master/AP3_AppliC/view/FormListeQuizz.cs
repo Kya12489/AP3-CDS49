@@ -34,7 +34,23 @@ namespace AP3_AppliC.view
             dgvQuestion.Columns[1].HeaderText = "Question";
             dgvQuestion.Columns[2].HeaderText = "Catégorie";
 
+            dgvQuestion.Columns[2].Width = 10;
+            dgvQuestion.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None; ;
+
             dgvReponse.Visible = false;
+
+
+            List<Category> types = Modele.ModeleQuizz.listeTypes();
+
+            cbRechercheCategorie.Items.Clear();
+            cbRechercheCategorie.Items.Add("Toutes les catégories");
+
+            foreach (var type in types)
+            {
+                cbRechercheCategorie.Items.Add(type.LibelleCategorie);
+            }
+
+            cbRechercheCategorie.SelectedIndex = 0;
         }
 
         private void voirSesReponseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -70,6 +86,30 @@ namespace AP3_AppliC.view
                     dgvReponse.Visible = false;
                 }
             }
+        }
+
+        private void cbRechercheCategorie_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbRechercheCategorie.SelectedItem == null)
+                return;
+
+            string categorieSelectionnee = cbRechercheCategorie.SelectedItem.ToString();
+
+            // Rechercher les questions par catégorie
+            var questionsRecherchees = Modele.ModeleQuizz.RechercherQuestionsParCategorie(categorieSelectionnee);
+
+            // Afficher les résultats
+            bsQuestion.DataSource = questionsRecherchees.Select(q => new
+            {
+                q.Idquestion,
+                q.Libellequestion,
+                Categorie = q.IdCategorieNavigation.LibelleCategorie
+            }).OrderBy(q => q.Idquestion).ToList();
+
+            dgvQuestion.DataSource = bsQuestion;
+
+            // Masquer les réponses lors du changement de filtre
+            dgvReponse.Visible = false;
         }
     }
 }

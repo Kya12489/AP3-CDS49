@@ -35,6 +35,7 @@
             bsQuestion = new BindingSource(components);
             dgvReponse = new DataGridView();
             bsReponse = new BindingSource(components);
+            cbRechercheCategorie = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dgvQuestion).BeginInit();
             contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsQuestion).BeginInit();
@@ -47,12 +48,13 @@
             dgvQuestion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvQuestion.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvQuestion.ContextMenuStrip = contextMenuStrip;
-            dgvQuestion.Location = new Point(41, 45);
+            dgvQuestion.Location = new Point(12, 63);
             dgvQuestion.Margin = new Padding(3, 4, 3, 4);
             dgvQuestion.Name = "dgvQuestion";
             dgvQuestion.RowHeadersVisible = false;
             dgvQuestion.RowHeadersWidth = 51;
-            dgvQuestion.Size = new Size(950, 469);
+            dgvQuestion.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvQuestion.Size = new Size(1005, 469);
             dgvQuestion.TabIndex = 0;
             // 
             // contextMenuStrip
@@ -75,19 +77,30 @@
             dgvReponse.AllowUserToDeleteRows = false;
             dgvReponse.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvReponse.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvReponse.Location = new Point(544, 99);
+            dgvReponse.Location = new Point(519, 99);
             dgvReponse.Name = "dgvReponse";
             dgvReponse.ReadOnly = true;
             dgvReponse.RowHeadersVisible = false;
             dgvReponse.RowHeadersWidth = 51;
-            dgvReponse.Size = new Size(473, 301);
+            dgvReponse.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvReponse.Size = new Size(511, 115);
             dgvReponse.TabIndex = 3;
+            // 
+            // cbRechercheCategorie
+            // 
+            cbRechercheCategorie.FormattingEnabled = true;
+            cbRechercheCategorie.Location = new Point(742, 20);
+            cbRechercheCategorie.Name = "cbRechercheCategorie";
+            cbRechercheCategorie.Size = new Size(233, 28);
+            cbRechercheCategorie.TabIndex = 4;
+            cbRechercheCategorie.SelectedIndexChanged += cbRechercheCategorie_SelectedIndexChanged;
             // 
             // FormListeQuizz
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1031, 556);
+            Controls.Add(cbRechercheCategorie);
             Controls.Add(dgvReponse);
             Controls.Add(dgvQuestion);
             FormBorderStyle = FormBorderStyle.None;
@@ -111,5 +124,6 @@
         private ContextMenuStrip contextMenuStrip;
         private ToolStripMenuItem voirSesReponseToolStripMenuItem;
         private BindingSource bsReponse;
+        private ComboBox cbRechercheCategorie;
     }
 }
