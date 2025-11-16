@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+main.container {
+    min-height: calc(100vh - 165px);
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/public/images/header.jpeg') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-section .lead {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.navbar-dark .navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, .8);
+    padding: 0.75rem 1rem;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #fff;
+}
+
+.progress-bar {
+    background-color: #d47500;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-success {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-color: #28a745 !important;
+}
+
+.text-primary {
+    color: #d47500 !important;
+}
+
+.btn.active,
+.btn-primary,
+.btn-info,
+.list-group-item.active {
+    background-color: #d47500;
+    border-color: #d47500;
+    color: white;
+}
+
+.btn.disabled,
+.btn:disabled,
+fieldset:disabled .btn {
+    background-color: #d4750099;
+    color: #fff;
+    border-color: #d4750099;
+}
+
+.btn-outline-primary {
+    color: #d47500;
+    border-color: #d47500;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.btn:hover,
+.btn-primary:hover {
+    background-color: #cc7000;
+    border-color: #cc7000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline-light {
+    color: #fff;
+    border-color: #fff;
+}
+
+.btn-outline-light:hover {
+    color: #000;
+    background-color: #fff;
+    border-color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+section {
+    padding: 40px 0;
+}
+
+section h2.display-5 {
+    font-weight: 600;
+    margin-bottom: 50px;
+    color: #2c3e50;
+}
+
+#mapid {
+    border: none;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+}
+
+footer.bg-dark {
+    padding: 40px 0;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    section h2.display-5 {
+        font-size: 2rem;
+    }
+
+    #espace-connecte>h1 {
+        font-size: 2.25rem;
+    }
+}
+
+/* Styles pour la force du mot de passe */
+
+.progress {
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.group-password .progress-bar {
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.group-password {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.group-password label {
+    margin-right: 15px;
+}
+
+#password-strength {
+    width: 72%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#password-strength .progress {
+    margin-top: 9px;
+    width: 30%;
+}
+
+#password-strength #strength-text {
+    padding-left: 8px;
+    padding-top: 3px;
+    font-weight: 600;
+}
+
+/*2 - Formulaire de création compte : Ajout du style pour le symbole de succès (✔) pour tous les champs
+concernés sauf date de naissance*/
+
+input:not([name="date_naissance"]) + .success-mark{
+  position: absolute;
+  left: 103%;
+  top: 70%;            /* centre verticalement */
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  pointer-events: none; /* pour éviter que le symbole interfère avec le clic */
+}
+
+input[name="date_naissance"] + div + .success-mark {
+    position: absolute;
+    left: 103%;
+    top: 55%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    pointer-events: none; /* pour éviter que le symbole interfère avec le clic */
+}
+
+input[name="telephone"] + div + .success-mark {
+    position: absolute;
+    left: 103%;
+    top: 55%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    pointer-events: none; /* pour éviter que le symbole interfère avec le clic */
+}
+
+/* 3 - Formulaire de modification des informations : Ajout du style pour le symbole de succès (✔) pour tous les champs
+concernés sauf date de naissance*/
+
+input:not([name="datenaissance"]) + .success-mark{
+  position: absolute;
+  left: 103%;
+  top: 70%;            /* centre verticalement */
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  pointer-events: none; /* pour éviter que le symbole interfère avec le clic */
+}
+
+input[name="datenaissance"] + div + .success-mark {
+    position: absolute;
+    left: 103%;
+    top: 55%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    pointer-events: none; /* pour éviter que le symbole interfère avec le clic */
+}
+
+/* Fin du style pour le symbole de succès (✔) */
+
+
+.alert-warning {
+    border-left: 5px solid #ffc107;
+    background-color: #fff3cd;
+}
+.alert-danger {
+    border-left: 5px solid #dc3545;
+}
+.alert-success {
+    border-left: 5px solid #28a745;
+}
