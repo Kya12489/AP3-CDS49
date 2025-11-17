@@ -375,4 +375,12 @@ class EleveModel extends SQL
         $stmt = $this->getPdo()->prepare($query);
         return $stmt->execute([':email' => $email]);
     }
+
+     public function getUserById(int $ideleve)
+    {
+        $query = "SELECT * FROM eleve WHERE ideleve = :ideleve LIMIT 1";
+        $stmt = $this->getPdo()->prepare($query);
+        $stmt->execute([':ideleve' => $ideleve]);
+        return $stmt->fetch();
+    }
 }

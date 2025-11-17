@@ -3,6 +3,9 @@
 namespace controllers;
 
 use controllers\base\ApiController;
+use DateTime;
+use Exception;
+use models\CategorieModel;
 use models\EleveModel;
 use models\QuestionModel;
 use models\ReponseModel;
@@ -15,6 +18,7 @@ class MobileApiController extends ApiController
     private QuestionModel $questionModel;
     private ReponseModel $reponseModel;
     private ResultatModel $resultatModel;
+    private CategorieModel $categorieModel;
 
     function __construct()
     {
@@ -22,6 +26,7 @@ class MobileApiController extends ApiController
         $this->questionModel = new QuestionModel();
         $this->reponseModel = new ReponseModel();
         $this->resultatModel = new ResultatModel();
+        $this->categorieModel = new CategorieModel();
     }
 
     function index()
@@ -52,7 +57,7 @@ class MobileApiController extends ApiController
         }
         $token = bin2hex(random_bytes(16));
         $user = $this->eleveModel->connexion($email, $password, $token);
-
+        
         if ($user) {
             return $this->successResponse('Connexion réussie', ['user' => $user, 'token' => $token]);
         } else {
@@ -60,6 +65,69 @@ class MobileApiController extends ApiController
         }
     }
 
+    /**
+     * path: /api/signup
+     * method: POST
+     * Méthode pour gérer l'inscription des utilisateurs via l'API mobile.
+     */
+    function signUp(){
+    if(!$this->isPost()){
+        return $this->errorResponse("Methode non autorisée", 405);
+    }
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
+    
+    if($data === null){
+        return $this->errorResponse("JSON invalide");
+    }
+    
+    $nom = trim($data["nom"] ?? "");
+    $prenom = trim($data["prenom"] ?? "");
+    $dn = trim($data["dateNaissance"] ?? "");
+    $email = trim($data["email"] ?? "");
+    $mdp = trim($data["mdp"] ?? "");
+    
+    if(empty($nom) || empty($prenom) || empty($email) || empty($mdp) || empty($dn)){
+        return $this->errorResponse("Tous les champs sont prérequis",406);
+    }
+    
+    // Convertir le format DD/MM/YYYY vers Y-m-d
+    try {
+        // Utiliser createFromFormat pour parser le format français
+        $dn2 = DateTime::createFromFormat('d/m/Y', $dn);
+        
+        if($dn2 === false){
+            return $this->errorResponse("Format de date invalide. Utilisez JJ/MM/AAAA",407);
+        }
+        
+        $age = $dn2->diff(new DateTime())->y;
+        
+        if($age < 16){
+            return $this->errorResponse("Vous devez avoir plus de 16 ans pour vous inscrire",408);
+        }
+        
+        // Convertir au format Y-m-d pour la base de données
+        $dnFormatted = $dn2->format('Y-m-d');
+        
+    } catch (Exception) {
+        return $this->errorResponse("Date de naissance invalide",407);
+    }
+    
+    // Créer l'élève avec la date au bon format
+    if($this->eleveModel->creer_eleve($nom, $prenom, $email, $mdp, $dnFormatted, "")){
+        $token = "votre_token"; // À implémenter
+        return $this->successResponse('Inscription réussie', [
+            'token' => $token,
+            'user' => [
+                'nom' => $nom,
+                'prenom' => $prenom,
+                'email' => $email
+            ]
+        ]);
+    } else {
+        return $this->errorResponse("Erreur lors de l'inscription",409);
+    }
+}
     /**
      * path: /api/profile/get
      * method: GET
@@ -79,7 +147,7 @@ class MobileApiController extends ApiController
         }
 
         $user = $this->eleveModel->getByToken($token);
-
+        $user = $this->eleveModel->getUserById($user["ideleve"]);
         if ($user) {
             return $this->successResponse('Informations utilisateur récupérées avec succès', ['user' => $user]);
         } else {
@@ -128,11 +196,11 @@ class MobileApiController extends ApiController
     }
 
     /**
-     * path: /api/questions/{n}?categorie=random
+     * path: /api/questions/{n}?categorie=0
      * method: GET
      * Retourne N questions et leur réponse associée.
      */
-    function getQuestions(int $n = 40)
+    public function getQuestions(int $n = 40)
     {
         if ($this->isPost()) {
             return $this->errorResponse('Méthode non autorisée', 405);
@@ -142,18 +210,16 @@ class MobileApiController extends ApiController
             return $this->errorResponse('Le nombre de questions doit être supérieur à zéro', 400);
         }
 
-        $categorie = $_GET['categorie'] ?? null;
+        $categorie = $_GET['categorie'] ?? 0;
 
         // TODO: Implémenter la logique de filtrage par catégorie si nécessaire
         $questions = [];
         $output = [];
-
-
         // Si la catégorie est null ou 'random', on récupère des questions aléatoires
-        if ($categorie == null || $categorie == 'random') {
+        if ($categorie == null || $categorie == 0) {
             $questions = $this->questionModel->getRandomQuestions($n);
         } else {
-            // TODO: Implémenter la logique pour récupérer les questions par catégorie
+            $questions = $this->questionModel->getCategorieQuestions($categorie,$n);
         }
 
 
@@ -166,6 +232,10 @@ class MobileApiController extends ApiController
         }
 
         return $this->successResponse('', $output);
+    }
+
+    public function getCategories(){
+        return $this->successResponse('', $this->categorieModel->getAll());
     }
 
     /**
@@ -221,5 +291,53 @@ class MobileApiController extends ApiController
         } else {
             return $this->errorResponse('Échec de la sauvegarde du score', 500);
         }
+    }
+
+    function getScore(){
+       if (!$this->isPost()) {
+            return $this->errorResponse('Méthode non autorisée', 405);
+        }
+        
+         $token = trim(str_replace('Bearer ', '', $_SERVER['HTTP_AUTHORIZATION'] ?? ''));
+
+        if (empty($token)) {
+            return $this->errorResponse('Token requis', 401);
+        }
+
+        $user = $this->eleveModel->getByToken($token);
+        if (!$user) {
+            return $this->errorResponse('Utilisateur non trouvé', 404);
+        }
+
+        $scores = $this->resultatModel->getScoreByUserId($user["ideleve"]);
+        if ($scores) {
+            
+            return $this->successResponse('Informations score récupérées avec succès', ['scores' => $scores]);
+        } else {
+            return $this->errorResponse('score non trouvé', 404);
+        }
+    }
+
+    public function getNbNotif(){
+        if ($this->isPost()) {
+            return $this->errorResponse('Méthode non autorisée', 405);
+        }
+
+        // Récupération depuis l'en-tête (Bearer token), on ne garde que le token
+        $token = trim(str_replace('Bearer ', '', $_SERVER['HTTP_AUTHORIZATION'] ?? ''));
+
+        if (empty($token)) {
+            return $this->errorResponse('Token requis', 401);
+        }
+
+        $user = $this->eleveModel->getByToken($token);
+        if (!$user) {
+            return $this->errorResponse('Utilisateur non trouvé', 404);
+        }
+
+        $documentModel = new \models\DocumentModel();
+        $nbNotif = $documentModel->getNbDocumentsNoReadByEleve($user["ideleve"]);
+
+        return $this->successResponse('Nombre de notifications récupérées avec succès', ['nbNotif' => $nbNotif]);
     }
 }
