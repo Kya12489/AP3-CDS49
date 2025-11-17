@@ -4,9 +4,8 @@ import 'package:flutter/services.dart';
 //import 'package:json_theme/json_theme.dart';
 import 'package:mobil_cds49/screens/screen_login/log_user.dart';
 import 'package:mobil_cds49/screens/screen_score/score_app.dart';
-import 'package:mobil_cds49/services/api/gestionScore/score_api.dart';
+import 'package:mobil_cds49/services/api/config.dart';
 import 'package:mobil_cds49/services/gestion_token/token.dart';
-import 'package:mobil_cds49/services/sqflite/score_gestione/score_bdd.dart';
 import 'package:mobil_cds49/services/theme/generer_theme.dart';
 import 'package:mobil_cds49/services/theme/gestion_theme.dart';
 import 'package:mobil_cds49/screens/screen_accueil/accueil.dart';
@@ -47,7 +46,7 @@ Future<List<ThemeData>> loadDataBeforeRunningApp() async {
   // Utilisation de json_theme KO depuis la denière mise à jour Flutter
   /*final lightTheme = ThemeDecoder.decodeThemeData(lightThemeJson,validate: true)!;
   final darkTheme = ThemeDecoder.decodeThemeData(darkThemeJson,validate: true)!;*/
-
+  AppConfig.load();
   // Décodage des thèmes à partir des fichiers JSON en manuel
   final lightTheme = GenererTheme.buildThemeFromJson(lightThemeJson);
   final darkTheme = GenererTheme.buildThemeFromJson(darkThemeJson);
