@@ -129,7 +129,7 @@ namespace AP3_AppliC.view
 
         private void btGestionCat_Click(object sender, EventArgs e)
         {
-
+            FormMenu.Instance.openChildForm(new FormGestionCategorie());
         }
     }
 }
