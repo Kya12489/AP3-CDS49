@@ -16,10 +16,9 @@ class DocumentApi {
           'Authorization': 'Bearer $token',
         },
       );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        return data['count'] ?? 0;
+      final data = jsonDecode(response.body);
+      if (data["status"] == "success") {
+        return data["data"]["nbNotif"] ?? 0;
       } else {
         return 0;
       }

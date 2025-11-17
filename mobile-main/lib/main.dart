@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:mobil_cds49/screens/screen_login/log_user.dart';
 import 'package:mobil_cds49/screens/screen_score/score_app.dart';
 import 'package:mobil_cds49/services/api/config.dart';
+import 'package:mobil_cds49/services/api/gestionDocument/documentsAPI.dart';
 import 'package:mobil_cds49/services/gestion_token/token.dart';
 import 'package:mobil_cds49/services/theme/generer_theme.dart';
 import 'package:mobil_cds49/services/theme/gestion_theme.dart';
@@ -106,15 +107,36 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // Index de la page actuelle pour la navigation
   int currentPageIndex = 0;
+  int nbNotif = 0;
   Widget? currentBody;
 
   @override
   void initState() {
     super.initState();
-    try {} catch (e) {
+    try {
+      if (GestionToken.isLogged() == true) {
+        refreshNbNotif();
+      }
+    } catch (e) {
       // Gérer les erreurs de synchronisation des scores
     }
     currentBody = Accueil(onNavigate: afficherNouvellePage);
+  }
+
+  Future<void> refreshNbNotif() async {
+    final autorise = await GestionToken.isLogged();
+    if (!autorise) {
+      setState(() {
+        nbNotif = 0;
+      });
+      return;
+    } else {
+      final documentApi = DocumentApi();
+      final count = await documentApi.getDocumentInWaiting();
+      setState(() {
+        nbNotif = count;
+      });
+    }
   }
 
   void afficherNouvellePage(Widget nouvellePage) {
@@ -138,6 +160,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     // Mise à jour du corps de la page
     setState(() {
+      try {
+        refreshNbNotif();
+      } catch (e) {
+        //Gérer les erreurs de navigation
+      }
       currentPageIndex = index;
       switch (index) {
         case 0:
@@ -210,6 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavbar(
         currentIndex: currentPageIndex,
         onDestinationSelected: _onDestinationSelected,
+        nbNotif: nbNotif,
       ),
     );
   }

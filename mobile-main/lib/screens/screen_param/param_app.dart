@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobil_cds49/models/usr.dart';
+import 'package:mobil_cds49/screens/screen_qcm/gestionscore.dart';
 import 'package:mobil_cds49/services/api/gestionUsr/usr_api.dart';
+import 'package:mobil_cds49/services/gestion_token/token.dart';
 import 'package:mobil_cds49/services/theme/gestion_theme.dart';
 
 // Ecran de paramètres de l'application
@@ -14,7 +16,7 @@ class ParamApp extends StatefulWidget {
 class _ParamAppState extends State<ParamApp> {
   bool light = false; // Variable pour le thème clair
   User? userInfo;
-  String? token;
+  String? token = "";
 
   bool isLoading = true;
 
@@ -22,11 +24,16 @@ class _ParamAppState extends State<ParamApp> {
   void initState() {
     super.initState();
     _loadUserInfo();
+    GestionToken.getToken().then((value) {
+      setState(() {
+        token = value;
+      });
+    });
   }
 
   Future<void> _loadUserInfo() async {
     final info = await UsrApi.infoUser();
-    print(info);
+
     setState(() {
       userInfo = info;
       isLoading = false;
@@ -108,6 +115,42 @@ class _ParamAppState extends State<ParamApp> {
                           ),
                   ),
                 ),
+                token != ""
+                    ? Card(
+                        margin: EdgeInsets.all(12),
+                        child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: isLoading
+                              ? Center(child: CircularProgressIndicator())
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Informations utilisateur',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8),
+                                    Text('ID : ${userInfo?.ideleve ?? "..."}'),
+                                    Text(
+                                      'Prénom : ${userInfo?.prenomeleve ?? "..."}',
+                                    ),
+                                    Text(
+                                      'Nom : ${userInfo?.nomeleve ?? "..."}',
+                                    ),
+                                    Text(
+                                      'Email : ${userInfo?.emailEleve ?? "..."}',
+                                    ),
+                                    Text(
+                                      'Date de naissance : ${userInfo?.dateNEleve ?? "..."}',
+                                    ),
+                                  ],
+                                ),
+                        ),
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
