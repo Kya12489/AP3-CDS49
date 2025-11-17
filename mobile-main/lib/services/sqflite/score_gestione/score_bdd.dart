@@ -41,6 +41,7 @@ class ScoreBDD {
   }
 
   Future<void> insertScore(Score score) async {
+    print(score.toString());
     final db = await instance.database;
     User? Eleve = await UsrApi.infoUser();
     await db.insert('scores', {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobil_cds49/main.dart';
 import 'package:mobil_cds49/models/score.dart';
 import 'package:mobil_cds49/services/api/gestionScore/score_api.dart';
+import 'package:mobil_cds49/services/api/gestionUsr/usr_api.dart';
 import 'package:mobil_cds49/services/sqflite/score_gestione/score_bdd.dart';
 
 // Ecran affichant le score de l'utilisateur après un QCM
@@ -24,6 +25,7 @@ class _GestionScoreState extends State<GestionScore> {
   void initState() {
     super.initState();
     saveScoreInLocal();
+    _envoyerScoreEtNaviguer();
   }
 
   // Apelle l'API pour envoyer le score et navigue vers la page d'accueil
@@ -38,9 +40,6 @@ class _GestionScoreState extends State<GestionScore> {
 
     if (statusCode == 200) {
       // Change le body pour afficher la page d'accueil
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => MyHomePage(title: 'CDS 49')),
-      );
     } else {
       // Affiche un message d'erreur si l'envoi du score échoue
       ScaffoldMessenger.of(context).showSnackBar(
@@ -55,6 +54,7 @@ class _GestionScoreState extends State<GestionScore> {
         dateResultat: DateTime.now(),
         scoreObtenu: widget.scoreRealise,
         nbQuestions: widget.nbQuestionsTotal,
+        idEleve: await UsrApi.infoUser().then((user) => user?.ideleve ?? 0),
       ),
     );
   }
@@ -74,7 +74,9 @@ class _GestionScoreState extends State<GestionScore> {
           ElevatedButton(
             onPressed: () {
               // Appelle la méthode pour envoyer le score et naviguer vers l'accueil
-              _envoyerScoreEtNaviguer();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => MyHomePage(title: 'CDS 49')),
+              );
             },
             child: const Text('Retour à l\'accueil'),
           ),

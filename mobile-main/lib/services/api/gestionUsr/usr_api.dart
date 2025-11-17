@@ -85,6 +85,7 @@ class UsrApi {
       if (data['status'] == "success") {
         // Enregistrement du token
         await GestionToken.saveToken(data['data']['token']);
+
         return {"status": data['status']};
       }
     }

@@ -21,9 +21,7 @@ class _LoginUtilisateurState extends State<LoginUtilisateur> {
   void _importScore() async {
     try {
       String? token = await GestionToken.getToken();
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Échec de connexion $token')));
+
       final result = await ScoreApi.getAllScore(token ?? "");
 
       if (result != null) {

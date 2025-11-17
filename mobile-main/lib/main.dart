@@ -112,26 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _importScore();
-    currentBody = Accueil(onNavigate: afficherNouvellePage);
-  }
-
-  void _importScore() async {
-    try {
-      String? token = await GestionToken.getToken();
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Échec de connexion $token')));
-      final result = await ScoreApi.getAllScore(token ?? "");
-
-      if (result != null) {
-        ScoreBDD.insertListScore(result);
-      }
-    } catch (Exception) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Impossible de synchroniser les scores ')),
-      );
+    try {} catch (e) {
+      // Gérer les erreurs de synchronisation des scores
     }
+    currentBody = Accueil(onNavigate: afficherNouvellePage);
   }
 
   void afficherNouvellePage(Widget nouvellePage) {
