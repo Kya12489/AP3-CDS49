@@ -3,7 +3,6 @@ import 'package:mobil_cds49/models/usr.dart';
 import 'package:mobil_cds49/services/api/gestionUsr/usr_api.dart';
 import 'package:mobil_cds49/services/theme/gestion_theme.dart';
 
-
 // Ecran de paramètres de l'application
 class ParamApp extends StatefulWidget {
   const ParamApp({super.key});
@@ -15,7 +14,8 @@ class ParamApp extends StatefulWidget {
 class _ParamAppState extends State<ParamApp> {
   bool light = false; // Variable pour le thème clair
   User? userInfo;
-  
+  String? token;
+
   bool isLoading = true;
 
   @override
@@ -26,7 +26,8 @@ class _ParamAppState extends State<ParamApp> {
 
   Future<void> _loadUserInfo() async {
     final info = await UsrApi.infoUser();
-    setState(() { 
+    print(info);
+    setState(() {
       userInfo = info;
       isLoading = false;
       light = themeController.isLightMode();
@@ -39,27 +40,30 @@ class _ParamAppState extends State<ParamApp> {
       width: double.infinity,
       height: double.infinity,
       child: Column(
-        children: <Widget>[          
+        children: <Widget>[
           Expanded(
             child: ListView(
-              children: [ 
-                 Card(
+              children: [
+                Card(
                   margin: EdgeInsets.all(12),
-                  child: 
-                  Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(16),
                     child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                        Text(light ? 'Passer en mode sombre' : 'Passer en mode clair',
-                        style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          light
+                              ? 'Passer en mode sombre'
+                              : 'Passer en mode clair',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         SizedBox(height: 8),
                         Center(
-                          child : Switch(
-                            value: light, 
+                          child: Switch(
+                            value: light,
                             onChanged: (bool value) {
                               setState(() {
                                 light = value;
@@ -69,10 +73,10 @@ class _ParamAppState extends State<ParamApp> {
                             },
                           ),
                         ),
-                    ],
+                      ],
                     ),
                   ),
-                ),      
+                ),
 
                 Card(
                   margin: EdgeInsets.all(12),
@@ -91,20 +95,22 @@ class _ParamAppState extends State<ParamApp> {
                                 ),
                               ),
                               SizedBox(height: 8),
-                              Text('ID : ${userInfo?.ideleve ?? "..." }'),
-                              Text('Prénom : ${userInfo?.prenomeleve ?? "..." }'),
-                              Text('Nom : ${userInfo?.nomeleve ?? "..." }'),
-                              Text('Email : ${userInfo?.emailEleve ?? "..." }'),
-                              Text('Date de naissance : ${userInfo?.dateNEleve ?? "..." }'),
-
+                              Text('ID : ${userInfo?.ideleve ?? "..."}'),
+                              Text(
+                                'Prénom : ${userInfo?.prenomeleve ?? "..."}',
+                              ),
+                              Text('Nom : ${userInfo?.nomeleve ?? "..."}'),
+                              Text('Email : ${userInfo?.emailEleve ?? "..."}'),
+                              Text(
+                                'Date de naissance : ${userInfo?.dateNEleve ?? "..."}',
+                              ),
                             ],
                           ),
                   ),
-                ),          
+                ),
               ],
             ),
           ),
-          
         ],
       ),
     );

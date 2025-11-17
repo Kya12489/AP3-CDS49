@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mobil_cds49/models/usr.dart';
-import 'package:mobil_cds49/screens/signUp_screen/signup_screen.dart';
 import 'package:mobil_cds49/services/api/config.dart';
 import 'package:mobil_cds49/services/gestion_token/token.dart';
 
@@ -76,8 +75,7 @@ class UsrApi {
         'mdp': paswd,
       }),
     );
-    print('Status: ${response.statusCode}');
-    print('Body: ${response.body}');
+
     // Vérification du statut de la réponse
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
