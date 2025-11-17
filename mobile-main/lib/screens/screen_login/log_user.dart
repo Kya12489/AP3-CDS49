@@ -53,7 +53,7 @@ class _LoginUtilisateurState extends State<LoginUtilisateur> {
               ),
             ), // Affiche un message de succès
           );
-          //_importScore();
+          _importScore();
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

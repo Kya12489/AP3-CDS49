@@ -96,8 +96,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, this.currentIndex = 0});
   final String title;
+  final int currentIndex;
 
   @override
   // Création de l'état pour la page d'accueil
@@ -113,14 +114,24 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    currentPageIndex = widget.currentIndex;
+
+    currentBody = currentPageIndex == 0
+        ? Accueil(onNavigate: afficherNouvellePage)
+        : currentPageIndex == 1
+        ? CodeQCM(onNavigate: afficherNouvellePage)
+        : currentPageIndex == 2
+        ? const ParamApp()
+        : currentPageIndex == 3
+        ? const ContactApp()
+        : currentPageIndex == 4
+        ? const scoreApp()
+        : const Center(child: Text('Page introuvable'));
     try {
-      if (GestionToken.isLogged() == true) {
-        refreshNbNotif();
-      }
+      refreshNbNotif();
     } catch (e) {
       // Gérer les erreurs de synchronisation des scores
     }
-    currentBody = Accueil(onNavigate: afficherNouvellePage);
   }
 
   Future<void> refreshNbNotif() async {
