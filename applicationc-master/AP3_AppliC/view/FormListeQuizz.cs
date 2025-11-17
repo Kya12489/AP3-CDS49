@@ -111,5 +111,25 @@ namespace AP3_AppliC.view
             // Masquer les réponses lors du changement de filtre
             dgvReponse.Visible = false;
         }
+
+        private void dgvQuestion_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgvReponse.Visible = false;
+        }
+
+        private void dgvQuestion_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            dgvReponse.Visible = false;
+        }
+
+        private void dgvQuestion_Click(object sender, EventArgs e)
+        {
+            dgvReponse.Visible = false;
+        }
+
+        private void btGestionCat_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

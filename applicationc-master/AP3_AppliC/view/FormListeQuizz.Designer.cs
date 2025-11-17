@@ -36,6 +36,7 @@
             dgvReponse = new DataGridView();
             bsReponse = new BindingSource(components);
             cbRechercheCategorie = new ComboBox();
+            btGestionCat = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvQuestion).BeginInit();
             contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsQuestion).BeginInit();
@@ -48,26 +49,28 @@
             dgvQuestion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvQuestion.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvQuestion.ContextMenuStrip = contextMenuStrip;
-            dgvQuestion.Location = new Point(12, 63);
-            dgvQuestion.Margin = new Padding(3, 4, 3, 4);
+            dgvQuestion.Location = new Point(10, 47);
             dgvQuestion.Name = "dgvQuestion";
             dgvQuestion.RowHeadersVisible = false;
             dgvQuestion.RowHeadersWidth = 51;
             dgvQuestion.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvQuestion.Size = new Size(1005, 469);
+            dgvQuestion.Size = new Size(912, 386);
             dgvQuestion.TabIndex = 0;
+            dgvQuestion.CellContentClick += dgvQuestion_CellContentClick;
+            dgvQuestion.CellMouseClick += dgvQuestion_CellMouseClick;
+            dgvQuestion.Click += dgvQuestion_Click;
             // 
             // contextMenuStrip
             // 
             contextMenuStrip.ImageScalingSize = new Size(20, 20);
             contextMenuStrip.Items.AddRange(new ToolStripItem[] { voirSesReponseToolStripMenuItem });
             contextMenuStrip.Name = "contextMenuStrip1";
-            contextMenuStrip.Size = new Size(192, 28);
+            contextMenuStrip.Size = new Size(164, 26);
             // 
             // voirSesReponseToolStripMenuItem
             // 
             voirSesReponseToolStripMenuItem.Name = "voirSesReponseToolStripMenuItem";
-            voirSesReponseToolStripMenuItem.Size = new Size(191, 24);
+            voirSesReponseToolStripMenuItem.Size = new Size(163, 22);
             voirSesReponseToolStripMenuItem.Text = "Voir ses réponses";
             voirSesReponseToolStripMenuItem.Click += voirSesReponseToolStripMenuItem_Click;
             // 
@@ -77,34 +80,46 @@
             dgvReponse.AllowUserToDeleteRows = false;
             dgvReponse.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvReponse.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvReponse.Location = new Point(519, 99);
+            dgvReponse.Location = new Point(465, 72);
+            dgvReponse.Margin = new Padding(3, 2, 3, 2);
             dgvReponse.Name = "dgvReponse";
             dgvReponse.ReadOnly = true;
             dgvReponse.RowHeadersVisible = false;
             dgvReponse.RowHeadersWidth = 51;
             dgvReponse.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvReponse.Size = new Size(511, 115);
+            dgvReponse.Size = new Size(468, 125);
             dgvReponse.TabIndex = 3;
             // 
             // cbRechercheCategorie
             // 
             cbRechercheCategorie.FormattingEnabled = true;
-            cbRechercheCategorie.Location = new Point(742, 20);
+            cbRechercheCategorie.Location = new Point(610, 15);
+            cbRechercheCategorie.Margin = new Padding(3, 2, 3, 2);
             cbRechercheCategorie.Name = "cbRechercheCategorie";
-            cbRechercheCategorie.Size = new Size(233, 28);
+            cbRechercheCategorie.Size = new Size(243, 23);
             cbRechercheCategorie.TabIndex = 4;
             cbRechercheCategorie.SelectedIndexChanged += cbRechercheCategorie_SelectedIndexChanged;
             // 
+            // btGestionCat
+            // 
+            btGestionCat.Location = new Point(704, 449);
+            btGestionCat.Name = "btGestionCat";
+            btGestionCat.Size = new Size(149, 23);
+            btGestionCat.TabIndex = 5;
+            btGestionCat.Text = "Gestion Catégorie";
+            btGestionCat.UseVisualStyleBackColor = true;
+            btGestionCat.Click += btGestionCat_Click;
+            // 
             // FormListeQuizz
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1031, 556);
+            ClientSize = new Size(934, 495);
+            Controls.Add(btGestionCat);
             Controls.Add(cbRechercheCategorie);
             Controls.Add(dgvReponse);
             Controls.Add(dgvQuestion);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "FormListeQuizz";
             Text = "FormListeQuizz";
             Load += FormListeQuizz_Load;
@@ -125,5 +140,6 @@
         private ToolStripMenuItem voirSesReponseToolStripMenuItem;
         private BindingSource bsReponse;
         private ComboBox cbRechercheCategorie;
+        private Button btGestionCat;
     }
 }
