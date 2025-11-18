@@ -106,7 +106,7 @@ namespace AP3_AppliC.view
             {
                 MessageBox.Show("La question et ses réponses ont été ajoutées avec succès.",
                     "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                FormMenu.Instance.openChildForm(new FormListeQuizz());
             }
             else
             {

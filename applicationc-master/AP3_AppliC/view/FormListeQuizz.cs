@@ -24,7 +24,8 @@ namespace AP3_AppliC.view
             {
                 x.Idquestion,
                 x.Libellequestion,
-                x.IdCategorieNavigation.LibelleCategorie
+                LibelleCategorie = x.IdCategorieNavigation?.LibelleCategorie ?? "(Sans catégorie)"
+                //x.IdCategorieNavigation.LibelleCategorie
             }).OrderBy(x => x.Idquestion);
 
 
@@ -34,7 +35,7 @@ namespace AP3_AppliC.view
             dgvQuestion.Columns[1].HeaderText = "Question";
             dgvQuestion.Columns[2].HeaderText = "Catégorie";
 
-            dgvQuestion.Columns[2].Width = 10;
+            dgvQuestion.Columns[2].Width = 350;
             dgvQuestion.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None; ;
 
             dgvReponse.Visible = false;
@@ -103,7 +104,8 @@ namespace AP3_AppliC.view
             {
                 q.Idquestion,
                 q.Libellequestion,
-                Categorie = q.IdCategorieNavigation.LibelleCategorie
+                LibelleCategorie = q.IdCategorieNavigation?.LibelleCategorie ?? "(Sans catégorie)"
+                //Categorie = q.IdCategorieNavigation.LibelleCategorie
             }).OrderBy(q => q.Idquestion).ToList();
 
             dgvQuestion.DataSource = bsQuestion;

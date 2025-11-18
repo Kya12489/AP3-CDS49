@@ -60,7 +60,7 @@
             tbReponse2.Name = "tbReponse2";
             tbReponse2.PlaceholderText = "Réponse 2";
             tbReponse2.Size = new Size(644, 61);
-            tbReponse2.TabIndex = 1;
+            tbReponse2.TabIndex = 2;
             // 
             // tbReponse1
             // 
@@ -69,7 +69,7 @@
             tbReponse1.Name = "tbReponse1";
             tbReponse1.PlaceholderText = "Réponse 1";
             tbReponse1.Size = new Size(644, 61);
-            tbReponse1.TabIndex = 2;
+            tbReponse1.TabIndex = 1;
             // 
             // tbReponse3
             // 
@@ -83,6 +83,7 @@
             // 
             // cbCategory
             // 
+            cbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
             cbCategory.FormattingEnabled = true;
             cbCategory.Location = new Point(27, 472);
             cbCategory.Name = "cbCategory";
@@ -106,7 +107,7 @@
             tbReponse4.Name = "tbReponse4";
             tbReponse4.PlaceholderText = "Réponse 4 (optionnelle)";
             tbReponse4.Size = new Size(644, 61);
-            tbReponse4.TabIndex = 6;
+            tbReponse4.TabIndex = 4;
             tbReponse4.TextChanged += tbReponse4_TextChanged;
             // 
             // pbImageQuestion

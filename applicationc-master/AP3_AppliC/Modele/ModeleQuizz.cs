@@ -65,9 +65,17 @@ namespace AP3_AppliC.Modele
                 return toutesLesQuestions;
             }
 
+            if (categorie.Trim().ToLower() == "(aucune catégorie)")
+            {
+                return toutesLesQuestions
+                    .Where(q => q.IdCategorieNavigation == null)
+                    .ToList();
+            }
+
             string categorieRecherche = categorie.Trim().ToLower();
             return toutesLesQuestions
-                .Where(q => q.IdCategorieNavigation.LibelleCategorie.ToLower() == categorieRecherche)
+                .Where(q => q.IdCategorieNavigation != null &&
+                            q.IdCategorieNavigation.LibelleCategorie.ToLower() == categorieRecherche)
                 .ToList();
         }
 
@@ -97,16 +105,37 @@ namespace AP3_AppliC.Modele
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(libelle))
+                {
+                    MessageBox.Show("Le libellé ne peut pas être vide.");
+                    return null;
+                }
+
+                string libelleNormalise = libelle.Trim().ToLower();
+
+                // Vérifier si la catégorie existe déjà
+                bool existe = Connexion.MonModel.Categories
+                    .Any(c => c.LibelleCategorie.Trim().ToLower() == libelleNormalise);
+
+                if (existe)
+                {
+                    MessageBox.Show("Cette catégorie existe déjà.",
+                        "Doublon", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return null;
+                }
+
                 // ajout dans la table Category
                 Category uneC = new Category();
-                uneC.LibelleCategorie = libelle;
-                Modele.Connexion.MonModel.Categories.Add(uneC);
-                Modele.Connexion.MonModel.SaveChanges();
+                uneC.LibelleCategorie = libelle.Trim();
+
+                Connexion.MonModel.Categories.Add(uneC);
+                Connexion.MonModel.SaveChanges();
+
                 return uneC;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show("Erreur : " + ex.Message);
                 return null;
             }
         }
@@ -201,5 +230,46 @@ namespace AP3_AppliC.Modele
                 return false;
             }
         }
+
+        public static bool SupprimerCategorie(int idCategorie)
+        {
+            try
+            {
+                // 1. Récupérer la catégorie
+                Category categorie = Connexion.MonModel.Categories
+                    .FirstOrDefault(c => c.IdCategorie == idCategorie);
+
+                if (categorie == null)
+                {
+                    MessageBox.Show("Catégorie introuvable.",
+                        "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                // 2. Récupérer les questions associées
+                var questionsLiees = Connexion.MonModel.Questions
+                    .Where(q => q.IdCategorie == idCategorie)
+                    .ToList();
+
+                // 3. Mettre IdCategorie des questions à NULL
+                foreach (var q in questionsLiees)
+                    q.IdCategorie = null;
+
+                // 4. Supprimer la catégorie
+                Connexion.MonModel.Categories.Remove(categorie);
+
+                // 5. Sauvegarder tout
+                Connexion.MonModel.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la suppression : {ex.Message}",
+                    "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
     }
 }

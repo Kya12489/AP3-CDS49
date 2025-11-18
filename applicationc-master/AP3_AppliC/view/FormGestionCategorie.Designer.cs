@@ -28,60 +28,98 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             dgvCategorie = new DataGridView();
-            button1 = new Button();
-            button2 = new Button();
+            btAjouter = new Button();
+            btModifier = new Button();
+            bsCategorie = new BindingSource(components);
+            btSupprimer = new Button();
+            btRetour = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCategorie).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bsCategorie).BeginInit();
             SuspendLayout();
             // 
             // dgvCategorie
             // 
             dgvCategorie.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCategorie.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCategorie.Location = new Point(82, 53);
+            dgvCategorie.Location = new Point(30, 54);
+            dgvCategorie.Margin = new Padding(3, 4, 3, 4);
             dgvCategorie.Name = "dgvCategorie";
             dgvCategorie.RowHeadersVisible = false;
-            dgvCategorie.Size = new Size(463, 239);
+            dgvCategorie.RowHeadersWidth = 51;
+            dgvCategorie.Size = new Size(984, 436);
             dgvCategorie.TabIndex = 0;
             // 
-            // button1
+            // btAjouter
             // 
-            button1.Location = new Point(119, 340);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 1;
-            button1.Text = "AJOUTER";
-            button1.UseVisualStyleBackColor = true;
+            btAjouter.Location = new Point(907, 530);
+            btAjouter.Margin = new Padding(3, 4, 3, 4);
+            btAjouter.Name = "btAjouter";
+            btAjouter.Size = new Size(86, 31);
+            btAjouter.TabIndex = 1;
+            btAjouter.Text = "AJOUTER";
+            btAjouter.UseVisualStyleBackColor = true;
+            btAjouter.Click += btAjouter_Click;
             // 
-            // button2
+            // btModifier
             // 
-            button2.Location = new Point(435, 340);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 2;
-            button2.Text = "MODIFIER";
-            button2.UseVisualStyleBackColor = true;
+            btModifier.Location = new Point(470, 530);
+            btModifier.Margin = new Padding(3, 4, 3, 4);
+            btModifier.Name = "btModifier";
+            btModifier.Size = new Size(86, 31);
+            btModifier.TabIndex = 2;
+            btModifier.Text = "MODIFIER";
+            btModifier.UseVisualStyleBackColor = true;
+            btModifier.Click += btModifier_Click;
+            // 
+            // btSupprimer
+            // 
+            btSupprimer.Location = new Point(43, 532);
+            btSupprimer.Name = "btSupprimer";
+            btSupprimer.Size = new Size(94, 29);
+            btSupprimer.TabIndex = 3;
+            btSupprimer.Text = "SUPPRIMER";
+            btSupprimer.UseVisualStyleBackColor = true;
+            btSupprimer.Click += btSupprimer_Click;
+            // 
+            // btRetour
+            // 
+            btRetour.Location = new Point(30, 12);
+            btRetour.Name = "btRetour";
+            btRetour.Size = new Size(94, 29);
+            btRetour.TabIndex = 4;
+            btRetour.Text = "RETOUR";
+            btRetour.UseVisualStyleBackColor = true;
+            btRetour.Click += btRetour_Click;
             // 
             // FormGestionCategorie
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(918, 456);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            ClientSize = new Size(1049, 608);
+            Controls.Add(btRetour);
+            Controls.Add(btSupprimer);
+            Controls.Add(btModifier);
+            Controls.Add(btAjouter);
             Controls.Add(dgvCategorie);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormGestionCategorie";
             Text = "FormGestionCategorie";
             Load += FormGestionCategorie_Load;
             ((System.ComponentModel.ISupportInitialize)dgvCategorie).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bsCategorie).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private DataGridView dgvCategorie;
-        private Button button1;
-        private Button button2;
+        private Button btAjouter;
+        private Button btModifier;
+        private BindingSource bsCategorie;
+        private Button btSupprimer;
+        private Button btRetour;
     }
 }
