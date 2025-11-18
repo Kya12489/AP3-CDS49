@@ -200,7 +200,7 @@ class MobileApiController extends ApiController
      * method: GET
      * Retourne N questions et leur réponse associée.
      */
-    public function getQuestions(int $n = 40)
+    function getQuestions(int $n = 40)
     {
         if ($this->isPost()) {
             return $this->errorResponse('Méthode non autorisée', 405);
@@ -215,6 +215,8 @@ class MobileApiController extends ApiController
         // TODO: Implémenter la logique de filtrage par catégorie si nécessaire
         $questions = [];
         $output = [];
+
+
         // Si la catégorie est null ou 'random', on récupère des questions aléatoires
         if ($categorie == null || $categorie == 0) {
             $questions = $this->questionModel->getRandomQuestions($n);
@@ -340,4 +342,205 @@ class MobileApiController extends ApiController
 
         return $this->successResponse('Nombre de notifications récupérées avec succès', ['nbNotif' => $nbNotif]);
     }
+
+    function getDocuments(){
+        if ($this->isPost()) {
+            return $this->errorResponse('Méthode non autorisée', 405);
+        }
+
+        // Récupération depuis l'en-tête (Bearer token), on ne garde que le token
+        $token = trim(str_replace('Bearer ', '', $_SERVER['HTTP_AUTHORIZATION'] ?? ''));
+
+        if (empty($token)) {
+            return $this->errorResponse('Token requis', 401);
+        }
+
+        $user = $this->eleveModel->getByToken($token);
+        if (!$user) {
+            return $this->errorResponse('Utilisateur non trouvé', 404);
+        }
+
+        $documentModel = new \models\DocumentModel();
+        $documents = $documentModel->getDocumentByEleve($user["ideleve"]);
+
+        return $this->successResponse('Documents récupérés avec succès', ['documents' => $documents]);
+    }
+
+    public function uploadDocument(){
+        try{
+        if (!$this->isPost()) {
+            return $this->errorResponse('Méthode non autorisée', 405);
+        }
+
+        // Récupération depuis l'en-tête (Bearer token), on ne garde que le token
+        $token = trim(str_replace('Bearer ', '', $_SERVER['HTTP_AUTHORIZATION'] ?? ''));
+
+        if (empty($token)) {
+            return $this->errorResponse('Token requis', 401);
+        }
+
+        $user = $this->eleveModel->getByToken($token);
+        if (!$user) {
+            return $this->errorResponse('Utilisateur non trouvé', 404);
+        }
+
+        if (!isset($_POST['document_id'])) {
+            http_response_code(400);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID du document manquant'
+            ]);
+            return;
+        }
+        
+        $documentId = intval($_POST['document_id']);
+        $file = $_FILES['document'];
+        
+        // Vérifier le type de fichier
+        $allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+        $fileType = mime_content_type($file['tmp_name']);
+        
+        if (!in_array($fileType, $allowedTypes)) {
+            http_response_code(400);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Type de fichier non autorisé. Seuls PDF, JPEG et PNG sont acceptés.'
+            ]);
+            return;
+        }
+        
+        // Vérifier la taille du fichier (max 10MB)
+        $maxSize = 10 * 1024 * 1024; // 10 MB
+        if ($file['size'] > $maxSize) {
+            http_response_code(400);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Fichier trop volumineux. Taille maximale: 10MB'
+            ]);
+            return;
+        }
+        
+        // Créer le dossier de destination si nécessaire
+        $uploadDir = __DIR__ . '../../documents/';
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        
+        // Générer un nom de fichier unique
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $fileName = uniqid('doc_' . $documentId . '_', true) . '.' . $extension;
+        $filePath = $uploadDir . $fileName;
+        
+        // Déplacer le fichier
+        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+            http_response_code(500);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erreur lors de l\'enregistrement du fichier'
+            ]);
+            return;
+        }
+        
+        try {
+        $documentModel = new \models\DocumentModel();
+        
+        // Correction : utiliser . pour concaténer, pas +
+        $documentModel->updateLienDocument($documentId, $fileName);
+        $documentModel->updateIdStatut($documentId, 2);
+        
+        // Réponse succès
+        return $this->successResponse('Document téléversé avec succès', [
+            'document_id' => $documentId,
+            'file_name' => $fileName,
+            'file_path' => $fileName,
+            'file_size' => $file['size'],
+            'file_type' => $fileType
+        ]);
+        
+    } catch (\Exception $e) {
+        // Supprimer le fichier en cas d'erreur
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+        return $this->errorResponse('Erreur lors de la mise à jour: ' . $e->getMessage(), 500);
+    }
+    } catch (\Exception $e) {
+        return $this->errorResponse('Erreur lors du téléversement: ' . $e->getMessage(), 500);
+    }
+}
+
+public function downloadDocument(){
+    if ($this->isPost()) {
+        return $this->errorResponse('Méthode non autorisée', 405);
+    }
+
+    // Récupération du token
+    $token = trim(str_replace('Bearer ', '', $_SERVER['HTTP_AUTHORIZATION'] ?? ''));
+
+    if (empty($token)) {
+        return $this->errorResponse('Token requis', 401);
+    }
+
+    $user = $this->eleveModel->getByToken($token);
+    if (!$user) {
+        return $this->errorResponse('Utilisateur non trouvé', 404);
+    }
+
+    // Récupérer l'ID du document depuis l'URL
+    if (!isset($_GET['document_id'])) {
+        return $this->errorResponse('ID du document manquant', 400);
+    }
+
+    $documentId = intval($_GET['document_id']);
+
+    $documentModel = new \models\DocumentModel();
+    $document = $documentModel->getById($documentId);
+
+    if (!$document) {
+        return $this->errorResponse('Document non trouvé', 404);
+    }
+
+    // Vérifier que le document appartient à l'utilisateur
+    if ($document['idEleve'] != $user['ideleve']) {
+        return $this->errorResponse('Accès non autorisé', 403);
+    }
+
+    // Vérifier que le document a un fichier
+    if (empty($document['lienDoc'])) {
+        return $this->errorResponse('Aucun fichier disponible', 404);
+    }
+
+    // Chemin du fichier
+    $filePath = __DIR__ . '/../../documents/' . $document['lienDoc'];
+
+    if (!file_exists($filePath)) {
+        return $this->errorResponse('Fichier introuvable sur le serveur', 404);
+    }
+
+    // Déterminer le type MIME
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mimeType = finfo_file($finfo, $filePath);
+    finfo_close($finfo);
+
+    // Nom du fichier pour le téléchargement
+    $fileName = basename($document['lienDoc']);
+
+    // Headers pour forcer le téléchargement
+    header('Content-Description: File Transfer');
+    header('Content-Type: ' . $mimeType);
+    header('Content-Disposition: attachment; filename="' . $fileName . '"');
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($filePath));
+
+    // Nettoyer le buffer de sortie
+    ob_clean();
+    flush();
+
+    // Envoyer le fichier
+    readfile($filePath);
+    exit;
+}
 }

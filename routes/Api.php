@@ -22,5 +22,8 @@ class Api
         Route::Add("/api/register",[$mobileApiController,'signUp']);
         Route::Add("/api/getScore",[$mobileApiController,'getScore']);
         Route::Add("/api/documents/waiting",[$mobileApiController,'getNbNotif']);
+        Route::Add("/api/documents",[$mobileApiController,'getDocuments']);
+        Route::Add("/api/documents/upload",[$mobileApiController,'uploadDocument']);
+        Route::Add("/api/documents/download",[$mobileApiController,'downloadDocument']);
     }
 }
