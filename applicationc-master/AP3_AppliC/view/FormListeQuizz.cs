@@ -36,7 +36,7 @@ namespace AP3_AppliC.view
             dgvQuestion.Columns[2].HeaderText = "Catégorie";
 
             dgvQuestion.Columns[2].Width = 350;
-            dgvQuestion.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None; ;
+            dgvQuestion.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None; 
 
             dgvReponse.Visible = false;
 
@@ -132,6 +132,54 @@ namespace AP3_AppliC.view
         private void btGestionCat_Click(object sender, EventArgs e)
         {
             FormMenu.Instance.openChildForm(new FormGestionCategorie());
+        }
+
+        private void btSupp_Click(object sender, EventArgs e)
+        {
+            if (dgvQuestion.CurrentRow == null) return;
+
+            var cellValue = dgvQuestion.CurrentRow.Cells[1]?.Value
+                            ?? dgvQuestion.CurrentRow.Cells[0]?.Value;
+
+            if (cellValue == null) return;
+
+            string libelle = cellValue.ToString().Trim();
+
+            // retrouver l'objet Category en interrogeant le modèle
+            Question question = Modele.ModeleQuizz.listeTousQuestions()
+                            .FirstOrDefault(c => c.Libellequestion.Trim().Equals(libelle, StringComparison.OrdinalIgnoreCase));
+
+            if (question == null)
+            {
+                MessageBox.Show("Question introuvable en base.");
+                return;
+            }
+
+            var rep = MessageBox.Show(
+                $"Voulez-vous vraiment supprimer la question '{question.Libellequestion}' ?",
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (rep == DialogResult.Yes)
+            {
+                if (Modele.ModeleQuizz.SupprimerQuestion(question.Idquestion))
+                {
+                    MessageBox.Show("Question supprimée avec succès.");
+                    bsQuestion.DataSource = Modele.ModeleQuizz.listeTousQuestions().Select(static x => new
+                    {
+                        x.Idquestion,
+                        x.Libellequestion,
+                        LibelleCategorie = x.IdCategorieNavigation?.LibelleCategorie ?? "(Sans catégorie)"
+                    }).OrderBy(x => x.Idquestion);
+                    dgvQuestion.DataSource = bsQuestion;
+                    dgvQuestion.Columns["Idquestion"].Visible = false;
+                    dgvQuestion.Columns[1].HeaderText = "Question";
+                    dgvQuestion.Columns[2].HeaderText = "Catégorie";
+                    dgvQuestion.Columns[2].Width = 350;
+                    dgvQuestion.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                }
+            }
         }
     }
 }

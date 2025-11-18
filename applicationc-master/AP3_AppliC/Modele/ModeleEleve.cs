@@ -220,7 +220,7 @@ namespace AP3_AppliC.Modele
         }
        
 
-        public static Eleve ModifierEleve(int idEleves, string nom, string prenom, string email, string mdp, DateOnly dateNaissance, string numTel)
+        public static Eleve ModifierEleve(int idEleves, string nom, string prenom, string email, /*string mdp,*/ DateOnly dateNaissance, string numTel)
         {
             try
             {
@@ -235,9 +235,32 @@ namespace AP3_AppliC.Modele
                 eleve.Nomeleve = nom;
                 eleve.Prenomeleve = prenom;
                 eleve.Emaileleve = email;
-                eleve.Motpasseeleve = BC.HashPassword(mdp);
+                //eleve.Motpasseeleve = BC.HashPassword(mdp);
                 eleve.Datenaissanceeleve = dateNaissance;
                 eleve.Numeroteleleve = numTel;
+
+                Modele.Connexion.MonModel.SaveChanges();
+                return eleve;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+                return null;
+            }
+        }
+        public static Eleve ModifierMdp(int idEleves, string mdp)
+        {
+            try
+            {
+                Eleve eleve = Modele.Connexion.MonModel.Eleves
+                    .FirstOrDefault(v => v.Ideleve == idEleves);
+                if (eleve == null)
+                {
+                    MessageBox.Show("Eleve introuvable");
+                    return null;
+                }
+
+                eleve.Motpasseeleve = BC.HashPassword(mdp);
 
                 Modele.Connexion.MonModel.SaveChanges();
                 return eleve;

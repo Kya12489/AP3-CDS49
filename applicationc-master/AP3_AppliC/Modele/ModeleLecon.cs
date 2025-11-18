@@ -1,4 +1,5 @@
 ﻿using AP3_AppliC.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -61,5 +62,125 @@ namespace AP3_AppliC.Modele
                 return false;
             }
         }
+        /*
+        public static List<Conduire> ObtenirLecons(DateTime? dateDebut = null, DateTime? dateFin = null)
+        {
+            using (var context = new Ap3LwsContext())
+            {
+                var query = context.Conduires
+                    .Include(c => c.IdeleveNavigation)
+                    .Include(c => c.IdmoniteurNavigation)
+                    .Include(c => c.IdvehiculeNavigation)
+                    .AsQueryable();
+
+                if (dateDebut != null)
+                    query = query.Where(c => c.Heuredebut >= dateDebut.Value);
+
+                if (dateFin != null)
+                    query = query.Where(c => c.Heuredebut <= dateFin.Value);
+
+                return query
+                    .OrderBy(c => c.Heuredebut)
+                    .ToList();
+            }
+        }*/
+
+        public static List<dynamic> ObtenirMoniteursPourFiltre()
+        {
+            using (var context = new Ap3LwsContext())
+            {
+                var moniteurs = context.Moniteurs
+                    .Select(m => new { m.Idmoniteur, Nom = m.Nommoniteur + " " + m.Prenommoniteur })
+                    .OrderBy(m => m.Nom)
+                    .ToList<dynamic>();
+
+                // Ajouter l'option "Tous"
+                moniteurs.Insert(0, new { Idmoniteur = 0, Nom = "-- Tous --" });
+
+                return moniteurs;
+            }
+        }
+
+        public static List<dynamic> ObtenirElevesPourFiltre()
+        {
+            using (var context = new Ap3LwsContext())
+            {
+                var eleves = context.Eleves
+                    .Select(e => new { e.Ideleve, Nom = e.Nomeleve + " " + e.Prenomeleve })
+                    .OrderBy(e => e.Nom)
+                    .ToList<dynamic>();
+
+                // Ajouter l'option "Tous"
+                eleves.Insert(0, new { Ideleve = 0, Nom = "-- Tous --" });
+
+                return eleves;
+            }
+        }
+
+        public static bool SupprimerLecon(int idEleve, int idMoniteur, int idVehicule, DateTime heureDebut)
+        {
+            try
+            {
+                using (var context = new Ap3LwsContext())
+                {
+                    var lecon = context.Conduires.FirstOrDefault(c =>
+                        c.Ideleve == idEleve &&
+                        c.Idmoniteur == idMoniteur &&
+                        c.Idvehicule == idVehicule &&
+                        c.Heuredebut == heureDebut);
+
+                    if (lecon != null)
+                    {
+                        context.Conduires.Remove(lecon);
+                        context.SaveChanges();
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        /*
+        public static Conduire ObtenirLecon(int idEleve, int idMoniteur, int idVehicule, DateTime heureDebut)
+        {
+            using (var context = new Ap3LwsContext())
+            {
+                return context.Conduires.FirstOrDefault(c =>
+                    c.Ideleve == idEleve &&
+                    c.Idmoniteur == idMoniteur &&
+                    c.Idvehicule == idVehicule &&
+                    c.Heuredebut == heureDebut);
+            }
+        }*/
+        public static List<Conduire> ObtenirLecons(DateTime? dateDebut = null,DateTime? dateFin = null,int? idMoniteur = null,int? idEleve = null)
+        {
+            using (var context = new Ap3LwsContext())
+            {
+                var query = context.Conduires
+                    .Include(c => c.IdeleveNavigation)
+                    .Include(c => c.IdmoniteurNavigation)
+                    .Include(c => c.IdvehiculeNavigation)
+                    .AsQueryable();
+
+                if (dateDebut.HasValue)
+                    query = query.Where(c => c.Heuredebut >= dateDebut.Value.Date);
+
+                if (dateFin.HasValue)
+                    query = query.Where(c => c.Heuredebut <= dateFin.Value.Date.AddDays(1).AddSeconds(-1));
+
+                if (idMoniteur.HasValue && idMoniteur.Value > 0)
+                    query = query.Where(c => c.Idmoniteur == idMoniteur.Value);
+
+                if (idEleve.HasValue && idEleve.Value > 0)
+                    query = query.Where(c => c.Ideleve == idEleve.Value);
+
+                return query.ToList();
+            }
+        }
+
     }
 }

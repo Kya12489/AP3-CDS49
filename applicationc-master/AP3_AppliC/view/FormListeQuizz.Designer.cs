@@ -37,6 +37,7 @@
             bsReponse = new BindingSource(components);
             cbRechercheCategorie = new ComboBox();
             btGestionCat = new Button();
+            btSupp = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvQuestion).BeginInit();
             contextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsQuestion).BeginInit();
@@ -110,11 +111,22 @@
             btGestionCat.UseVisualStyleBackColor = true;
             btGestionCat.Click += btGestionCat_Click;
             // 
+            // btSupp
+            // 
+            btSupp.Location = new Point(74, 449);
+            btSupp.Name = "btSupp";
+            btSupp.Size = new Size(93, 23);
+            btSupp.TabIndex = 6;
+            btSupp.Text = "SUPPRIMER";
+            btSupp.UseVisualStyleBackColor = true;
+            btSupp.Click += btSupp_Click;
+            // 
             // FormListeQuizz
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(934, 495);
+            Controls.Add(btSupp);
             Controls.Add(btGestionCat);
             Controls.Add(cbRechercheCategorie);
             Controls.Add(dgvReponse);
@@ -141,5 +153,6 @@
         private BindingSource bsReponse;
         private ComboBox cbRechercheCategorie;
         private Button btGestionCat;
+        private Button btSupp;
     }
 }

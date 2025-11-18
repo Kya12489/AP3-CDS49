@@ -96,20 +96,7 @@ namespace AP3_AppliC.view
             }
             #endregion
 
-            string mdp = tbMdp.Text;
-            if (string.IsNullOrEmpty(mdp))
-            {
-                MessageBox.Show("Le mot de passe est obligatoire.",
-                            "Champ requis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-            if (!Controleur.MdpValide(mdp, out string messageErreur))
-            {
-                MessageBox.Show(messageErreur,
-                            "Mot de passe invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                tbMdp.Focus();
-                return;
-            }
+            
 
             DateOnly date = DateOnly.FromDateTime(dtpNaissance.Value);
             if (date > DateOnly.FromDateTime(DateTime.Today))
@@ -149,6 +136,22 @@ namespace AP3_AppliC.view
 
             if (etat == EtatGestionE.Add && !Modele.ModeleEleve.EmailExiste(mail))
             {
+
+                string mdp = tbMdp.Text;
+                if (string.IsNullOrEmpty(mdp))
+                {
+                    MessageBox.Show("Le mot de passe est obligatoire.",
+                                "Champ requis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                if (!Controleur.MdpValide(mdp, out string messageErreur))
+                {
+                    MessageBox.Show(messageErreur,
+                                "Mot de passe invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    tbMdp.Focus();
+                    return;
+                }
+
                 Eleve nouvelEleve = Modele.ModeleEleve.AjoutEleve(nom, prenom, mail, mdp, date, telEnvoyer);
 
                 if (nouvelEleve != null)
@@ -178,7 +181,7 @@ namespace AP3_AppliC.view
             }
             if (etat == EtatGestionE.Update && !Modele.ModeleEleve.EmailExisteModif(mail, _idEleve))
             {
-                Eleve eleveModifie = Modele.ModeleEleve.ModifierEleve(_idEleve, nom, prenom, mail, mdp, date, telEnvoyer);
+                Eleve eleveModifie = Modele.ModeleEleve.ModifierEleve(_idEleve, nom, prenom, mail, /*mdp,*/ date, telEnvoyer);
                 if (eleveModifie != null)
                 {
                     MessageBox.Show("Élève modifié avec succès !",
@@ -214,13 +217,15 @@ namespace AP3_AppliC.view
             if (etat == EtatGestionE.Add) // cas etat en ajout
             {
                 btAction.Text = "AJOUTER";
-
-
             }
 
             if (etat == EtatGestionE.Update) // cas etat en modification 
             {
                 btAction.Text = "MODIFIER";
+                lblForfait.Visible = false;
+                cbForfait.Visible = false;
+                tbMdp.Visible = false;
+                lblMdp.Visible = false;
                 ChargerDonneesEleves();
             }
         }

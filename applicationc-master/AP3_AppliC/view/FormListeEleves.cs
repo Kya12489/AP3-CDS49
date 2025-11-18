@@ -203,5 +203,13 @@ namespace AP3_AppliC
                     "Aucune sélection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void changementMdpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Type type = bsEleves.Current.GetType();
+            int idE = (int)type.GetProperty("Ideleve").GetValue(bsEleves.Current, null);
+            FormChangementMdp M = new FormChangementMdp(idE);
+            M.Show();
+        }
     }
 }

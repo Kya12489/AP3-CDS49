@@ -34,16 +34,17 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             voirSesForfaitsToolStripMenuItem = new ToolStripMenuItem();
             attribuerUnForfaitToolStripMenuItem = new ToolStripMenuItem();
+            changementMdpToolStripMenuItem = new ToolStripMenuItem();
             bsEleves = new BindingSource(components);
             dgvForfaits = new DataGridView();
             bsForfaitsparEleve = new BindingSource(components);
-            label2 = new Label();
             btnFermer = new Button();
             tbNomEleve = new TextBox();
             tbPrenomEleve = new TextBox();
             btModifier = new Button();
             btArchiver = new Button();
             btFacturation = new Button();
+            btjustificatifs = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvEleves).BeginInit();
             contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bsEleves).BeginInit();
@@ -55,9 +56,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(70, 48);
+            label1.Location = new Point(61, 36);
             label1.Name = "label1";
-            label1.Size = new Size(177, 31);
+            label1.Size = new Size(145, 25);
             label1.TabIndex = 0;
             label1.Text = "Liste des Elèves";
             // 
@@ -68,7 +69,8 @@
             dgvEleves.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvEleves.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvEleves.ContextMenuStrip = contextMenuStrip1;
-            dgvEleves.Location = new Point(70, 107);
+            dgvEleves.Location = new Point(61, 80);
+            dgvEleves.Margin = new Padding(3, 2, 3, 2);
             dgvEleves.MultiSelect = false;
             dgvEleves.Name = "dgvEleves";
             dgvEleves.ReadOnly = true;
@@ -76,7 +78,7 @@
             dgvEleves.RowHeadersVisible = false;
             dgvEleves.RowHeadersWidth = 51;
             dgvEleves.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEleves.Size = new Size(880, 373);
+            dgvEleves.Size = new Size(770, 280);
             dgvEleves.TabIndex = 1;
             dgvEleves.CellContentClick += dgvEleves_CellContentClick;
             dgvEleves.CellMouseClick += dgvEleves_CellMouseClick;
@@ -85,23 +87,30 @@
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { voirSesForfaitsToolStripMenuItem, attribuerUnForfaitToolStripMenuItem });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { voirSesForfaitsToolStripMenuItem, attribuerUnForfaitToolStripMenuItem, changementMdpToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(203, 52);
+            contextMenuStrip1.Size = new Size(174, 70);
             // 
             // voirSesForfaitsToolStripMenuItem
             // 
             voirSesForfaitsToolStripMenuItem.Name = "voirSesForfaitsToolStripMenuItem";
-            voirSesForfaitsToolStripMenuItem.Size = new Size(202, 24);
+            voirSesForfaitsToolStripMenuItem.Size = new Size(173, 22);
             voirSesForfaitsToolStripMenuItem.Text = "Voir ses forfaits";
             voirSesForfaitsToolStripMenuItem.Click += voirSesForfaitsToolStripMenuItem_Click;
             // 
             // attribuerUnForfaitToolStripMenuItem
             // 
             attribuerUnForfaitToolStripMenuItem.Name = "attribuerUnForfaitToolStripMenuItem";
-            attribuerUnForfaitToolStripMenuItem.Size = new Size(202, 24);
+            attribuerUnForfaitToolStripMenuItem.Size = new Size(173, 22);
             attribuerUnForfaitToolStripMenuItem.Text = "Attribuer un forfait";
             attribuerUnForfaitToolStripMenuItem.Click += attribuerUnForfaitToolStripMenuItem_Click;
+            // 
+            // changementMdpToolStripMenuItem
+            // 
+            changementMdpToolStripMenuItem.Name = "changementMdpToolStripMenuItem";
+            changementMdpToolStripMenuItem.Size = new Size(173, 22);
+            changementMdpToolStripMenuItem.Text = "Changement mdp";
+            changementMdpToolStripMenuItem.Click += changementMdpToolStripMenuItem_Click;
             // 
             // dgvForfaits
             // 
@@ -109,22 +118,13 @@
             dgvForfaits.AllowUserToDeleteRows = false;
             dgvForfaits.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvForfaits.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvForfaits.Location = new Point(634, 177);
+            dgvForfaits.Location = new Point(555, 133);
+            dgvForfaits.Margin = new Padding(3, 2, 3, 2);
             dgvForfaits.Name = "dgvForfaits";
             dgvForfaits.ReadOnly = true;
             dgvForfaits.RowHeadersWidth = 51;
-            dgvForfaits.Size = new Size(399, 188);
+            dgvForfaits.Size = new Size(349, 141);
             dgvForfaits.TabIndex = 2;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(70, 554);
-            label2.Name = "label2";
-            label2.Size = new Size(680, 28);
-            label2.TabIndex = 3;
-            label2.Text = "click droit sur l'élève sélectionné pour voir ses forfaits ou en attribuer un.";
             // 
             // btnFermer
             // 
@@ -132,9 +132,10 @@
             btnFermer.FlatStyle = FlatStyle.Popup;
             btnFermer.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnFermer.ForeColor = Color.White;
-            btnFermer.Location = new Point(815, 499);
+            btnFermer.Location = new Point(713, 374);
+            btnFermer.Margin = new Padding(3, 2, 3, 2);
             btnFermer.Name = "btnFermer";
-            btnFermer.Size = new Size(135, 57);
+            btnFermer.Size = new Size(118, 43);
             btnFermer.TabIndex = 4;
             btnFermer.Text = "FERMER";
             btnFermer.UseVisualStyleBackColor = false;
@@ -142,18 +143,20 @@
             // 
             // tbNomEleve
             // 
-            tbNomEleve.Location = new Point(501, 53);
+            tbNomEleve.Location = new Point(438, 40);
+            tbNomEleve.Margin = new Padding(3, 2, 3, 2);
             tbNomEleve.Name = "tbNomEleve";
             tbNomEleve.PlaceholderText = "Nom";
-            tbNomEleve.Size = new Size(125, 27);
+            tbNomEleve.Size = new Size(110, 23);
             tbNomEleve.TabIndex = 5;
             // 
             // tbPrenomEleve
             // 
-            tbPrenomEleve.Location = new Point(709, 53);
+            tbPrenomEleve.Location = new Point(620, 40);
+            tbPrenomEleve.Margin = new Padding(3, 2, 3, 2);
             tbPrenomEleve.Name = "tbPrenomEleve";
             tbPrenomEleve.PlaceholderText = "Prénom";
-            tbPrenomEleve.Size = new Size(125, 27);
+            tbPrenomEleve.Size = new Size(110, 23);
             tbPrenomEleve.TabIndex = 6;
             // 
             // btModifier
@@ -162,9 +165,10 @@
             btModifier.FlatStyle = FlatStyle.Popup;
             btModifier.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btModifier.ForeColor = Color.White;
-            btModifier.Location = new Point(452, 499);
+            btModifier.Location = new Point(396, 374);
+            btModifier.Margin = new Padding(3, 2, 3, 2);
             btModifier.Name = "btModifier";
-            btModifier.Size = new Size(135, 57);
+            btModifier.Size = new Size(118, 43);
             btModifier.TabIndex = 7;
             btModifier.Text = "MODIFIER";
             btModifier.UseVisualStyleBackColor = false;
@@ -176,9 +180,10 @@
             btArchiver.FlatStyle = FlatStyle.Popup;
             btArchiver.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btArchiver.ForeColor = Color.White;
-            btArchiver.Location = new Point(70, 499);
+            btArchiver.Location = new Point(61, 374);
+            btArchiver.Margin = new Padding(3, 2, 3, 2);
             btArchiver.Name = "btArchiver";
-            btArchiver.Size = new Size(135, 57);
+            btArchiver.Size = new Size(118, 43);
             btArchiver.TabIndex = 8;
             btArchiver.Text = "SUPPRIMER";
             btArchiver.UseVisualStyleBackColor = false;
@@ -186,31 +191,43 @@
             // 
             // btFacturation
             // 
-            btFacturation.Location = new Point(887, 34);
+            btFacturation.Location = new Point(776, 26);
+            btFacturation.Margin = new Padding(3, 2, 3, 2);
             btFacturation.Name = "btFacturation";
-            btFacturation.Size = new Size(146, 45);
+            btFacturation.Size = new Size(128, 34);
             btFacturation.TabIndex = 9;
             btFacturation.Text = "Générer facture";
             btFacturation.UseVisualStyleBackColor = true;
             btFacturation.Click += btFacturation_Click;
             // 
+            // btjustificatifs
+            // 
+            btjustificatifs.Location = new Point(255, 27);
+            btjustificatifs.Margin = new Padding(3, 2, 3, 2);
+            btjustificatifs.Name = "btjustificatifs";
+            btjustificatifs.Size = new Size(128, 34);
+            btjustificatifs.TabIndex = 10;
+            btjustificatifs.Text = "Justificatifs";
+            btjustificatifs.UseVisualStyleBackColor = true;
+            // 
             // FormListeEleves
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1045, 591);
+            ClientSize = new Size(914, 443);
+            Controls.Add(btjustificatifs);
             Controls.Add(btFacturation);
             Controls.Add(btArchiver);
             Controls.Add(btModifier);
             Controls.Add(tbPrenomEleve);
             Controls.Add(tbNomEleve);
             Controls.Add(btnFermer);
-            Controls.Add(label2);
             Controls.Add(dgvForfaits);
             Controls.Add(dgvEleves);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FormListeEleves";
             Text = "Liste des Elèves";
             Load += FormListeEleves_Load;
@@ -232,7 +249,6 @@
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem voirSesForfaitsToolStripMenuItem;
         private BindingSource bsForfaitsparEleve;
-        private Label label2;
         private Button btnFermer;
         private ToolStripMenuItem attribuerUnForfaitToolStripMenuItem;
         private TextBox tbNomEleve;
@@ -241,5 +257,7 @@
         private Button btModifier;
         private Button btArchiver;
         private Button btFacturation;
+        private ToolStripMenuItem changementMdpToolStripMenuItem;
+        private Button btjustificatifs;
     }
 }

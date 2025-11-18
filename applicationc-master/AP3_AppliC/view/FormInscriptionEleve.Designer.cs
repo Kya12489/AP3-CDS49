@@ -32,7 +32,7 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            label4 = new Label();
+            lblMdp = new Label();
             label5 = new Label();
             label6 = new Label();
             tbNom = new TextBox();
@@ -43,7 +43,7 @@
             tbNumTel = new TextBox();
             btAction = new Button();
             cbForfait = new ComboBox();
-            label7 = new Label();
+            lblForfait = new Label();
             bsForfait = new BindingSource(components);
             btnFermer = new Button();
             ((System.ComponentModel.ISupportInitialize)bsForfait).BeginInit();
@@ -52,110 +52,117 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(118, 56);
+            label1.Location = new Point(103, 42);
             label1.Name = "label1";
-            label1.Size = new Size(42, 20);
+            label1.Size = new Size(34, 15);
             label1.TabIndex = 0;
             label1.Text = "Nom";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(109, 112);
+            label2.Location = new Point(95, 84);
             label2.Name = "label2";
-            label2.Size = new Size(60, 20);
+            label2.Size = new Size(49, 15);
             label2.TabIndex = 1;
             label2.Text = "Prénom";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(118, 162);
+            label3.Location = new Point(103, 122);
             label3.Name = "label3";
-            label3.Size = new Size(46, 20);
+            label3.Size = new Size(36, 15);
             label3.TabIndex = 2;
             label3.Text = "Email";
             // 
-            // label4
+            // lblMdp
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(94, 207);
-            label4.Name = "label4";
-            label4.Size = new Size(98, 20);
-            label4.TabIndex = 3;
-            label4.Text = "Mot de passe";
+            lblMdp.AutoSize = true;
+            lblMdp.Location = new Point(82, 155);
+            lblMdp.Name = "lblMdp";
+            lblMdp.Size = new Size(77, 15);
+            lblMdp.TabIndex = 3;
+            lblMdp.Text = "Mot de passe";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(82, 258);
+            label5.Location = new Point(72, 194);
             label5.Name = "label5";
-            label5.Size = new Size(129, 20);
+            label5.Size = new Size(101, 15);
             label5.TabIndex = 4;
             label5.Text = "Date de naissance";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(68, 315);
+            label6.Location = new Point(60, 236);
             label6.Name = "label6";
-            label6.Size = new Size(155, 20);
+            label6.Size = new Size(123, 15);
             label6.TabIndex = 5;
             label6.Text = "Numero de téléphone";
             // 
             // tbNom
             // 
-            tbNom.Location = new Point(286, 56);
+            tbNom.Location = new Point(250, 42);
+            tbNom.Margin = new Padding(3, 2, 3, 2);
             tbNom.Name = "tbNom";
             tbNom.PlaceholderText = "Nom";
-            tbNom.Size = new Size(174, 27);
+            tbNom.Size = new Size(153, 23);
             tbNom.TabIndex = 6;
             // 
             // tbPrenom
             // 
-            tbPrenom.Location = new Point(286, 109);
+            tbPrenom.Location = new Point(250, 82);
+            tbPrenom.Margin = new Padding(3, 2, 3, 2);
             tbPrenom.Name = "tbPrenom";
             tbPrenom.PlaceholderText = "Prenom";
-            tbPrenom.Size = new Size(174, 27);
+            tbPrenom.Size = new Size(153, 23);
             tbPrenom.TabIndex = 7;
             // 
             // tbEmail
             // 
-            tbEmail.Location = new Point(286, 159);
+            tbEmail.Location = new Point(250, 119);
+            tbEmail.Margin = new Padding(3, 2, 3, 2);
             tbEmail.Name = "tbEmail";
             tbEmail.PlaceholderText = "Email";
-            tbEmail.Size = new Size(174, 27);
+            tbEmail.Size = new Size(153, 23);
             tbEmail.TabIndex = 8;
             // 
             // tbMdp
             // 
-            tbMdp.Location = new Point(286, 207);
+            tbMdp.Location = new Point(250, 155);
+            tbMdp.Margin = new Padding(3, 2, 3, 2);
             tbMdp.Name = "tbMdp";
             tbMdp.PasswordChar = '*';
             tbMdp.PlaceholderText = "Mot de passe";
-            tbMdp.Size = new Size(174, 27);
+            tbMdp.Size = new Size(153, 23);
             tbMdp.TabIndex = 9;
             // 
             // dtpNaissance
             // 
-            dtpNaissance.Location = new Point(231, 258);
+            dtpNaissance.Location = new Point(202, 194);
+            dtpNaissance.Margin = new Padding(3, 2, 3, 2);
             dtpNaissance.Name = "dtpNaissance";
-            dtpNaissance.Size = new Size(250, 27);
+            dtpNaissance.Size = new Size(219, 23);
             dtpNaissance.TabIndex = 10;
             // 
             // tbNumTel
             // 
-            tbNumTel.Location = new Point(286, 308);
+            tbNumTel.Location = new Point(250, 231);
+            tbNumTel.Margin = new Padding(3, 2, 3, 2);
             tbNumTel.Name = "tbNumTel";
             tbNumTel.PlaceholderText = "Numero de téléphone";
-            tbNumTel.Size = new Size(174, 27);
+            tbNumTel.Size = new Size(153, 23);
             tbNumTel.TabIndex = 11;
             // 
             // btAction
             // 
-            btAction.Location = new Point(231, 432);
+            btAction.Location = new Point(202, 324);
+            btAction.Margin = new Padding(3, 2, 3, 2);
             btAction.Name = "btAction";
-            btAction.Size = new Size(94, 29);
+            btAction.Size = new Size(82, 22);
             btAction.TabIndex = 12;
             btAction.Text = "Ajouter";
             btAction.UseVisualStyleBackColor = true;
@@ -165,19 +172,20 @@
             // 
             cbForfait.DropDownStyle = ComboBoxStyle.DropDownList;
             cbForfait.FormattingEnabled = true;
-            cbForfait.Location = new Point(286, 357);
+            cbForfait.Location = new Point(250, 268);
+            cbForfait.Margin = new Padding(3, 2, 3, 2);
             cbForfait.Name = "cbForfait";
-            cbForfait.Size = new Size(174, 28);
+            cbForfait.Size = new Size(153, 23);
             cbForfait.TabIndex = 13;
             // 
-            // label7
+            // lblForfait
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(109, 365);
-            label7.Name = "label7";
-            label7.Size = new Size(52, 20);
-            label7.TabIndex = 14;
-            label7.Text = "Forfait";
+            lblForfait.AutoSize = true;
+            lblForfait.Location = new Point(95, 274);
+            lblForfait.Name = "lblForfait";
+            lblForfait.Size = new Size(41, 15);
+            lblForfait.TabIndex = 14;
+            lblForfait.Text = "Forfait";
             // 
             // btnFermer
             // 
@@ -185,9 +193,10 @@
             btnFermer.FlatStyle = FlatStyle.Popup;
             btnFermer.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnFermer.ForeColor = Color.White;
-            btnFermer.Location = new Point(633, 415);
+            btnFermer.Location = new Point(554, 311);
+            btnFermer.Margin = new Padding(3, 2, 3, 2);
             btnFermer.Name = "btnFermer";
-            btnFermer.Size = new Size(135, 57);
+            btnFermer.Size = new Size(118, 43);
             btnFermer.TabIndex = 15;
             btnFermer.Text = "FERMER";
             btnFermer.UseVisualStyleBackColor = false;
@@ -195,11 +204,11 @@
             // 
             // FormInscriptionEleve
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(894, 520);
+            ClientSize = new Size(782, 390);
             Controls.Add(btnFermer);
-            Controls.Add(label7);
+            Controls.Add(lblForfait);
             Controls.Add(cbForfait);
             Controls.Add(btAction);
             Controls.Add(tbNumTel);
@@ -210,11 +219,12 @@
             Controls.Add(tbNom);
             Controls.Add(label6);
             Controls.Add(label5);
-            Controls.Add(label4);
+            Controls.Add(lblMdp);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FormInscriptionEleve";
             Text = "FormInscriptionEleve";
             Load += FormInscriptionEleve_Load;
@@ -228,7 +238,7 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Label label4;
+        private Label lblMdp;
         private Label label5;
         private Label label6;
         private TextBox tbNom;
@@ -239,7 +249,7 @@
         private TextBox tbNumTel;
         private Button btAction;
         private ComboBox cbForfait;
-        private Label label7;
+        private Label lblForfait;
         private BindingSource bsForfait;
         private Button btnFermer;
     }

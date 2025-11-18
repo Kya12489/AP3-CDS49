@@ -28,43 +28,71 @@
         /// </summary>
         private void InitializeComponent()
         {
-            pnlCalendrier = new Panel();
-            lblMoisAnnee = new Label();
+            dgvLecon = new DataGridView();
+            btSupp = new Button();
+            btModif = new Button();
+            btAjout = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvLecon).BeginInit();
             SuspendLayout();
             // 
-            // pnlCalendrier
+            // dgvLecon
             // 
-            pnlCalendrier.Location = new Point(37, 56);
-            pnlCalendrier.Name = "pnlCalendrier";
-            pnlCalendrier.Size = new Size(721, 352);
-            pnlCalendrier.TabIndex = 0;
+            dgvLecon.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvLecon.Location = new Point(100, 22);
+            dgvLecon.Name = "dgvLecon";
+            dgvLecon.Size = new Size(711, 333);
+            dgvLecon.TabIndex = 4;
             // 
-            // lblMoisAnnee
+            // btSupp
             // 
-            lblMoisAnnee.AutoSize = true;
-            lblMoisAnnee.Location = new Point(422, 22);
-            lblMoisAnnee.Name = "lblMoisAnnee";
-            lblMoisAnnee.Size = new Size(50, 20);
-            lblMoisAnnee.TabIndex = 1;
-            lblMoisAnnee.Text = "label1";
+            btSupp.Location = new Point(100, 384);
+            btSupp.Name = "btSupp";
+            btSupp.Size = new Size(82, 23);
+            btSupp.TabIndex = 5;
+            btSupp.Text = "SUPPRIMER";
+            btSupp.UseVisualStyleBackColor = true;
+            // 
+            // btModif
+            // 
+            btModif.Location = new Point(423, 384);
+            btModif.Name = "btModif";
+            btModif.Size = new Size(75, 23);
+            btModif.TabIndex = 6;
+            btModif.Text = "MODIFIER";
+            btModif.UseVisualStyleBackColor = true;
+            // 
+            // btAjout
+            // 
+            btAjout.Location = new Point(736, 384);
+            btAjout.Name = "btAjout";
+            btAjout.Size = new Size(75, 23);
+            btAjout.TabIndex = 7;
+            btAjout.Text = "AJOUTER";
+            btAjout.UseVisualStyleBackColor = true;
             // 
             // FormListeLecon
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(lblMoisAnnee);
-            Controls.Add(pnlCalendrier);
+            ClientSize = new Size(914, 443);
+            Controls.Add(btAjout);
+            Controls.Add(btModif);
+            Controls.Add(btSupp);
+            Controls.Add(dgvLecon);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FormListeLecon";
             Text = "FormListeLecon";
+            ((System.ComponentModel.ISupportInitialize)dgvLecon).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private Panel pnlCalendrier;
-        private Label lblMoisAnnee;
+        private Panel panelMoniteursDispo;
+        private Panel panelVehicule;
+        private DataGridView dgvLecon;
+        private Button btSupp;
+        private Button btModif;
+        private Button btAjout;
     }
 }
