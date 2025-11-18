@@ -23,6 +23,8 @@ public partial class Eleve
 
     public virtual ICollection<Conduire> Conduires { get; set; } = new List<Conduire>();
 
+    public virtual ICollection<Justificatifs> Documents { get; set; } = new List<Justificatifs>();
+
     public virtual ICollection<Inscrire> Inscrires { get; set; } = new List<Inscrire>();
 
     public virtual ICollection<Resultat> Resultats { get; set; } = new List<Resultat>();

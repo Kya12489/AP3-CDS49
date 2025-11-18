@@ -9,7 +9,7 @@ public partial class Question
 
     public string Libellequestion { get; set; } = null!;
 
-    public string Imagequestion { get; set; } = null!;
+    public string? Imagequestion { get; set; }
 
     public int? IdCategorie { get; set; }
 

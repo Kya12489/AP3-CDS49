@@ -22,6 +22,8 @@ public partial class Ap3LwsContext : DbContext
 
     public virtual DbSet<Conduire> Conduires { get; set; }
 
+    public virtual DbSet<Justificatifs> Documents { get; set; }
+
     public virtual DbSet<Eleve> Eleves { get; set; }
 
     public virtual DbSet<Forfait> Forfaits { get; set; }
@@ -36,7 +38,11 @@ public partial class Ap3LwsContext : DbContext
 
     public virtual DbSet<Resultat> Resultats { get; set; }
 
+    public virtual DbSet<Statut> Statuts { get; set; }
+
     public virtual DbSet<Token> Tokens { get; set; }
+
+    public virtual DbSet<TypeDoculent> TypeDoculents { get; set; }
 
     public virtual DbSet<Vehicule> Vehicules { get; set; }
 
@@ -127,6 +133,44 @@ public partial class Ap3LwsContext : DbContext
                 .HasForeignKey(d => d.Idvehicule)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("conduire_ibfk_2");
+        });
+
+        modelBuilder.Entity<Justificatifs>(entity =>
+        {
+            entity.HasKey(e => e.IdDoc).HasName("PRIMARY");
+
+            entity.ToTable("document");
+
+            entity.HasIndex(e => e.IdEleve, "idEleve");
+
+            entity.HasIndex(e => e.IdStatut, "idStatut");
+
+            entity.HasIndex(e => e.IdType, "idType");
+
+            entity.Property(e => e.IdDoc).HasColumnName("idDoc");
+            entity.Property(e => e.IdEleve).HasColumnName("idEleve");
+            entity.Property(e => e.IdStatut)
+                .HasDefaultValueSql("'1'")
+                .HasColumnName("idStatut");
+            entity.Property(e => e.IdType).HasColumnName("idType");
+            entity.Property(e => e.LienDoc)
+                .HasMaxLength(255)
+                .HasColumnName("lienDoc");
+
+            entity.HasOne(d => d.IdEleveNavigation).WithMany(p => p.Documents)
+                .HasForeignKey(d => d.IdEleve)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("document_ibfk_1");
+
+            entity.HasOne(d => d.IdStatutNavigation).WithMany(p => p.Documents)
+                .HasForeignKey(d => d.IdStatut)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("document_ibfk_2");
+
+            entity.HasOne(d => d.IdTypeNavigation).WithMany(p => p.Documents)
+                .HasForeignKey(d => d.IdType)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("document_ibfk_3");
         });
 
         modelBuilder.Entity<Eleve>(entity =>
@@ -311,6 +355,18 @@ public partial class Ap3LwsContext : DbContext
                 .HasConstraintName("resultat_ibfk_1");
         });
 
+        modelBuilder.Entity<Statut>(entity =>
+        {
+            entity.HasKey(e => e.IdStatut).HasName("PRIMARY");
+
+            entity.ToTable("statut");
+
+            entity.Property(e => e.IdStatut).HasColumnName("idStatut");
+            entity.Property(e => e.LibelleStatut)
+                .HasMaxLength(100)
+                .HasColumnName("libelleStatut");
+        });
+
         modelBuilder.Entity<Token>(entity =>
         {
             entity.HasKey(e => e.Token1).HasName("PRIMARY");
@@ -330,6 +386,18 @@ public partial class Ap3LwsContext : DbContext
             entity.HasOne(d => d.IdeleveNavigation).WithMany(p => p.Tokens)
                 .HasForeignKey(d => d.Ideleve)
                 .HasConstraintName("token_ibfk_1");
+        });
+
+        modelBuilder.Entity<TypeDoculent>(entity =>
+        {
+            entity.HasKey(e => e.IdType).HasName("PRIMARY");
+
+            entity.ToTable("typeDoculent");
+
+            entity.Property(e => e.IdType).HasColumnName("idType");
+            entity.Property(e => e.LibelleType)
+                .HasMaxLength(100)
+                .HasColumnName("libelleType");
         });
 
         modelBuilder.Entity<Vehicule>(entity =>

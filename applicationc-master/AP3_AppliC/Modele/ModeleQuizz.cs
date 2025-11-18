@@ -124,10 +124,12 @@ namespace AP3_AppliC.Modele
                 Connexion.MonModel.SaveChanges();
 
                 // 2. Créer les réponses associées
+                int num = 1;
                 foreach (var reponse in reponses)
                 {
                     Reponse uneR = new Reponse();
                     uneR.Idquestion = uneQ.Idquestion;
+                    uneR.Numreponse = num++;
                     uneR.Libellereponse = reponse.libelle;
                     uneR.Valide = reponse.estCorrecte;
 
