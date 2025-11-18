@@ -32,6 +32,10 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             menuStrip1 = new MenuStrip();
             gestionDesElèvesToolStripMenuItem = new ToolStripMenuItem();
             listeToolStripMenuItem = new ToolStripMenuItem();
@@ -53,12 +57,14 @@
             deconnexionToolStripMenuItem = new ToolStripMenuItem();
             quizToolStripMenuItem = new ToolStripMenuItem();
             listeToolStripMenuItem5 = new ToolStripMenuItem();
-            panelPrincipal = new Panel();
-            chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ajouterToolStripMenuItem3 = new ToolStripMenuItem();
+            panelPrincipal = new Panel();
+            chartProportionForfait = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            chartInscritEleve = new System.Windows.Forms.DataVisualization.Charting.Chart();
             menuStrip1.SuspendLayout();
             panelPrincipal.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)chart1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)chartProportionForfait).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)chartInscritEleve).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -160,14 +166,14 @@
             // listeToolStripMenuItem2
             // 
             listeToolStripMenuItem2.Name = "listeToolStripMenuItem2";
-            listeToolStripMenuItem2.Size = new Size(224, 28);
+            listeToolStripMenuItem2.Size = new Size(150, 28);
             listeToolStripMenuItem2.Text = "Liste";
             listeToolStripMenuItem2.Click += listeToolStripMenuItem2_Click;
             // 
             // ajouterToolStripMenuItem1
             // 
             ajouterToolStripMenuItem1.Name = "ajouterToolStripMenuItem1";
-            ajouterToolStripMenuItem1.Size = new Size(224, 28);
+            ajouterToolStripMenuItem1.Size = new Size(150, 28);
             ajouterToolStripMenuItem1.Text = "Ajouter";
             ajouterToolStripMenuItem1.Click += ajouterToolStripMenuItem1_Click;
             // 
@@ -181,14 +187,14 @@
             // listeToolStripMenuItem4
             // 
             listeToolStripMenuItem4.Name = "listeToolStripMenuItem4";
-            listeToolStripMenuItem4.Size = new Size(224, 28);
+            listeToolStripMenuItem4.Size = new Size(150, 28);
             listeToolStripMenuItem4.Text = "Liste";
             listeToolStripMenuItem4.Click += listeToolStripMenuItem4_Click;
             // 
             // ajouterToolStripMenuItem2
             // 
             ajouterToolStripMenuItem2.Name = "ajouterToolStripMenuItem2";
-            ajouterToolStripMenuItem2.Size = new Size(224, 28);
+            ajouterToolStripMenuItem2.Size = new Size(150, 28);
             ajouterToolStripMenuItem2.Text = "Ajouter";
             ajouterToolStripMenuItem2.Click += ajouterToolStripMenuItem2_Click;
             // 
@@ -218,9 +224,16 @@
             // listeToolStripMenuItem5
             // 
             listeToolStripMenuItem5.Name = "listeToolStripMenuItem5";
-            listeToolStripMenuItem5.Size = new Size(224, 28);
+            listeToolStripMenuItem5.Size = new Size(150, 28);
             listeToolStripMenuItem5.Text = "Liste";
             listeToolStripMenuItem5.Click += listeToolStripMenuItem5_Click;
+            // 
+            // ajouterToolStripMenuItem3
+            // 
+            ajouterToolStripMenuItem3.Name = "ajouterToolStripMenuItem3";
+            ajouterToolStripMenuItem3.Size = new Size(150, 28);
+            ajouterToolStripMenuItem3.Text = "Ajouter";
+            ajouterToolStripMenuItem3.Click += ajouterToolStripMenuItem3_Click;
             // 
             // panelPrincipal
             // 
@@ -228,41 +241,58 @@
             panelPrincipal.BackgroundImage = Properties.Resources.logo_cds49;
             panelPrincipal.BackgroundImageLayout = ImageLayout.Zoom;
             panelPrincipal.BorderStyle = BorderStyle.Fixed3D;
-            panelPrincipal.Controls.Add(chart1);
+            panelPrincipal.Controls.Add(chartProportionForfait);
+            panelPrincipal.Controls.Add(chartInscritEleve);
             panelPrincipal.Location = new Point(0, 32);
-            panelPrincipal.Margin = new Padding(5, 5, 5, 5);
+            panelPrincipal.Margin = new Padding(5);
             panelPrincipal.Name = "panelPrincipal";
             panelPrincipal.Size = new Size(1067, 659);
             panelPrincipal.TabIndex = 1;
             // 
-            // chart1
+            // chartProportionForfait
             // 
             chartArea1.Name = "ChartArea1";
-            chart1.ChartAreas.Add(chartArea1);
+            chartProportionForfait.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
-            legend1.Title = "nb élèves";
-            chart1.Legends.Add(legend1);
-            chart1.Location = new Point(61, 85);
-            chart1.Margin = new Padding(3, 4, 3, 4);
-            chart1.Name = "chart1";
+            legend1.Title = "Liste Forfait";
+            chartProportionForfait.Legends.Add(legend1);
+            chartProportionForfait.Location = new Point(551, 22);
+            chartProportionForfait.Margin = new Padding(3, 4, 3, 4);
+            chartProportionForfait.Name = "chartProportionForfait";
             series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             series1.YValuesPerPoint = 4;
-            chart1.Series.Add(series1);
-            chart1.Size = new Size(343, 400);
-            chart1.TabIndex = 0;
-            chart1.Text = "chart1";
+            chartProportionForfait.Series.Add(series1);
+            chartProportionForfait.Size = new Size(456, 219);
+            chartProportionForfait.TabIndex = 1;
+            chartProportionForfait.Text = "chart1";
             title1.Name = "Title1";
-            title1.Text = "Nombre d’élèves inscrits par mois sur les 12 derniers mois";
-            chart1.Titles.Add(title1);
+            title1.Text = "Proportion des différents forfaits choisis";
+            chartProportionForfait.Titles.Add(title1);
             // 
-            // ajouterToolStripMenuItem3
+            // chartInscritEleve
             // 
-            ajouterToolStripMenuItem3.Name = "ajouterToolStripMenuItem3";
-            ajouterToolStripMenuItem3.Size = new Size(224, 28);
-            ajouterToolStripMenuItem3.Text = "Ajouter";
-            ajouterToolStripMenuItem3.Click += ajouterToolStripMenuItem3_Click;
+            chartArea2.Name = "ChartArea1";
+            chartInscritEleve.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            legend2.Title = "nb élèves";
+            chartInscritEleve.Legends.Add(legend2);
+            chartInscritEleve.Location = new Point(61, 22);
+            chartInscritEleve.Margin = new Padding(3, 4, 3, 4);
+            chartInscritEleve.Name = "chartInscritEleve";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            chartInscritEleve.Series.Add(series2);
+            chartInscritEleve.Size = new Size(432, 299);
+            chartInscritEleve.TabIndex = 0;
+            chartInscritEleve.Text = "chart1";
+            title2.Name = "Title1";
+            title2.Text = "Nombre d’élèves inscrits par mois sur les 12 derniers mois";
+            chartInscritEleve.Titles.Add(title2);
             // 
             // FormMenu
             // 
@@ -279,7 +309,8 @@
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             panelPrincipal.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)chart1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)chartProportionForfait).EndInit();
+            ((System.ComponentModel.ISupportInitialize)chartInscritEleve).EndInit();
             ResumeLayout(false);
         }
 
@@ -299,7 +330,7 @@
         private ToolStripMenuItem modificationToolStripMenuItem;
         private ToolStripMenuItem ajouterToolStripMenuItem;
         private ToolStripMenuItem ToolStripMenuItem;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartInscritEleve;
         private ToolStripMenuItem deconnexionToolStripMenuItem;
         private ToolStripMenuItem listeToolStripMenuItem2;
         private ToolStripMenuItem ajouterToolStripMenuItem1;
@@ -309,6 +340,7 @@
         private ToolStripMenuItem quizToolStripMenuItem;
         private ToolStripMenuItem listeToolStripMenuItem5;
         private ToolStripMenuItem ajouterToolStripMenuItem3;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartProportionForfait;
         //private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }

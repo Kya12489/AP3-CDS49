@@ -284,5 +284,86 @@ namespace AP3_AppliC.Modele
                 return false;
             }
         }
+
+        public static List<(DateOnly, int)> nbEleveParMois()
+        {
+            using (var context = new Ap3LwsContext())
+            {
+                // Date de début : il y a 12 mois
+                DateOnly dateDebut = DateOnly.FromDateTime(DateTime.Now.AddMonths(-12));
+
+                // Requête pour compter les inscriptions par mois
+                var resultats = context.Inscrires
+                    .AsEnumerable() // Passage en mémoire d'abord
+                    .Where(i => i.Dateinscription >= dateDebut)
+                    .GroupBy(i => new
+                    {
+                        Annee = i.Dateinscription.Year,
+                        Mois = i.Dateinscription.Month
+                    })
+                    .Select(g => new
+                    {
+                        Date = new DateOnly(g.Key.Annee, g.Key.Mois, 1),
+                        Nombre = g.Count()
+                    })
+                    .OrderBy(x => x.Date)
+                    .Select(x => (x.Date, x.Nombre))
+                    .ToList();
+
+                // Remplir les mois manquants avec 0
+                return RemplirMoisManquants(resultats);
+            }
+        }
+
+
+
+        private static List<(DateOnly, int)> RemplirMoisManquants(List<(DateOnly, int)> donnees)
+        {
+            List<(DateOnly, int)> resultatComplet = new List<(DateOnly, int)>();
+            DateTime dateActuelle = DateTime.Now;
+
+            // Parcourir les 12 derniers mois
+            for (int i = 11; i >= 0; i--)
+            {
+                DateTime mois = dateActuelle.AddMonths(-i);
+                DateOnly dateMois = new DateOnly(mois.Year, mois.Month, 1);
+
+                // Chercher si ce mois existe dans les données
+                var trouve = donnees.FirstOrDefault(d => d.Item1 == dateMois);
+
+                if (trouve != default)
+                {
+                    resultatComplet.Add(trouve);
+                }
+                else
+                {
+                    // Mois sans inscription : ajouter avec 0
+                    resultatComplet.Add((dateMois, 0));
+                }
+            }
+
+            return resultatComplet;
+        }
+
+        public static List<(int, string)> proportionForfait()
+        {
+            using (var context = new Ap3LwsContext())
+            {
+                // Requête pour compter le nombre d'inscriptions par forfait
+                var resultats = context.Inscrires
+                    .GroupBy(i => i.IdforfaitNavigation.Libelleforfait)
+                    .Select(g => new
+                    {
+                        NomForfait = g.Key,
+                        Nombre = g.Count()
+                    })
+                    .OrderByDescending(x => x.Nombre) // Trier du plus populaire au moins populaire
+                    .ToList() // Exécution de la requête SQL ici
+                    .Select(x => (x.Nombre, x.NomForfait)) // Conversion en tuple en C#
+                    .ToList();
+
+                return resultats;
+            }
+        }
     }
 }
