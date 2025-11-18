@@ -39,6 +39,7 @@ namespace AP3_AppliC.Modele
             return resultats;
         }
 
+        /*
         public static bool AjouterLecon(int idEleve, int idMoniteur, int idVehicule, DateTime dateHeure, string lieu)
         {
             try
@@ -59,6 +60,57 @@ namespace AP3_AppliC.Modele
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return false;
+            }
+        }*/
+        public static bool AjouterLecon(int idEleve, int idMoniteur, int idVehicule, DateTime dateHeure, string lieu)
+        {
+            try
+            {
+                using (var context = new Ap3LwsContext())
+                {
+                    // Vérifier que l'élève, le moniteur et le véhicule existent
+                    bool eleveExiste = context.Eleves.Any(e => e.Ideleve == idEleve);
+                    bool moniteurExiste = context.Moniteurs.Any(m => m.Idmoniteur == idMoniteur);
+                    bool vehiculeExiste = context.Vehicules.Any(v => v.Idvehicule == idVehicule);
+
+                    if (!eleveExiste || !moniteurExiste || !vehiculeExiste)
+                    {
+                        MessageBox.Show("L'élève, le moniteur ou le véhicule n'existe pas.");
+                        return false;
+                    }
+
+                    // Créer une nouvelle leçon
+                    Conduire lecon = new Conduire()
+                    {
+                        Ideleve = idEleve,
+                        Idmoniteur = idMoniteur,
+                        Idvehicule = idVehicule,
+                        Heuredebut = dateHeure,
+                        Lieurdv = string.IsNullOrWhiteSpace(lieu) ? null : lieu,
+                        DureeMinutes = 60, // Durée par défaut
+                        Archiver = false,
+                    };
+
+                    // Ajouter la leçon au contexte
+                    context.Conduires.Add(lecon);
+
+                    // Sauvegarder les modifications
+                    context.SaveChanges();
+
+                    return true;
+                }
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                // En cas de conflit de concurrency, afficher un message
+                MessageBox.Show("Conflit de concurrency détecté. Les données ont été modifiées par un autre utilisateur. Veuillez réessayer.");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Gérer les autres exceptions
+                MessageBox.Show($"Erreur lors de l'ajout de la leçon : {ex.Message}");
                 return false;
             }
         }
@@ -116,7 +168,7 @@ namespace AP3_AppliC.Modele
                 return eleves;
             }
         }
-
+        /*
         public static bool SupprimerLecon(int idEleve, int idMoniteur, int idVehicule, DateTime heureDebut)
         {
             try
@@ -141,6 +193,41 @@ namespace AP3_AppliC.Modele
             }
             catch
             {
+                return false;
+            }
+        }*/
+
+        public static bool SupprimerLecon(int idEleve, int idMoniteur, int idVehicule, DateTime heureDebut)
+        {
+            try
+            {
+                using (var context = new Ap3LwsContext())
+                {
+                    // Récupérer la leçon à supprimer en utilisant la clé composite
+                    var lecon = context.Conduires.FirstOrDefault(c =>
+                        c.Ideleve == idEleve &&
+                        c.Idmoniteur == idMoniteur &&
+                        c.Idvehicule == idVehicule &&
+                        c.Heuredebut == heureDebut);
+
+                    if (lecon != null)
+                    {
+                        // Supprimer la leçon
+                        context.Conduires.Remove(lecon);
+                        context.SaveChanges();
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                MessageBox.Show("Conflit de concurrency détecté. Les données ont été modifiées par un autre utilisateur. Veuillez réessayer.");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la suppression de la leçon : {ex.Message}");
                 return false;
             }
         }
@@ -180,6 +267,34 @@ namespace AP3_AppliC.Modele
 
                 return query.ToList();
             }
+        }
+        public static List<string> ObtenirLieuxDepuisConduire()
+        {
+            try
+            {
+                using (var context = new Ap3LwsContext())
+                {
+                    // Récupère les lieux uniques, non vides, et triés par ordre alphabétique
+                    var lieux = context.Conduires
+                        .Where(c => !string.IsNullOrEmpty(c.Lieurdv))
+                        .Select(c => c.Lieurdv)
+                        .Distinct()
+                        .OrderBy(l => l)
+                        .ToList();
+
+                    // Ajoute une option par défaut
+                    lieux.Insert(0, "-- Sélectionnez un lieu --");
+
+                    return lieux;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la récupération des lieux : {ex.Message}");
+                return new List<string> { "-- Erreur --" };
+            }
+
+
         }
 
     }

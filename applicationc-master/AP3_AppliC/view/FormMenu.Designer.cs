@@ -78,10 +78,10 @@
             menuStrip1.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(6, 3, 0, 3);
+            menuStrip1.Padding = new Padding(5, 2, 0, 2);
             menuStrip1.RightToLeft = RightToLeft.No;
             menuStrip1.ShowItemToolTips = true;
-            menuStrip1.Size = new Size(1067, 36);
+            menuStrip1.Size = new Size(934, 27);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -89,21 +89,21 @@
             // 
             gestionDesElèvesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { listeToolStripMenuItem, inscriptionToolStripMenuItem });
             gestionDesElèvesToolStripMenuItem.Name = "gestionDesElèvesToolStripMenuItem";
-            gestionDesElèvesToolStripMenuItem.Size = new Size(71, 30);
+            gestionDesElèvesToolStripMenuItem.Size = new Size(59, 23);
             gestionDesElèvesToolStripMenuItem.Text = "Elèves";
             gestionDesElèvesToolStripMenuItem.TextDirection = ToolStripTextDirection.Horizontal;
             // 
             // listeToolStripMenuItem
             // 
             listeToolStripMenuItem.Name = "listeToolStripMenuItem";
-            listeToolStripMenuItem.Size = new Size(319, 28);
+            listeToolStripMenuItem.Size = new Size(264, 24);
             listeToolStripMenuItem.Text = "Liste et Attribution de forfaits";
             listeToolStripMenuItem.Click += listeToolStripMenuItem_Click;
             // 
             // inscriptionToolStripMenuItem
             // 
             inscriptionToolStripMenuItem.Name = "inscriptionToolStripMenuItem";
-            inscriptionToolStripMenuItem.Size = new Size(319, 28);
+            inscriptionToolStripMenuItem.Size = new Size(264, 24);
             inscriptionToolStripMenuItem.Text = "Inscription";
             inscriptionToolStripMenuItem.Click += inscriptionToolStripMenuItem_Click;
             // 
@@ -111,27 +111,27 @@
             // 
             gestionDesConducteursToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { listeToolStripMenuItem1, ajoutToolStripMenuItem, modificationToolStripMenuItem });
             gestionDesConducteursToolStripMenuItem.Name = "gestionDesConducteursToolStripMenuItem";
-            gestionDesConducteursToolStripMenuItem.Size = new Size(102, 30);
+            gestionDesConducteursToolStripMenuItem.Size = new Size(85, 23);
             gestionDesConducteursToolStripMenuItem.Text = "Moniteurs";
             // 
             // listeToolStripMenuItem1
             // 
             listeToolStripMenuItem1.Name = "listeToolStripMenuItem1";
-            listeToolStripMenuItem1.Size = new Size(191, 28);
+            listeToolStripMenuItem1.Size = new Size(159, 24);
             listeToolStripMenuItem1.Text = "Liste";
             listeToolStripMenuItem1.Click += listeToolStripMenuItem1_Click;
             // 
             // ajoutToolStripMenuItem
             // 
             ajoutToolStripMenuItem.Name = "ajoutToolStripMenuItem";
-            ajoutToolStripMenuItem.Size = new Size(191, 28);
+            ajoutToolStripMenuItem.Size = new Size(159, 24);
             ajoutToolStripMenuItem.Text = "Ajout";
             ajoutToolStripMenuItem.Click += ajoutToolStripMenuItem_Click;
             // 
             // modificationToolStripMenuItem
             // 
             modificationToolStripMenuItem.Name = "modificationToolStripMenuItem";
-            modificationToolStripMenuItem.Size = new Size(191, 28);
+            modificationToolStripMenuItem.Size = new Size(159, 24);
             modificationToolStripMenuItem.Text = "Modification";
             modificationToolStripMenuItem.Click += modificationToolStripMenuItem_Click;
             // 
@@ -139,20 +139,20 @@
             // 
             gestionDesForfaitsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { listeToolStripMenuItem3, ajouterToolStripMenuItem });
             gestionDesForfaitsToolStripMenuItem.Name = "gestionDesForfaitsToolStripMenuItem";
-            gestionDesForfaitsToolStripMenuItem.Size = new Size(81, 30);
+            gestionDesForfaitsToolStripMenuItem.Size = new Size(68, 23);
             gestionDesForfaitsToolStripMenuItem.Text = "Forfaits";
             // 
             // listeToolStripMenuItem3
             // 
             listeToolStripMenuItem3.Name = "listeToolStripMenuItem3";
-            listeToolStripMenuItem3.Size = new Size(245, 28);
+            listeToolStripMenuItem3.Size = new Size(203, 24);
             listeToolStripMenuItem3.Text = "Liste et Suppression";
             listeToolStripMenuItem3.Click += listeToolStripMenuItem3_Click;
             // 
             // ajouterToolStripMenuItem
             // 
             ajouterToolStripMenuItem.Name = "ajouterToolStripMenuItem";
-            ajouterToolStripMenuItem.Size = new Size(245, 28);
+            ajouterToolStripMenuItem.Size = new Size(203, 24);
             ajouterToolStripMenuItem.Text = "Ajouter";
             ajouterToolStripMenuItem.Click += ajouterToolStripMenuItem_Click;
             // 
@@ -160,20 +160,20 @@
             // 
             vehiculeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { listeToolStripMenuItem2, ajouterToolStripMenuItem1 });
             vehiculeToolStripMenuItem.Name = "vehiculeToolStripMenuItem";
-            vehiculeToolStripMenuItem.Size = new Size(95, 30);
+            vehiculeToolStripMenuItem.Size = new Size(80, 23);
             vehiculeToolStripMenuItem.Text = "Véhicules";
             // 
             // listeToolStripMenuItem2
             // 
             listeToolStripMenuItem2.Name = "listeToolStripMenuItem2";
-            listeToolStripMenuItem2.Size = new Size(150, 28);
+            listeToolStripMenuItem2.Size = new Size(124, 24);
             listeToolStripMenuItem2.Text = "Liste";
             listeToolStripMenuItem2.Click += listeToolStripMenuItem2_Click;
             // 
             // ajouterToolStripMenuItem1
             // 
             ajouterToolStripMenuItem1.Name = "ajouterToolStripMenuItem1";
-            ajouterToolStripMenuItem1.Size = new Size(150, 28);
+            ajouterToolStripMenuItem1.Size = new Size(124, 24);
             ajouterToolStripMenuItem1.Text = "Ajouter";
             ajouterToolStripMenuItem1.Click += ajouterToolStripMenuItem1_Click;
             // 
@@ -181,20 +181,20 @@
             // 
             ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { listeToolStripMenuItem4, ajouterToolStripMenuItem2 });
             ToolStripMenuItem.Name = "ToolStripMenuItem";
-            ToolStripMenuItem.Size = new Size(69, 30);
-            ToolStripMenuItem.Text = "Lecon";
+            ToolStripMenuItem.Size = new Size(58, 23);
+            ToolStripMenuItem.Text = "Leçon";
             // 
             // listeToolStripMenuItem4
             // 
             listeToolStripMenuItem4.Name = "listeToolStripMenuItem4";
-            listeToolStripMenuItem4.Size = new Size(150, 28);
+            listeToolStripMenuItem4.Size = new Size(180, 24);
             listeToolStripMenuItem4.Text = "Liste";
             listeToolStripMenuItem4.Click += listeToolStripMenuItem4_Click;
             // 
             // ajouterToolStripMenuItem2
             // 
             ajouterToolStripMenuItem2.Name = "ajouterToolStripMenuItem2";
-            ajouterToolStripMenuItem2.Size = new Size(150, 28);
+            ajouterToolStripMenuItem2.Size = new Size(180, 24);
             ajouterToolStripMenuItem2.Text = "Ajouter";
             ajouterToolStripMenuItem2.Click += ajouterToolStripMenuItem2_Click;
             // 
@@ -202,7 +202,7 @@
             // 
             quitterToolStripMenuItem1.Alignment = ToolStripItemAlignment.Right;
             quitterToolStripMenuItem1.Name = "quitterToolStripMenuItem1";
-            quitterToolStripMenuItem1.Size = new Size(78, 30);
+            quitterToolStripMenuItem1.Size = new Size(66, 23);
             quitterToolStripMenuItem1.Text = "Quitter";
             quitterToolStripMenuItem1.Click += quitterToolStripMenuItem1quitterToolStripMenuItem1_Click;
             // 
@@ -210,7 +210,7 @@
             // 
             deconnexionToolStripMenuItem.Alignment = ToolStripItemAlignment.Right;
             deconnexionToolStripMenuItem.Name = "deconnexionToolStripMenuItem";
-            deconnexionToolStripMenuItem.Size = new Size(125, 30);
+            deconnexionToolStripMenuItem.Size = new Size(103, 23);
             deconnexionToolStripMenuItem.Text = "Deconnexion";
             deconnexionToolStripMenuItem.Click += quitterToolStripMenuItem1_Click;
             // 
@@ -218,20 +218,20 @@
             // 
             quizToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { listeToolStripMenuItem5, ajouterToolStripMenuItem3 });
             quizToolStripMenuItem.Name = "quizToolStripMenuItem";
-            quizToolStripMenuItem.Size = new Size(67, 30);
+            quizToolStripMenuItem.Size = new Size(58, 23);
             quizToolStripMenuItem.Text = "Quizz";
             // 
             // listeToolStripMenuItem5
             // 
             listeToolStripMenuItem5.Name = "listeToolStripMenuItem5";
-            listeToolStripMenuItem5.Size = new Size(150, 28);
+            listeToolStripMenuItem5.Size = new Size(124, 24);
             listeToolStripMenuItem5.Text = "Liste";
             listeToolStripMenuItem5.Click += listeToolStripMenuItem5_Click;
             // 
             // ajouterToolStripMenuItem3
             // 
             ajouterToolStripMenuItem3.Name = "ajouterToolStripMenuItem3";
-            ajouterToolStripMenuItem3.Size = new Size(150, 28);
+            ajouterToolStripMenuItem3.Size = new Size(124, 24);
             ajouterToolStripMenuItem3.Text = "Ajouter";
             ajouterToolStripMenuItem3.Click += ajouterToolStripMenuItem3_Click;
             // 
@@ -243,10 +243,10 @@
             panelPrincipal.BorderStyle = BorderStyle.Fixed3D;
             panelPrincipal.Controls.Add(chartProportionForfait);
             panelPrincipal.Controls.Add(chartInscritEleve);
-            panelPrincipal.Location = new Point(0, 32);
-            panelPrincipal.Margin = new Padding(5);
+            panelPrincipal.Location = new Point(0, 24);
+            panelPrincipal.Margin = new Padding(4, 4, 4, 4);
             panelPrincipal.Name = "panelPrincipal";
-            panelPrincipal.Size = new Size(1067, 659);
+            panelPrincipal.Size = new Size(934, 495);
             panelPrincipal.TabIndex = 1;
             // 
             // chartProportionForfait
@@ -256,8 +256,7 @@
             legend1.Name = "Legend1";
             legend1.Title = "Liste Forfait";
             chartProportionForfait.Legends.Add(legend1);
-            chartProportionForfait.Location = new Point(551, 22);
-            chartProportionForfait.Margin = new Padding(3, 4, 3, 4);
+            chartProportionForfait.Location = new Point(482, 16);
             chartProportionForfait.Name = "chartProportionForfait";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
@@ -265,7 +264,7 @@
             series1.Name = "Series1";
             series1.YValuesPerPoint = 4;
             chartProportionForfait.Series.Add(series1);
-            chartProportionForfait.Size = new Size(456, 219);
+            chartProportionForfait.Size = new Size(399, 164);
             chartProportionForfait.TabIndex = 1;
             chartProportionForfait.Text = "chart1";
             title1.Name = "Title1";
@@ -279,15 +278,14 @@
             legend2.Name = "Legend1";
             legend2.Title = "nb élèves";
             chartInscritEleve.Legends.Add(legend2);
-            chartInscritEleve.Location = new Point(61, 22);
-            chartInscritEleve.Margin = new Padding(3, 4, 3, 4);
+            chartInscritEleve.Location = new Point(53, 16);
             chartInscritEleve.Name = "chartInscritEleve";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             series2.YValuesPerPoint = 4;
             chartInscritEleve.Series.Add(series2);
-            chartInscritEleve.Size = new Size(432, 299);
+            chartInscritEleve.Size = new Size(378, 224);
             chartInscritEleve.TabIndex = 0;
             chartInscritEleve.Text = "chart1";
             title2.Name = "Title1";
@@ -296,13 +294,14 @@
             // 
             // FormMenu
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1067, 692);
+            ClientSize = new Size(934, 519);
             ControlBox = false;
             Controls.Add(panelPrincipal);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FormMenu";
             Text = "CDS 49 Administration";
             Load += FormMenu_Load;

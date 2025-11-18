@@ -153,7 +153,7 @@ namespace AP3_AppliC.view
                 }
 
                 Eleve nouvelEleve = Modele.ModeleEleve.AjoutEleve(nom, prenom, mail, mdp, date, telEnvoyer);
-
+                Controleur.CreationEmailEleve(mail, nom, prenom, mdp);
                 if (nouvelEleve != null)
                 {
                     MessageBox.Show("Élève inscrit avec succès !",

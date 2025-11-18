@@ -20,7 +20,7 @@ namespace AP3_AppliC.view
             ChargerDonnees();
         }
 
-        
+
 
         private void ChargerDonnees()
         {
@@ -61,5 +61,68 @@ namespace AP3_AppliC.view
             dgvLecon.Columns["Début"].DefaultCellStyle.Format = "HH:mm";
             dgvLecon.Columns["Fin"].DefaultCellStyle.Format = "HH:mm";
         }
+
+        private void btSupp_Click(object sender, EventArgs e)
+        {
+            // Vérifier qu'une ligne est sélectionnée dans la DataGridView
+            if (dgvLecon.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Veuillez sélectionner une leçon à supprimer.");
+                return;
+            }
+
+            // Récupérer la ligne sélectionnée
+            DataGridViewRow selectedRow = dgvLecon.SelectedRows[0];
+
+            try
+            {
+                // Récupérer les valeurs nécessaires pour identifier la leçon
+                int idEleve = (int)selectedRow.Cells["Ideleve"].Value;
+                int idMoniteur = (int)selectedRow.Cells["Idmoniteur"].Value;
+                int idVehicule = (int)selectedRow.Cells["Idvehicule"].Value;
+                DateTime heureDebut = (DateTime)selectedRow.Cells["Heuredebut"].Value;
+
+                // Demander confirmation à l'utilisateur
+                DialogResult result = MessageBox.Show("Voulez-vous vraiment supprimer cette leçon ?", "Confirmation", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+
+                // Appeler la méthode pour supprimer la leçon
+                bool succes = ModeleLecon.SupprimerLecon(idEleve, idMoniteur, idVehicule, heureDebut);
+
+                // Afficher un message à l'utilisateur
+                if (succes)
+                {
+                    MessageBox.Show("Leçon supprimée avec succès !");
+                    // Rafraîchir la DataGridView pour refléter les modifications
+                    RafraichirListeLecons();
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de la suppression de la leçon.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la suppression de la leçon : {ex.Message}");
+            }
+        }
+        private void RafraichirListeLecons()
+        {
+            // Vider la source de données actuelle
+            dgvLecon.DataSource = null;
+
+            // Récupérer la liste des leçons
+            var lecons = ModeleLecon.ObtenirLecons();
+
+            // Mettre à jour la source de données de la DataGridView
+            dgvLecon.DataSource = lecons;
+
+            // Rafraîchir visuellement la DataGridView
+            dgvLecon.Refresh();
+        }
+        
     }
 }

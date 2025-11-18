@@ -54,6 +54,31 @@ namespace AP3_AppliC
                 Console.WriteLine("Exception caught in CreateEmail(): {0}", ex.ToString());
             }
         }
+        public static void CreationEmailEleve(string dest, string nom, string prenom, string mdp)
+        {
+            string to = dest;
+            string from = "admin.chevrollier.driving.school49@cds49.com";
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = "CDS 49 : AJOUT D'UN ELEVE";
+            message.Body = "Bonjour " + nom + " " + prenom + ",\n\nNous validons la création de votre compte en tant que nouvelle élève du CDS 49.\n\nVoici votre mot de passe : " + mdp + "\n\nBien Cordialement,\n\nChevrollier Driving School49";
+            SmtpClient client = new SmtpClient();
+
+            client.Host = "mail.dombtsig.local";
+            client.Port = 1025;
+
+            // Credentials are necessary if the server requires the client
+            // to authenticate before it will send email on the client's behalf.
+            client.UseDefaultCredentials = true;
+
+            try
+            {
+                client.Send(message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught in CreateEmail(): {0}", ex.ToString());
+            }
+        }
         public static bool KeyPressEntier(object sender, KeyPressEventArgs e)
         {
             bool valeurCorrect = true; 
