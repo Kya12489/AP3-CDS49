@@ -264,7 +264,7 @@ class MobileApiController extends ApiController
         $score = $data['score'] ?? null;
         $nbQuestions = $data['nbquestions'] ?? null;
 
-        if (empty($score) || empty($nbQuestions)) {
+        if ($score === null || $nbQuestions === null) {
             return $this->errorResponse('Score et nombre de questions requis', 400);
         }
 
