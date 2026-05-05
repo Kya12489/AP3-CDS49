@@ -42,7 +42,7 @@ class Web
         Route::Add("/documents/{lien}",[$document,"showDocument"] );
 
         Route::Add('/download-app', function () {
-            $file = __DIR__ . '/../public/downloads/cds-app-release.apk';
+            $file = __DIR__ . '/../public/download/cds-app-release.apk';
             header('Content-Type: application/vnd.android.package-archive');
             header('Content-Disposition: attachment; filename="cds-app.apk"');
             header('Content-Length: ' . filesize($file));
