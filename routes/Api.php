@@ -20,6 +20,10 @@ class Api
         Route::Add('/api/fin-test', [$mobileApiController, 'saveScore']);
         Route::Add('/api/categories', [$mobileApiController, 'getCategories']);
         Route::Add("/api/register",[$mobileApiController,'signUp']);
-        Route::Add("/api/getScore/{id}",[$mobileApiController,'getScore']);
+        Route::Add("/api/getScore",[$mobileApiController,'getScore']);
+        Route::Add("/api/documents/waiting",[$mobileApiController,'getNbNotif']);
+        Route::Add("/api/documents",[$mobileApiController,'getDocuments']);
+        Route::Add("/api/documents/upload",[$mobileApiController,'uploadDocument']);
+        Route::Add("/api/documents/download",[$mobileApiController,'downloadDocument']);
     }
 }

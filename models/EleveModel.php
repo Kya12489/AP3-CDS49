@@ -111,6 +111,13 @@ class EleveModel extends SQL
         }
     }
 
+    public function getUserById(int $ideleve)
+    {
+        $query = "SELECT * FROM eleve WHERE ideleve = :ideleve LIMIT 1";
+        $stmt = $this->getPdo()->prepare($query);
+        $stmt->execute([':ideleve' => $ideleve]);
+        return $stmt->fetch();
+    }
     /**
      * Méthode pour vérifier si un élève existe avec l'email et le mot de passe donnés.
      *

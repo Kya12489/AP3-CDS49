@@ -60,7 +60,7 @@ class ResultatModel extends SQL
         ]);
     }
 
-    public function getScoreByUserId(int $userId){
+     public function getScoreByUserId(int $userId){
         $stmt = $this->getPdo()->prepare("SELECT * FROM resultat WHERE ideleve=?");
         $stmt->execute([$userId]);
         return $stmt->fetchAll(\PDO::FETCH_OBJ);

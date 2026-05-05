@@ -3,6 +3,7 @@
 namespace routes;
 
 use controllers\CompteController;
+use controllers\DocumentController;
 use utils\Template;
 use routes\base\Route;
 use utils\SessionHelpers;
@@ -16,6 +17,7 @@ class Web
         $public = new PublicWebController();
         $utilisateur = new UtilisateurController();
         $compte = new CompteController();
+        $document = new DocumentController();
 
         // Appel la méthode « home » dans le contrôleur $main.
         Route::Add('/', [$public, 'home']);
@@ -36,6 +38,8 @@ class Web
         Route::Add('/documentation-api.html', function () {
             return Template::render('views/global/documentation-api.php');
         });
+
+        Route::Add("/documents/{lien}",[$document,"showDocument"] );
 
         // Si l'utilisateur est connecté, ajoute les routes de déconnexion et de compte.
         if (SessionHelpers::isLogin()) {
