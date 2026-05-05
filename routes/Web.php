@@ -41,6 +41,15 @@ class Web
 
         Route::Add("/documents/{lien}",[$document,"showDocument"] );
 
+        Route::Add('/download-app', function () {
+            $file = __DIR__ . '/../public/downloads/cds-app-release.apk';
+            header('Content-Type: application/vnd.android.package-archive');
+            header('Content-Disposition: attachment; filename="app.apk"');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        });
+
         // Si l'utilisateur est connecté, ajoute les routes de déconnexion et de compte.
         if (SessionHelpers::isLogin()) {
             Route::Add('/deconnexion.html', [$compte, 'deconnexion']);
