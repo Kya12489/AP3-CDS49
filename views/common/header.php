@@ -35,7 +35,7 @@ use utils\SessionHelpers;
                         <a class="nav-link" href="/forfaits.html">Nos Forfaits</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/download-app">Download mobile app</a>
+                        <a class="nav-link" href="/download-app>Télécharger l'app mobile</a>
                     </li>
                      <!-- AJOUT DE L'A PROPOS DANS LE HEADER  LOT 1 -->
                     <li class="nav-item">
