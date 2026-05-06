@@ -344,7 +344,7 @@ class MobileApiController extends ApiController
     }
 
     function getDocuments(){
-        if ($this->isPost()) {
+        if (!$this->isPost()) {
             return $this->errorResponse('Méthode non autorisée', 405);
         }
 
@@ -470,7 +470,7 @@ class MobileApiController extends ApiController
 }
 
 public function downloadDocument(){
-    if ($this->isPost()) {
+    if (!$this->isPost()) {
         return $this->errorResponse('Méthode non autorisée', 405);
     }
 
