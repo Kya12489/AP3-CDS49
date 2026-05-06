@@ -418,10 +418,10 @@ class MobileApiController extends ApiController
         }
 
         // ← Vérifier le chemin du dossier
-        $uploadDir = realpath(__DIR__ . '/../../documents/');
+        $uploadDir = realpath(__DIR__ . '/../documents/');
         if ($uploadDir === false) {
             // Le dossier n'existe pas encore, le créer
-            $uploadDir = __DIR__ . '/../../documents/';
+            $uploadDir = __DIR__ . '/../documents/';
             if (!mkdir($uploadDir, 0777, true)) {
                 return $this->errorResponse('Impossible de créer le dossier: ' . $uploadDir, 500);
             }
