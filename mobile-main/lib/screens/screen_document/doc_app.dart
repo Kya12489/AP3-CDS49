@@ -1,5 +1,7 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 import 'package:mobil_cds49/main.dart';
 import 'package:mobil_cds49/models/documents.dart';
 import 'package:mobil_cds49/services/api/config.dart';
@@ -18,8 +20,8 @@ class DocumentApp extends StatefulWidget {
 
 class _DocumentAppState extends State<DocumentApp> {
   final List<Document> documents = [];
-  Map<int, File?> selectedFiles = {}; // Un fichier par document
-  Map<int, bool> isUploading = {}; // État de chargement par document
+  Map<int, PlatformFile?> selectedFiles = {}; // ← PlatformFile au lieu de File
+  Map<int, bool> isUploading = {};
 
   @override
   void initState() {
@@ -31,43 +33,22 @@ class _DocumentAppState extends State<DocumentApp> {
     });
   }
 
-  // Méthode pour télécharger et ouvrir un fichier depuis une URL
   Future<void> _downloadAndOpenFile(String url, String name) async {
     try {
-      // Afficher un indicateur de chargement
       showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => const Center(child: CircularProgressIndicator()),
       );
 
-      // Extraire le nom du fichier depuis l'URL
       String fileName = url.split('/').last;
-
-      // Créer une instance de Dio
       final dio = Dio();
-
-      // Utiliser getTemporaryDirectory ou getApplicationDocumentsDirectory
       final Directory appDocDir = await getApplicationDocumentsDirectory();
       final String filePath = '${appDocDir.path}/$name-$fileName';
 
-      // Télécharger le fichier depuis l'URL complète
-      await dio.download(
-        url,
-        filePath,
-        onReceiveProgress: (received, total) {
-          if (total != -1) {
-            print(
-              'Téléchargement : ${(received / total * 100).toStringAsFixed(0)}%',
-            );
-          }
-        },
-      );
+      await dio.download(url, filePath);
 
-      // Fermer le loader
       Navigator.pop(context);
-
-      // Ouvrir le fichier
       await OpenFile.open(filePath);
     } catch (e) {
       Navigator.pop(context);
@@ -80,13 +61,13 @@ class _DocumentAppState extends State<DocumentApp> {
     }
   }
 
-  // Méthode pour uploader le document
-  Future<void> _uploadDocument(Document doc, File file) async {
+  // ← Prend maintenant un PlatformFile
+  Future<void> _uploadDocument(Document doc, PlatformFile platformFile) async {
     setState(() {
       isUploading[doc.id] = true;
     });
     try {
-      final result = await DocumentApi().uploadDocument(file, doc.id);
+      final result = await DocumentApi().uploadDocument(platformFile, doc.id);
       if (result['status'] == 'success') {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -94,7 +75,6 @@ class _DocumentAppState extends State<DocumentApp> {
             backgroundColor: Colors.green,
           ),
         );
-        // Rafraîchir la liste des documents
         final updatedDocs = await DocumentApi().getDocuments();
         setState(() {
           documents.clear();
@@ -174,7 +154,7 @@ class _DocumentAppState extends State<DocumentApp> {
                               ),
                       ),
                     ),
-                    // Afficher le fichier sélectionné
+                    // Aperçu du fichier sélectionné
                     if (selectedFiles[doc.id] != null) ...[
                       Container(
                         margin: const EdgeInsets.only(
@@ -205,18 +185,15 @@ class _DocumentAppState extends State<DocumentApp> {
                                       color: Colors.red,
                                       size: 30,
                                     )
-                                  : ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.file(
-                                        selectedFiles[doc.id]!,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+                                  : _buildImagePreview(
+                                      selectedFiles[doc.id]!,
+                                    ), // ← méthode dédiée
                             ),
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                selectedFiles[doc.id]!.path.split('/').last,
+                                selectedFiles[doc.id]!
+                                    .name, // ← .name au lieu de .path.split('/').last
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(fontSize: 12),
                               ),
@@ -234,12 +211,10 @@ class _DocumentAppState extends State<DocumentApp> {
                         ),
                       ),
                     ],
-                    // Bouton télécharger ou message
                     if (doc.lien != null && doc.lien!.isNotEmpty)
                       TextButton(
                         child: const Text("Télécharger le document"),
                         onPressed: () async {
-                          // Construire l'URL complète
                           String url =
                               "${AppConfig.apiBaseUrl}/documents/${doc.lien}";
                           await _downloadAndOpenFile(url, doc.type!);
@@ -250,18 +225,17 @@ class _DocumentAppState extends State<DocumentApp> {
                         padding: EdgeInsets.all(8.0),
                         child: Text("Fichier non téléversé"),
                       ),
-                    // Bouton pour ajouter un fichier
                     Padding(
                       padding: const EdgeInsets.all(12),
                       child: FilePickerButton(
-                        onFilesSelected: (file) {
+                        onFilesSelected: (platformFile) {
+                          // ← callback retourne PlatformFile
                           setState(() {
-                            selectedFiles[doc.id] = file;
+                            selectedFiles[doc.id] = platformFile;
                           });
                         },
                       ),
                     ),
-                    // Bouton d'envoi
                     if (selectedFiles[doc.id] != null)
                       Padding(
                         padding: const EdgeInsets.all(12),
@@ -292,7 +266,23 @@ class _DocumentAppState extends State<DocumentApp> {
     );
   }
 
-  bool _isPdf(File file) {
-    return file.path.toLowerCase().endsWith('.pdf');
+  // Aperçu image compatible Web + Mobile
+  Widget _buildImagePreview(PlatformFile file) {
+    if (kIsWeb && file.bytes != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.memory(file.bytes!, fit: BoxFit.cover),
+      );
+    } else if (file.path != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.file(File(file.path!), fit: BoxFit.cover),
+      );
+    }
+    return const Icon(Icons.image, color: Colors.blue);
+  }
+
+  bool _isPdf(PlatformFile file) {
+    return file.name.toLowerCase().endsWith('.pdf');
   }
 }
