@@ -504,7 +504,7 @@ public function downloadDocument(){
     }
 
     // Chemin du fichier
-    $filePath = __DIR__ . '/../../documents/' . $document['lienDoc'];
+    $filePath = __DIR__ . '/../documents/' . $document['lienDoc'];
 
     if (!file_exists($filePath)) {
         return $this->errorResponse('Fichier introuvable sur le serveur', 404);
