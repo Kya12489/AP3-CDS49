@@ -480,11 +480,11 @@ public function downloadDocument(){
     }
 
     // Récupérer l'ID du document depuis l'URL
-    if (!isset($_GET['document_id'])) {
+    if (!isset($_POST['document_id'])) {
         return $this->errorResponse('ID du document manquant', 400);
     }
 
-    $documentId = intval($_GET['document_id']);
+    $documentId = intval($_POST['document_id']);
 
     $documentModel = new \models\DocumentModel();
     $document = $documentModel->getById($documentId);
