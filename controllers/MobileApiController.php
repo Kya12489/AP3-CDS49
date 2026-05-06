@@ -321,7 +321,7 @@ class MobileApiController extends ApiController
     }
 
     public function getNbNotif(){
-        if ($this->isPost()) {
+        if (!$this->isPost()) {
             return $this->errorResponse('Méthode non autorisée', 405);
         }
 
