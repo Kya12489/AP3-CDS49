@@ -14,7 +14,7 @@ class DocumentApi {
   Future<int> getDocumentInWaiting() async {
     try {
       final token = await GestionToken.getToken();
-      final response = await http.get(
+      final response = await http.post(
         Uri.parse('${AppConfig.apiBaseUrl}/api/documents/waiting'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

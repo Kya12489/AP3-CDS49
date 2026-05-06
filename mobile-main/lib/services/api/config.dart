@@ -30,7 +30,7 @@ class AppConfig {
     } else if (Platform.isIOS) {
       apiBaseUrl = config['API_URL_IOS'];
     } else {
-      apiBaseUrl = config['API_URL_WEB'] ?? 'https://frontap3.dombtsig.local';
+      apiBaseUrl = config['API_URL_WEB'] ?? 'http://lrichard.cds.etud';
     }
 
     appVersion = config['APP_VERSION'] ?? '1.0.0';
