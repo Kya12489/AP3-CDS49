@@ -123,22 +123,20 @@ class DocumentApi {
   ) async {
     try {
       final token = await GestionToken.getToken();
-
       if (token == null || token.isEmpty) {
         return {'status': 'error', 'message': 'Non autorisé - Token manquant'};
       }
 
-      final url = Uri.parse(
-        '${AppConfig.apiBaseUrl}/api/documents/download?document_id=$documentId',
-      );
+      final url = Uri.parse('${AppConfig.apiBaseUrl}/api/documents/download');
 
+      // ← Envoyer en form-data pour que $_POST le reçoive
       final response = await http.post(
         url,
         headers: {'Authorization': 'Bearer $token'},
+        body: {'document_id': documentId.toString()},
       );
 
       if (response.statusCode == 200) {
-        // Extraire le nom du fichier
         String finalFileName = fileName;
         final contentDisposition = response.headers['content-disposition'];
         if (contentDisposition != null) {
@@ -149,12 +147,10 @@ class DocumentApi {
           }
         }
 
-        // Créer un fichier temporaire
         final tempDir = await getTemporaryDirectory();
         final tempFilePath = '${tempDir.path}/$finalFileName';
         await File(tempFilePath).writeAsBytes(response.bodyBytes);
 
-        // Sauvegarder automatiquement dans Téléchargements
         final finalPath = await FlutterFileDialog.saveFile(
           params: SaveFileDialogParams(
             sourceFilePath: tempFilePath,
@@ -162,8 +158,9 @@ class DocumentApi {
           ),
         );
 
-        // Nettoyer
-        await File(tempFilePath).delete();
+        if (await File(tempFilePath).exists()) {
+          await File(tempFilePath).delete();
+        }
 
         if (finalPath != null) {
           return {
@@ -175,7 +172,18 @@ class DocumentApi {
           return {'status': 'error', 'message': 'Téléchargement annulé'};
         }
       } else {
-        return {'status': 'error', 'message': 'Erreur: ${response.statusCode}'};
+        try {
+          final errorBody = json.decode(response.body);
+          return {
+            'status': 'error',
+            'message': errorBody['message'] ?? 'Erreur: ${response.statusCode}',
+          };
+        } catch (_) {
+          return {
+            'status': 'error',
+            'message': 'Erreur: ${response.statusCode}',
+          };
+        }
       }
     } catch (e) {
       return {'status': 'error', 'message': 'Erreur: $e'};
