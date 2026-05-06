@@ -366,15 +366,20 @@ class MobileApiController extends ApiController
         return $this->successResponse('Documents récupérés avec succès', ['documents' => $documents]);
     }
 
-    public function uploadDocument(){
-        try{
+   public function uploadDocument(){
+
+
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        http_response_code(200);
+        exit();
+    }
+
+    try {
         if (!$this->isPost()) {
             return $this->errorResponse('Méthode non autorisée', 405);
         }
 
-        // Récupération depuis l'en-tête (Bearer token), on ne garde que le token
         $token = trim(str_replace('Bearer ', '', $_SERVER['HTTP_AUTHORIZATION'] ?? ''));
-
         if (empty($token)) {
             return $this->errorResponse('Token requis', 401);
         }
@@ -385,87 +390,75 @@ class MobileApiController extends ApiController
         }
 
         if (!isset($_POST['document_id'])) {
-            http_response_code(400);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'ID du document manquant'
-            ]);
-            return;
+            return $this->errorResponse('ID du document manquant', 400);
         }
-        
+
+        // ← Vérifier que le fichier est bien reçu
+        if (!isset($_FILES['document'])) {
+            return $this->errorResponse('Aucun fichier reçu', 400);
+        }
+
+        if ($_FILES['document']['error'] !== UPLOAD_ERR_OK) {
+            return $this->errorResponse('Erreur upload: ' . $_FILES['document']['error'], 400);
+        }
+
         $documentId = intval($_POST['document_id']);
         $file = $_FILES['document'];
-        
-        // Vérifier le type de fichier
+
         $allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
         $fileType = mime_content_type($file['tmp_name']);
-        
+
         if (!in_array($fileType, $allowedTypes)) {
-            http_response_code(400);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Type de fichier non autorisé. Seuls PDF, JPEG et PNG sont acceptés.'
-            ]);
-            return;
+            return $this->errorResponse('Type non autorisé: ' . $fileType, 400);
         }
-        
-        // Vérifier la taille du fichier (max 10MB)
-        $maxSize = 10 * 1024 * 1024; // 10 MB
+
+        $maxSize = 10 * 1024 * 1024;
         if ($file['size'] > $maxSize) {
-            http_response_code(400);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Fichier trop volumineux. Taille maximale: 10MB'
-            ]);
-            return;
+            return $this->errorResponse('Fichier trop volumineux', 400);
         }
-        
-        // Créer le dossier de destination si nécessaire
-        $uploadDir = __DIR__ . '../../documents/';
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
+
+        // ← Vérifier le chemin du dossier
+        $uploadDir = realpath(__DIR__ . '/../../documents/');
+        if ($uploadDir === false) {
+            // Le dossier n'existe pas encore, le créer
+            $uploadDir = __DIR__ . '/../../documents/';
+            if (!mkdir($uploadDir, 0777, true)) {
+                return $this->errorResponse('Impossible de créer le dossier: ' . $uploadDir, 500);
+            }
+            $uploadDir = realpath($uploadDir);
         }
-        
-        // Générer un nom de fichier unique
+        $uploadDir .= '/';
+
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $fileName = uniqid('doc_' . $documentId . '_', true) . '.' . $extension;
         $filePath = $uploadDir . $fileName;
-        
-        // Déplacer le fichier
+
         if (!move_uploaded_file($file['tmp_name'], $filePath)) {
-            http_response_code(500);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Erreur lors de l\'enregistrement du fichier'
-            ]);
-            return;
+            return $this->errorResponse('Impossible de déplacer le fichier vers: ' . $filePath, 500);
         }
-        
+
         try {
-        $documentModel = new \models\DocumentModel();
-        
-        // Correction : utiliser . pour concaténer, pas +
-        $documentModel->updateLienDocument($documentId, $fileName);
-        $documentModel->updateIdStatut($documentId, 2);
-        
-        // Réponse succès
-        return $this->successResponse('Document téléversé avec succès', [
-            'document_id' => $documentId,
-            'file_name' => $fileName,
-            'file_path' => $fileName,
-            'file_size' => $file['size'],
-            'file_type' => $fileType
-        ]);
-        
-    } catch (\Exception $e) {
-        // Supprimer le fichier en cas d'erreur
-        if (file_exists($filePath)) {
-            unlink($filePath);
+            $documentModel = new \models\DocumentModel();
+            $documentModel->updateLienDocument($documentId, $fileName);
+            $documentModel->updateIdStatut($documentId, 2);
+
+            return $this->successResponse('Document téléversé avec succès', [
+                'document_id' => $documentId,
+                'file_name' => $fileName,
+                'file_path' => $fileName,
+                'file_size' => $file['size'],
+                'file_type' => $fileType
+            ]);
+
+        } catch (\Exception $e) {
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            return $this->errorResponse('Erreur BDD: ' . $e->getMessage(), 500);
         }
-        return $this->errorResponse('Erreur lors de la mise à jour: ' . $e->getMessage(), 500);
-    }
+
     } catch (\Exception $e) {
-        return $this->errorResponse('Erreur lors du téléversement: ' . $e->getMessage(), 500);
+        return $this->errorResponse('Erreur générale: ' . $e->getMessage(), 500);
     }
 }
 
